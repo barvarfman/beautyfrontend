@@ -14,7 +14,7 @@ import './AppHeader.scss';
     render() {
         return (
             <header className="app-header">
-    stam masheo
+   Dolev Header
             </header>
         )
     }
