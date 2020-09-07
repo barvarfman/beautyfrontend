@@ -14,7 +14,11 @@ import './AppHeader.scss';
     render() {
         return (
             <header className="app-header">
+<<<<<<< HEAD
     stam ma
+=======
+   Dolev Header
+>>>>>>> 1938009c0e0e11f188987c7f8a76943153d67c5a
             </header>
         )
     }
