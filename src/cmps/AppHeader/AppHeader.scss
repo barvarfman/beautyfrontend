@@ -1,8 +1,32 @@
 .app-header {
-    height: 3.5rem;
-    background-color: #1a1a1a;
-    color: #f6f6f6;
+    width: 100%;
     margin-block-end: 1rem;
-    box-shadow: 0px 7px 10px #00000033;
-    max-width: 450px;
+    box-shadow: 0px 1px 2px #00000033;
+    header {
+        height: 4rem;
+        background-color:#e91e63;
+        color: #f6f6f6;
+        padding: 0 1rem;
+        width: 100%;
+    }
+    .bottom-header{
+        text-align: center;
+        .bottom-header-title{
+            width:50%;
+        }
+        // .bottom-header-title:active{ 
+        //     border-bottom:solid #e91e63 1px;
+        // }
+    }
+    h3 {
+        color: #a5abb1;
+    }
 }
+
+
+@media screen and (min-width: 500px) {
+    .app-header {
+        width: 480px
+    }
+  }
+
