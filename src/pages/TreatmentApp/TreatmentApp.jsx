@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loadTreatments } from '../../actions/treatmentActions.js';
+import { loadCalendar } from '../../actions/calendarActions.js';
 // import { TreatmentEdit } from '../TreatmentEdit/TreatmentEdit.jsx'
 import { TreatmentList } from '../../cmps/TreatmentList/TreatmentList';
 import { AppHeader } from '../../cmps/AppHeader/AppHeader';
@@ -12,6 +13,7 @@ class _TreatmentApp extends Component {
 
     async componentDidMount() {
         await this.props.loadTreatments()
+        await this.props.loadCalendar()
     }
 
     render() {
@@ -32,12 +34,14 @@ class _TreatmentApp extends Component {
 
 function mapStateProps(state) {
     return {
-        treatments: state.TreatmentReducer.treatments
+        treatments: state.TreatmentReducer.treatments,
+        calendar:state.CalendarReducer.calendar
     }
 }
 
 const mapDispatchToProps = {
     loadTreatments,
+    loadCalendar
 }
 
 export const TreatmentApp = connect(mapStateProps, mapDispatchToProps)(_TreatmentApp)
