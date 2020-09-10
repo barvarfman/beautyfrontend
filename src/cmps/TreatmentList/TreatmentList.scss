@@ -1,4 +1,11 @@
 .treatment-container{
-    width: 500px;
-    height: 500px;
+     width: 100%;
 }
+
+
+@media screen and (min-width: 500px) {
+    .treatment-container {
+        width: 480px
+    }
+  }
+

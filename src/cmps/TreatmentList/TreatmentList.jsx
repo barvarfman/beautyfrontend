@@ -5,7 +5,7 @@ import { TreatmentPreview } from '../TreatmentPreview/TreatmentPreview';
 
 export function TreatmentList(props) {
     return (
-        <div className="treatment-list flex space-between wrap">
+        <div className="treatment-list flex column">
             {
                 props.treatments.map(treatment => {
                     return (

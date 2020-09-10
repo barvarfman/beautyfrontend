@@ -32,19 +32,19 @@ export function removeTreatment(treatmentId) {
 }
 export function setTreatment(treatment) {
     return {
-      type: 'SET_Treatment',
+      type: 'SET_TREATMENT',
       treatment
     };
   }
   function setTreatments(treatments) {
     return {
-      type: 'SET_Treatments',
+      type: 'SET_TREATMENTS',
       treatments
     };
   }
 function _removeTreatment(treatmentId) {
   return {
-    type: 'Treatment_REMOVE',
+    type: 'REMOVE_TREATMENT',
     treatmentId
   };
 }
