@@ -9,10 +9,11 @@ export function CalendarReducer(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 calendar: action.calendar
-            }       
+            }          
       
         default:
             return state;
     }
 }
+
 

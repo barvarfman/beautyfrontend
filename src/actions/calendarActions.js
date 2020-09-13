@@ -6,7 +6,6 @@ export function loadCalendar() {
   return async dispatch => {
     try {
       const calendar = await CalendarService.getCalendar();
-        console.log(calendar);
       dispatch(setCalendar(calendar));
     } catch (err) {
       console.log('CalendarActions: err in loadCalendars', err);

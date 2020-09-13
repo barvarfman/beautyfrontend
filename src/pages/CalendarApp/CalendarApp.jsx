@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DateFnsUtils from '@date-io/date-fns';
 import heLocale from "date-fns/locale/he";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { AppHeader } from '../../cmps/AppHeader/AppHeader';
+import CalendarService from '../../services/CalendarService';
+
 const materialTheme = createMuiTheme({
     overrides: {
         MuiPickersToolbar: {
@@ -36,19 +38,45 @@ const materialTheme = createMuiTheme({
 });
 
 export function CalendarApp(props) {
+    
     const [selectedDate, handleDateChange] = useState(new Date());
 
-    function handleDateChangeAndConvert(ev) {
-        handleDateChange(ev)
+    // Similar to componentDidMount and componentDidUpdate:
+    useEffect(() => {
+        loadTimeSlots()
+        // setAppointment()
+    });
 
-        let datePicked = ev.toString().split(" ").slice(0, 4)
-        let dateObj = {
-            day: datePicked[0],
-            month: datePicked[1],
-            dayDigit: datePicked[2],
-            year: datePicked[3]
+    function loadTimeSlots(pickedDate = null){
+        if (!pickedDate) {
+            var firstDay = getIsosDate (0)
+            var secondDay = getIsosDate (1)
+            var thirdDay = getIsosDate (2)
+        } else {
+            firstDay = getIsosDate (-1, pickedDate)
+            secondDay = getIsosDate (0,  pickedDate)
+            thirdDay = getIsosDate (1, pickedDate ) 
         }
-        console.log(dateObj);
+        CalendarService.getAvailbleDailySlots(`${firstDay}T05:00:00`, `${firstDay}T17:00:00`, '1H')
+        CalendarService.getAvailbleDailySlots(`${secondDay}T05:00:00`, `${secondDay}T17:00:00`, '1H')
+        CalendarService.getAvailbleDailySlots(`${thirdDay}T05:00:00`, `${thirdDay}T17:00:00`, '1H')
+    }
+
+    function getIsosDate (daysAfterOrBefore, date = new Date()) {
+        var dateCopy = new Date(date.getTime())
+        dateCopy.setDate(dateCopy.getDate() + daysAfterOrBefore)
+        dateCopy = dateCopy.toISOString().slice(0,10)
+        console.log(dateCopy)
+        return dateCopy
+    }
+
+    function setAppointment () {
+        CalendarService.update ("2020-09-17T11:30:00Z", "2020-09-17T12:30:00Z", 'zipornaimlebar', 'ayal', 'ayal@gmail.com')
+    }
+
+    function handleDateChangeAndConvert(pickedDate) {
+        // handleDateChange(pickedDate)
+        loadTimeSlots(pickedDate)
     }
 
     return (

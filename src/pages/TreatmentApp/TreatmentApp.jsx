@@ -5,6 +5,7 @@ import { loadCalendar } from '../../actions/calendarActions.js';
 // import { TreatmentEdit } from '../TreatmentEdit/TreatmentEdit.jsx'
 import { TreatmentList } from '../../cmps/TreatmentList/TreatmentList';
 import { AppHeader } from '../../cmps/AppHeader/AppHeader';
+import CalendarService from '../../services/CalendarService';
 import './TreatmentApp.scss';
 import '../../styles/style.scss';
 
@@ -31,6 +32,7 @@ class _TreatmentApp extends Component {
         )
     }
 }
+
 
 
 function mapStateProps(state) {
