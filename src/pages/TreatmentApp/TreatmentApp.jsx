@@ -22,10 +22,11 @@ class _TreatmentApp extends Component {
         if (!treatments) return 'loading...'
         return (
             <>
-            <AppHeader></AppHeader>
+            <AppHeader/>
             <main className="home-page">
                 <TreatmentList treatments={treatments} />
             </main>
+            <button onClick={()=>this.props.history.push('/calendar')}>הבא</button>
             </>
         )
     }
