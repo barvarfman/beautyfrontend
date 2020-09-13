@@ -2,7 +2,7 @@ import React from 'react';
 import './TreatmentPreview.scss';
 import '../../styles/style.scss';
 import UtilService from '../../services/UtilsService'
-import { SwitcheApp } from '../../cmps/SwitcheApp/SwitcheApp';
+import { SwitchApp } from '../switchApp/SwitchApp';
 export function TreatmentPreview(props) {
     return (
         <div className="treatment-preview">
@@ -18,7 +18,7 @@ export function TreatmentPreview(props) {
                 </div>
                 <div className="flex column">
                     {/* <input class="switch" type="checkbox"></input> */}
-                    <SwitcheApp/>
+                    <SwitchApp/>
                     {props.treatment.duration + UtilService.englishToHebrew('minutes')}
                 </div>
             </div>
