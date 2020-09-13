@@ -2,7 +2,7 @@ import React from 'react';
 import './TreatmentPreview.scss';
 import '../../styles/style.scss';
 import UtilService from '../../services/UtilsService'
-import { SwitchApp } from '../switchApp/SwitchApp';
+import { SwitchApp } from '../SwitchApp/SwitchApp';
 export function TreatmentPreview(props) {
     return (
         <div className="treatment-preview">
