@@ -38,7 +38,7 @@ async function ajax(endpoint, method='get', data=null) {
             // headers:h,
             data
         })
-        console.log(`${BASE_URL}${endpoint}`)
+        // console.log(`${BASE_URL}${endpoint}`)
         return res.data;
     } catch (err) {
         console.log(`Had Issues ${method}ing to the backend, endpoint: ${endpoint}, with data: ${data}`);
