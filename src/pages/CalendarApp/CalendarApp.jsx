@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { connect } from 'react-redux';
 import DateFnsUtils from '@date-io/date-fns';
 import heLocale from "date-fns/locale/he";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
@@ -6,6 +7,7 @@ import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { AppHeader } from '../../cmps/AppHeader/AppHeader';
 import CalendarService from '../../services/CalendarService';
+import { updateEmail, sendEmail } from '../../actions/emailAction.js';
 
 const materialTheme = createMuiTheme({
     overrides: {
@@ -37,8 +39,7 @@ const materialTheme = createMuiTheme({
     },
 });
 
-export function CalendarApp(props) {
-    
+export function _CalendarApp(props) {
     const [selectedDate, handleDateChange] = useState(new Date());
 
     // Similar to componentDidMount and componentDidUpdate:
@@ -79,6 +80,21 @@ export function CalendarApp(props) {
         loadTimeSlots(pickedDate)
     }
 
+    function handleChange({ target }) {
+        const value = target.value;
+        props.updateEmail(value)
+    }
+
+    function onSendEmail(ev) {
+        ev.preventDefault()
+        let emailObj = {
+            email: props.email,
+            bodyText: 'פה צריך להיכנס גוף ההודעה'
+        }
+        props.sendEmail(emailObj)
+    }
+
+
     return (
         <>
             <AppHeader />
@@ -98,9 +114,27 @@ export function CalendarApp(props) {
                     />
                 </ThemeProvider>
             </MuiPickersUtilsProvider>
+            <form onSubmit={onSendEmail}>
+                <input value={props.email} onChange={handleChange} placeholder="enter email" />
+                <button >שלח</button>
+            </form>
             <button onClick={() => props.history.push('/')}>חזרה</button>
         </>
     );
 }
 
 
+
+
+function mapStateProps(state) {
+    return {
+        email: state.EmailReducer.email
+    }
+}
+
+const mapDispatchToProps = {
+    updateEmail,
+    sendEmail
+}
+
+export const CalendarApp = connect(mapStateProps, mapDispatchToProps)(_CalendarApp)
