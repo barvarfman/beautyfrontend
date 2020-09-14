@@ -6,8 +6,10 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/picker
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { AppHeader } from '../../cmps/AppHeader/AppHeader';
+import {TimeslotList}  from '../../cmps/TimeslotList/TimeslotList';
 import CalendarService from '../../services/CalendarService';
 import { updateEmail, sendEmail } from '../../actions/emailAction.js';
+import { loadTimeSlots } from '../../actions/calendarActions.js';
 
 const materialTheme = createMuiTheme({
     overrides: {
@@ -44,40 +46,22 @@ export function _CalendarApp(props) {
 
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
-        loadTimeSlots()
+        props.loadTimeSlots()
         // setAppointment()
-    });
+    }, []);
 
-    function loadTimeSlots(pickedDate = null){
-        if (!pickedDate) {
-            var firstDay = getIsosDate (0)
-            var secondDay = getIsosDate (1)
-            var thirdDay = getIsosDate (2)
-        } else {
-            firstDay = getIsosDate (-1, pickedDate)
-            secondDay = getIsosDate (0,  pickedDate)
-            thirdDay = getIsosDate (1, pickedDate ) 
-        }
-        CalendarService.getAvailbleDailySlots(`${firstDay}T05:00:00`, `${firstDay}T17:00:00`, '1H')
-        CalendarService.getAvailbleDailySlots(`${secondDay}T05:00:00`, `${secondDay}T17:00:00`, '1H')
-        CalendarService.getAvailbleDailySlots(`${thirdDay}T05:00:00`, `${thirdDay}T17:00:00`, '1H')
-    }
-
-    function getIsosDate (daysAfterOrBefore, date = new Date()) {
-        var dateCopy = new Date(date.getTime())
-        dateCopy.setDate(dateCopy.getDate() + daysAfterOrBefore)
-        dateCopy = dateCopy.toISOString().slice(0,10)
-        console.log(dateCopy)
-        return dateCopy
-    }
 
     function setAppointment () {
-        CalendarService.update ("2020-09-17T11:30:00Z", "2020-09-17T12:30:00Z", 'zipornaimlebar', 'ayal', 'ayal@gmail.com')
+        CalendarService.update ("2020-09-17T10:30:00Z", "2020-09-17T11:30:00Z", 'zipor', 'ayal', 'ayal@gmail.com')
     }
 
     function handleDateChangeAndConvert(pickedDate) {
         handleDateChange(pickedDate)
+<<<<<<< HEAD
         loadTimeSlots(pickedDate)
+=======
+        props.loadTimeSlots(pickedDate)
+>>>>>>> 26dfa6107dc7478730881520f3dd41cb0d7772c3
     }
 
     function handleChange({ target }) {
@@ -114,27 +98,27 @@ export function _CalendarApp(props) {
                     />
                 </ThemeProvider>
             </MuiPickersUtilsProvider>
+            {(props.timeSlots)? <TimeslotList timeslots={props.timeSlots}/> : ' '}
             <form onSubmit={onSendEmail}>
                 <input value={props.email} onChange={handleChange} placeholder="enter email" />
-                <button >שלח</button>
+                <button>שלח</button>
             </form>
             <button onClick={() => props.history.push('/')}>חזרה</button>
         </>
     );
 }
 
-
-
-
 function mapStateProps(state) {
     return {
-        email: state.EmailReducer.email
+        email: state.EmailReducer.email,
+        timeSlots: state.CalendarReducer.timeSlots
     }
 }
 
 const mapDispatchToProps = {
     updateEmail,
-    sendEmail
+    sendEmail,
+    loadTimeSlots
 }
 
 export const CalendarApp = connect(mapStateProps, mapDispatchToProps)(_CalendarApp)

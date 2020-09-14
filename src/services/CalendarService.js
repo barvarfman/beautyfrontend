@@ -1,4 +1,5 @@
 // import HttpService from './HttpService'
+import axios from 'axios';
 
 // const url = process.env.NODE_ENV === 'production'
 //     ? '/api/calendar'
@@ -12,47 +13,33 @@ export default {
 
 const ACCOUNTID = '413361439'
 
-// function getCalendar() {
-//     ajax({
-//         url: URL,
-//         beforeSend: function(xhr) {
-//              xhr.setRequestHeader("Authorization", "Bearer mFzYTSGauAA4QGdG6rI9MtfvvfEZHo")
-//         }, success: function(data){
-//             alert(data);
-//             //process the JSON data etc
-//         }
-//     })
-// }
-
-function getCalendar() {
-    const options = {
-        headers: {
-          Authorization: "Bearer mFzYTSGauAA4QGdG6rI9MtfvvfEZHo"
-        }
-    };
-    const url = 'https://api.kloudless.com/v1/accounts?enabled=True'
-    console.log(url)
-fetch(url, options)
-  .then( res => res.json() )
-  .then( data => console.log(data.objects[0]) );
+async function getCalendar() {
+    const res = await axios ({
+        method: 'get',
+        url: 'https://api.kloudless.com/v1/accounts?enabled=True',
+        headers: {Authorization: "Bearer mFzYTSGauAA4QGdG6rI9MtfvvfEZHo"}
+    })
+    const calendar = res.data.objects[0]
+    console.log(calendar)
+    return calendar
 }
 
-function getAvailbleDailySlots (startTime,endtTime,duration){
-    const url = `https://api.kloudless.com/v1/accounts/${ACCOUNTID}/cal/availability`
-fetch(url, {
+async function getAvailbleDailySlots (startTime,endtTime,duration){ 
+  const timeSlots = await axios({
     method: 'post',
-    headers: {Authorization: "Bearer mFzYTSGauAA4QGdG6rI9MtfvvfEZHo", 'Content-Type': 'application/json'}
-,
-body: JSON.stringify( {
-    "meeting_duration": `PT${duration}`,
-        "time_windows": [
-            {
-                "start": startTime,
-                "end": endtTime
-            }
-        ] 
-})
-}).then(res=>res.json())
+    url: `https://api.kloudless.com/v1/accounts/${ACCOUNTID}/cal/availability`,
+    headers: {Authorization: "Bearer mFzYTSGauAA4QGdG6rI9MtfvvfEZHo", 'Content-Type': 'application/json'},
+    data: JSON.stringify( {
+        "meeting_duration": `PT${duration}`,
+            "time_windows": [
+                {
+                    "start": startTime,
+                    "end": endtTime
+                }
+            ] 
+    })
+  })
+  return timeSlots.data.time_windows
 }
 
 function update (startTime, endtTime, eventName, creatorName, creatorEmail){
@@ -75,6 +62,25 @@ body: JSON.stringify(
   .then(res => console.log(res));
 }
 
+// async function update (startTime, endtTime, eventName, creatorName, creatorEmail){
+//   const updatedCalendar = await axios ({
+//       maethod: 'post',
+//       url: `https://api.kloudless.com/v1/accounts/${ACCOUNTID}/cal/calendars/primary/events`,
+//       headers: {Authorization: "Bearer mFzYTSGauAA4QGdG6rI9MtfvvfEZHo", 'Content-Type': 'application/json'},
+//       body: JSON.stringify ( 
+//         {
+//             "name": eventName,
+//             "start": startTime,
+//             "end": endtTime,
+//             "creator": {
+//                 "name": creatorName,
+//                 "email": creatorEmail
+//             }
+//         })
+//   })
+//   console.log('updated',updatedCalendar.data)
+// }
+    
 
 
 // function update(calendar) {

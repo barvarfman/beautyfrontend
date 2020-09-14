@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
     calendar: null,
+    timeSlots: null
 }
 
 export function CalendarReducer(state = INITIAL_STATE, action) {
@@ -9,6 +10,11 @@ export function CalendarReducer(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 calendar: action.calendar
+            }          
+        case 'SET_TIMESLOTS':
+            return {
+                ...state,
+                timeSlots: action.timeSlots
             }          
       
         default:
