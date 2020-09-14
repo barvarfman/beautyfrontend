@@ -57,11 +57,7 @@ export function _CalendarApp(props) {
 
     function handleDateChangeAndConvert(pickedDate) {
         handleDateChange(pickedDate)
-<<<<<<< HEAD
-        loadTimeSlots(pickedDate)
-=======
         props.loadTimeSlots(pickedDate)
->>>>>>> 26dfa6107dc7478730881520f3dd41cb0d7772c3
     }
 
     function handleChange({ target }) {

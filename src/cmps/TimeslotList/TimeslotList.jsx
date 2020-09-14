@@ -16,9 +16,9 @@ export function TimeslotList(props) {
                 Object.entries(props.timeslots).map(([day, timeslots]) => {
                     return timeslots.map((timeslot,idx) => {
                      return (
-                        <>
+                      <ul>
                             <TimeslotPreview timeslot={timeslot} key={idx} />
-                        </>
+                            </ul>
                     )
                 })
             })
