@@ -76,7 +76,7 @@ export function _CalendarApp(props) {
     }
 
     function handleDateChangeAndConvert(pickedDate) {
-        // handleDateChange(pickedDate)
+        handleDateChange(pickedDate)
         loadTimeSlots(pickedDate)
     }
 
