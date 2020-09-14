@@ -1,5 +1,6 @@
 export default {
     englishToHebrew,
+    getIsosDate
 }
 
 function englishToHebrew(word) {
@@ -38,4 +39,12 @@ function englishToHebrew(word) {
     }
     
     return ' ' + convertedWord 
+}
+
+function getIsosDate (daysAfterOrBefore, date = new Date()) {
+  var dateCopy = new Date(date.getTime())
+  dateCopy.setDate(dateCopy.getDate() + daysAfterOrBefore)
+  dateCopy = dateCopy.toISOString().slice(0,10)
+  console.log(dateCopy)
+  return dateCopy
 }
