@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
     treatment: null,
-    treatments: null
+    treatments: null,
+    duration:0
 }
 
 export function TreatmentReducer(state = INITIAL_STATE, action) {
@@ -19,6 +20,11 @@ export function TreatmentReducer(state = INITIAL_STATE, action) {
         return {
           ...state,
           treatments: state.treatments.filter(treatment => treatment._id !== action.treatmentId)
+        };        
+        case 'UPDATE_DURATION':
+        return {
+          ...state,
+          duration: state.duration+(action.duration)
         };        
       
         default:

@@ -9,12 +9,14 @@ export function DailyslotsPreview(props) {
     useEffect(() => {
         // timeslots = UtilsService.getTimeSlotsForPreview(props.timeslot, props.duration)
         console.log(props.timeslots)
+        console.log('gg',props.date);
     });
 
     return (
  
              <div className="dailyslots-preview flex column align-center space-between">
-                {props.timeslots.map(ts => <button className="timeslot-btn">{ts}</button>)}
+                {props.timeslots.map(ts => <button onClick={()=>props.setAppointment(ts,props.date)}
+                className="timeslot-btn" key={UtilsService.idGen()}>{ts}</button>)}
              </div>
     )
 }

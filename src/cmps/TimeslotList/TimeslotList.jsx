@@ -1,31 +1,32 @@
 // import React from 'react';
 import './TimeslotList.scss';
 import React, { useState, useEffect } from "react";
-import {DailyslotsPreview}  from '../DailyslotsPreview/DailyslotsPreview';
+import { DailyslotsPreview } from '../DailyslotsPreview/DailyslotsPreview';
 import UtilsService from '../../services/UtilsService';
 // import { TreatmentPreview } from '../TreatmentPreview/TreatmentPreview';
 
 export function TimeslotList(props) {
 
     useEffect(() => {
-        console.log('timeslots',props.timeslots)
+        console.log('timeslots', props.timeslots)
     }, []);
 
     return (
         <div className="timeslot-list flex">
             {
                 // cahnge name properly --- timeslots is the arrays of each day/key 
-                Object.keys(props.timeslots).map((day,idx) => {
+                Object.keys(props.timeslots).map(day => {
+                    var date = (props.timeslots[day])[0].start.slice(0, 10)
                     // running on each day
-                    var slotsForPreview = UtilsService.getDailySlotsForPreview (props.timeslots[day], 30)
-                     return (
-                        <div>
-                          <DailyslotsPreview timeslots={slotsForPreview} key={idx} />
+                    var slotsForPreview = UtilsService.getDailySlotsForPreview(props.timeslots[day], 30)
+                    return (
+                        <div key={UtilsService.idGen()}>
+                            <DailyslotsPreview setAppointment={props.setAppointment} timeslots={slotsForPreview} date={date} />
                         </div>
                     )
                 })
             })
-            }
+         
         </div>
     )
 }

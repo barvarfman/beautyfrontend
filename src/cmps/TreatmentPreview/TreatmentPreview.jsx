@@ -1,29 +1,55 @@
 import React from 'react';
 import './TreatmentPreview.scss';
 import '../../styles/style.scss';
+import { connect } from 'react-redux';
+import { updateDuration} from '../../actions/treatmentActions';
 import UtilService from '../../services/UtilsService'
 import { SwitchApp } from '../SwitchApp/SwitchApp';
-export function TreatmentPreview(props) {
+
+export function _TreatmentPreview(props) {
+  function updateDuration(switchIsOn) {
+        if (switchIsOn) {
+            props.updateDuration(+props.treatment.duration)
+        } else {
+            props.updateDuration((+props.treatment.duration)*-1)
+        }
+    }
+   
     return (
         <div className="treatment-preview">
-            {props.treatment && 
-            <div className="preview-container flex align-center space-between">
-                <div>
+            {props.treatment &&
+                <div className="preview-container flex align-center space-between">
                     <div>
-                        {props.treatment.name}
+                        <div>
+                            {props.treatment.name}
+                        </div>
+                        <div>
+                            {props.treatment.price}
+                        </div>
                     </div>
-                    <div>
-                        {props.treatment.price}
+                    <div className="flex column">
+                        {/* <input class="switch" type="checkbox"></input> */}
+                        <SwitchApp updateDuration={updateDuration} />
+
+                        {props.treatment.duration + UtilService.englishToHebrew('minutes')}
                     </div>
                 </div>
-                <div className="flex column">
-                    {/* <input class="switch" type="checkbox"></input> */}
-                    <SwitchApp/>
-                    {props.treatment.duration + UtilService.englishToHebrew('minutes')}
-                </div>
-            </div>
             }
 
         </div>
     )
 }
+
+
+
+function mapStateProps(state) {
+    return {
+        duration: state.TreatmentReducer.duration
+    }
+}
+
+const mapDispatchToProps = {
+    updateDuration
+}
+
+export const TreatmentPreview = connect(mapStateProps, mapDispatchToProps)(_TreatmentPreview)

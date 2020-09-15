@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import DateFnsUtils from '@date-io/date-fns';
 import heLocale from "date-fns/locale/he";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
-import { createMuiTheme } from "@material-ui/core";
+import { createMuiTheme, duration } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { AppHeader } from '../../cmps/AppHeader/AppHeader';
-import {TimeslotList}  from '../../cmps/TimeslotList/TimeslotList';
+import { TimeslotList } from '../../cmps/TimeslotList/TimeslotList';
 import CalendarService from '../../services/CalendarService';
 import { updateEmail, sendEmail } from '../../actions/emailAction.js';
 import { loadTimeSlots } from '../../actions/calendarActions.js';
+import UtilsService from "../../services/UtilsService";
 
 const materialTheme = createMuiTheme({
     overrides: {
@@ -47,12 +48,16 @@ export function _CalendarApp(props) {
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
         props.loadTimeSlots()
-        // setAppointment()
     }, []);
 
 
-    function setAppointment () {
-        CalendarService.update ("2020-09-17T10:30:00Z", "2020-09-17T11:30:00Z", 'zipor', 'ayal', 'ayal@gmail.com')
+    function setAppointment(time, date) {
+        time = UtilsService.addHoursToMatchTheClock(time,3)
+        const startTime = `${date}T${time}:00Z`
+        time = UtilsService.calculateEndTime(time, props.duration)
+        const endTime = `${date}T${time}:00Z`
+        console.log(startTime, endTime);
+        CalendarService.update(startTime, endTime, 'בר טיפול ציפורנים', 'ayal', 'ayal@gmail.com')
     }
 
     function handleDateChangeAndConvert(pickedDate) {
@@ -94,7 +99,7 @@ export function _CalendarApp(props) {
                     />
                 </ThemeProvider>
             </MuiPickersUtilsProvider>
-            {(props.timeSlots)? <TimeslotList timeslots={props.timeSlots}/> : ' '}
+            {(props.timeSlots) ? <TimeslotList setAppointment={setAppointment} timeslots={props.timeSlots} /> : ' '}
             <form onSubmit={onSendEmail}>
                 <input value={props.email} onChange={handleChange} placeholder="enter email" />
                 <button>שלח</button>
@@ -107,7 +112,8 @@ export function _CalendarApp(props) {
 function mapStateProps(state) {
     return {
         email: state.EmailReducer.email,
-        timeSlots: state.CalendarReducer.timeSlots
+        timeSlots: state.CalendarReducer.timeSlots,
+        duration: state.TreatmentReducer.duration
     }
 }
 

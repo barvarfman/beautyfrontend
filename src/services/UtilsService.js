@@ -2,7 +2,10 @@ export default {
   englishToHebrew,
   getIsosDate,
   getTimeSlotsForPreview,
-  getDailySlotsForPreview
+  getDailySlotsForPreview,
+  addHoursToMatchTheClock,
+  idGen,
+  calculateEndTime
 }
 
 function englishToHebrew(word) {
@@ -42,7 +45,7 @@ function englishToHebrew(word) {
 
   return ' ' + convertedWord
 }
-
+//get a date and how many days before/after and returns only the date part by isos convention
 function getIsosDate(daysAfterOrBefore, date = new Date()) {
   var dateCopy = new Date(date.getTime())
   dateCopy.setDate(dateCopy.getDate() + daysAfterOrBefore)
@@ -51,8 +54,8 @@ function getIsosDate(daysAfterOrBefore, date = new Date()) {
   return dateCopy
 }
 
-function getDailySlotsForPreview(slotsRanges, duration){
-  const timeslotsByConstraints = slotsRanges.map (sr => getTimeSlotsForPreview(sr, duration))
+function getDailySlotsForPreview(slotsRanges, duration) {
+  const timeslotsByConstraints = slotsRanges.map(sr => getTimeSlotsForPreview(sr, duration))
   const mergedTimeSlotsToRender = [].concat.apply([], timeslotsByConstraints);
   return mergedTimeSlotsToRender
 }
@@ -71,13 +74,13 @@ function getTimeSlotsForPreview(timeslot, duration) {
   hours = +timeslot.end.slice(11, 13)
   min = timeslot.end.slice(14, 16)
   const endTime = new Date(year, month - 1, day, hours + 3, min, 0, 0);
-  
+
   let nextTimeSlot = startTime//maby need copy
   hours = nextTimeSlot.getHours()
   min = nextTimeSlot.getMinutes()
   let slotToRender = checkDigitsAndAddZerosIfNeeded(hours) + ':' + checkDigitsAndAddZerosIfNeeded(min);
-  if ((nextTimeSlot.getTime() + (duration*60*1000)) < endTime.getTime()) {slotsToRender.push(slotToRender)}
-  while ((nextTimeSlot.getTime() + (duration*60*1000)) < endTime.getTime()) {
+  if ((nextTimeSlot.getTime() + (duration * 60 * 1000)) < endTime.getTime()) { slotsToRender.push(slotToRender) }
+  while ((nextTimeSlot.getTime() + (duration * 60 * 1000)) < endTime.getTime()) {
     nextTimeSlot = new Date(nextTimeSlot.getTime() + ((60 * 60 * 1000) / 2));//adding half an hour
     hours = nextTimeSlot.getHours()
     min = nextTimeSlot.getMinutes()
@@ -87,7 +90,43 @@ function getTimeSlotsForPreview(timeslot, duration) {
   return slotsToRender
 }
 
-  function checkDigitsAndAddZerosIfNeeded (digit) {
-    digit = (digit<10)? '0' + digit : digit
-    return digit
+//get an hour and returns full isos date (including the time)
+function addHoursToMatchTheClock(time,diff) {
+  let hours = +time.slice(0, 2)-diff
+  let minutes = time.slice(3, 5)
+  hours = checkDigitsAndAddZerosIfNeeded(hours)
+  return hours + ':' + minutes
 }
+
+
+function calculateEndTime(time, duration) {
+  let hours = +time.slice(0, 2)
+  let minutes = +time.slice(3, 5)
+
+  if (duration % 60 === 30) {
+    if (minutes === 30) {
+      hours += Math.floor(duration / 60) + 1
+      minutes = '00'
+    }
+    else {
+      hours += Math.floor(duration / 60)
+      minutes = '30'
+    }
+  }
+  else {
+    hours += (duration / 60)
+  }
+  hours = checkDigitsAndAddZerosIfNeeded(hours)
+  return hours + ':' + minutes
+}
+
+function checkDigitsAndAddZerosIfNeeded(digit) {
+  digit = (digit < 10) ? '0' + digit : digit
+  return digit
+}
+
+
+function idGen() {
+  return '_' + Math.random().toString(36).substr(2, 9);
+};
+

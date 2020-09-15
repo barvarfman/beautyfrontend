@@ -30,6 +30,23 @@ export function removeTreatment(treatmentId) {
     }
   };
 }
+
+export function updateDuration(duration) {
+  return async dispatch => {
+    try {
+      await 
+      dispatch(_updateDuration(duration));
+    } catch (err) {
+      console.log('TreatmentActions: err in addDuration', err);
+    }
+  };
+}
+export function _updateDuration(duration) {
+    return {
+      type: 'UPDATE_DURATION',
+      duration
+    };
+  }
 export function setTreatment(treatment) {
     return {
       type: 'SET_TREATMENT',
