@@ -1,7 +1,8 @@
 export default {
   englishToHebrew,
   getIsosDate,
-  getTimeSlotsForPreview
+  getTimeSlotsForPreview,
+  getDailySlotsForPreview
 }
 
 function englishToHebrew(word) {
@@ -50,23 +51,11 @@ function getIsosDate(daysAfterOrBefore, date = new Date()) {
   return dateCopy
 }
 
-
-
-// function getDividedTimeSlots(timeslot, duration) {
-//   console.log(duration);
-//   let startTime = timeslot.start.slice(11, 16)
-//   let endTime = timeslot.end.slice(11, 16)
-//   let roundHours = Math.floor(duration / 60)
-
-
-// }
-
-// function _addThreeHours(time) {
-//   let hours = +time.slice(0, 2) + 3
-//   let minutes = time.slice(3, 5)
-//   let timeStr = hours + ':' + minutes
-//   return timeStr;
-// }
+function getDailySlotsForPreview(slotsRanges, duration){
+  const timeslotsByConstraints = slotsRanges.map (sr => getTimeSlotsForPreview(sr, duration))
+  const mergedTimeSlotsToRender = [].concat.apply([], timeslotsByConstraints);
+  return mergedTimeSlotsToRender
+}
 
 function getTimeSlotsForPreview(timeslot, duration) {
   let slotsToRender = [];
@@ -84,21 +73,21 @@ function getTimeSlotsForPreview(timeslot, duration) {
   const endTime = new Date(year, month - 1, day, hours + 3, min, 0, 0);
   
   let nextTimeSlot = startTime//maby need copy
-  let slotToRender = nextTimeSlot.getHours() + ':' + nextTimeSlot.getMinutes();
-  slotsToRender.push(slotToRender)
-  console.log("slotToRender",slotsToRender);
-  while (nextTimeSlot + duration <= endTime) {
+  hours = nextTimeSlot.getHours()
+  min = nextTimeSlot.getMinutes()
+  let slotToRender = checkDigitsAndAddZerosIfNeeded(hours) + ':' + checkDigitsAndAddZerosIfNeeded(min);
+  if ((nextTimeSlot.getTime() + (duration*60*1000)) < endTime.getTime()) {slotsToRender.push(slotToRender)}
+  while ((nextTimeSlot.getTime() + (duration*60*1000)) < endTime.getTime()) {
     nextTimeSlot = new Date(nextTimeSlot.getTime() + ((60 * 60 * 1000) / 2));//adding half an hour
-    slotToRender = nextTimeSlot.getHours() + ':' + nextTimeSlot.getMinutes();
+    hours = nextTimeSlot.getHours()
+    min = nextTimeSlot.getMinutes()
+    slotToRender = checkDigitsAndAddZerosIfNeeded(hours) + ':' + checkDigitsAndAddZerosIfNeeded(min);
     slotsToRender.push(slotToRender)
-   
   }
+  return slotsToRender
+}
 
-
-  // var olddate = new Date(year, month, day, hours, min, 0, 0); // create a date of Jun 15/2011, 8:32:00am
-
-  // var subbed = new Date(olddate - 3*60*60*1000); // subtract 3 hours
-
-  // var newtime = subbed.getHours() + ':' + subbed.getMinutes();
-
+  function checkDigitsAndAddZerosIfNeeded (digit) {
+    digit = (digit<10)? '0' + digit : digit
+    return digit
 }
