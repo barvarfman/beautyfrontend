@@ -5,7 +5,8 @@ export default {
   getDailySlotsForPreview,
   addHoursToMatchTheClock,
   idGen,
-  calculateEndTime
+  calculateEndTime,
+  updatePickedTreatments
 }
 
 function englishToHebrew(word) {
@@ -91,8 +92,8 @@ function getTimeSlotsForPreview(timeslot, duration) {
 }
 
 //get an hour and returns full isos date (including the time)
-function addHoursToMatchTheClock(time,diff) {
-  let hours = +time.slice(0, 2)-diff
+function addHoursToMatchTheClock(time, diff) {
+  let hours = +time.slice(0, 2) - diff
   let minutes = time.slice(3, 5)
   hours = checkDigitsAndAddZerosIfNeeded(hours)
   return hours + ':' + minutes
@@ -130,3 +131,16 @@ function idGen() {
   return '_' + Math.random().toString(36).substr(2, 9);
 };
 
+function updatePickedTreatments(reducerPickedTreatments, action) {
+
+  if (action.treatmentObj.addOrRemove === 'add') {
+    console.log(action.treatmentObj.treatment._id);
+    reducerPickedTreatments.push(action.treatmentObj.treatment)
+    console.log(reducerPickedTreatments);
+  } else {
+    const treatmentIdx = reducerPickedTreatments.findIndex((treatment) => treatment._id === action.treatmentObj.treatment._id);
+    reducerPickedTreatments.splice(treatmentIdx, 1);
+    console.log(reducerPickedTreatments);
+  }
+  return reducerPickedTreatments
+}

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadTreatments } from '../../actions/treatmentActions.js';
 import { loadCalendar } from '../../actions/calendarActions.js';
@@ -8,37 +8,37 @@ import { AppHeader } from '../../cmps/AppHeader/AppHeader';
 import CalendarService from '../../services/CalendarService';
 import './TreatmentApp.scss';
 import '../../styles/style.scss';
+import {StepperBtn} from '../../cmps/StepperBtn/StepperBtn';
 
+export function _TreatmentApp(props) {
 
-class _TreatmentApp extends Component {
+    useEffect( () => {
+         props.loadTreatments()
+         props.loadCalendar()
+    }, []);
 
-    async componentDidMount() {
-        await this.props.loadTreatments()
-        await this.props.loadCalendar()
-    }
+    const { treatments } = props;
 
-    render() {
-        const { treatments } = this.props;
-
-        if (!treatments) return 'loading...'
-        return (
-            <>
-            <AppHeader/>
+    if (!treatments) return 'loading...'
+    return (
+        <>
+            <AppHeader />
             <main className="home-page">
                 <TreatmentList treatments={treatments} />
             </main>
-            <button onClick={()=>this.props.history.push('/calendar')}>הבא</button>
-            </>
-        )
-    }
+            {/* <button onClick={()=>props.history.push('/calendar')}>הבא</button> */}
+            <StepperBtn/>
+        </>
+    )
 }
+
 
 
 
 function mapStateProps(state) {
     return {
         treatments: state.TreatmentReducer.treatments,
-        calendar:state.CalendarReducer.calendar
+        calendar: state.CalendarReducer.calendar
     }
 }
 

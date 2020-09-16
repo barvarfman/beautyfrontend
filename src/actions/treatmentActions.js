@@ -41,6 +41,27 @@ export function updateDuration(duration) {
     }
   };
 }
+
+export function updatePickedTreatments(treatment,addOrRemove) {
+  return async dispatch => {
+    try {
+      await 
+      dispatch(_updatePickedTreatments(treatment,addOrRemove));
+    } catch (err) {
+      console.log('TreatmentActions: err in updatePickedTreatments', err);
+    }
+  };
+}
+export function _updatePickedTreatments(treatment,addOrRemove) {
+    return {
+      type: 'UPDATE_PICKED_TREATMENT',
+      treatmentObj:{
+        treatment,
+        addOrRemove
+      }
+    };
+  }
+
 export function _updateDuration(duration) {
     return {
       type: 'UPDATE_DURATION',

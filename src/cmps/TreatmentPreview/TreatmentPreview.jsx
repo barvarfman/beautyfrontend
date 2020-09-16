@@ -2,19 +2,24 @@ import React from 'react';
 import './TreatmentPreview.scss';
 import '../../styles/style.scss';
 import { connect } from 'react-redux';
-import { updateDuration} from '../../actions/treatmentActions';
+import { updateDuration, updatePickedTreatments } from '../../actions/treatmentActions';
 import UtilService from '../../services/UtilsService'
 import { SwitchApp } from '../SwitchApp/SwitchApp';
 
 export function _TreatmentPreview(props) {
-  function updateDuration(switchIsOn) {
+    function updateDuration(switchIsOn) {
         if (switchIsOn) {
             props.updateDuration(+props.treatment.duration)
         } else {
-            props.updateDuration((+props.treatment.duration)*-1)
+            props.updateDuration((+props.treatment.duration) * -1)
         }
     }
-   
+
+    function updatePickedTreatments(addOrRemove) {
+        props.updatePickedTreatments(props.treatment, addOrRemove)
+    }
+    console.log(props.pickedTreatments);
+
     return (
         <div className="treatment-preview">
             {props.treatment &&
@@ -29,7 +34,7 @@ export function _TreatmentPreview(props) {
                     </div>
                     <div className="flex column">
                         {/* <input class="switch" type="checkbox"></input> */}
-                        <SwitchApp updateDuration={updateDuration} />
+                        <SwitchApp updateDuration={updateDuration} updatePickedTreatments={updatePickedTreatments} />
 
                         {props.treatment.duration + UtilService.englishToHebrew('minutes')}
                     </div>
@@ -44,12 +49,14 @@ export function _TreatmentPreview(props) {
 
 function mapStateProps(state) {
     return {
-        duration: state.TreatmentReducer.duration
+        duration: state.TreatmentReducer.duration,
+        pickedTreatments: state.TreatmentReducer.pickedTreatments
     }
 }
 
 const mapDispatchToProps = {
-    updateDuration
+    updateDuration,
+    updatePickedTreatments
 }
 
 export const TreatmentPreview = connect(mapStateProps, mapDispatchToProps)(_TreatmentPreview)

@@ -12,10 +12,12 @@ export  function SwitchApp(props) {
     if(!state.checkedA){
       console.log('switch on');
       props.updateDuration(true)
+      props.updatePickedTreatments('add')
    }
    else{
      console.log('switch off');
      props.updateDuration(false)
+     props.updatePickedTreatments('remove')
    }
     setState({ ...state, [event.target.name]: event.target.checked });
   };

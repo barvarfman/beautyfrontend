@@ -52,12 +52,19 @@ export function _CalendarApp(props) {
 
 
     function setAppointment(time, date) {
-        time = UtilsService.addHoursToMatchTheClock(time,3)
+        let treatmentsType=''
+             props.pickedTreatments.forEach((tr,idx)=>{
+                 if( props.pickedTreatments.length!==idx+1) treatmentsType+=tr.name+', '
+                else treatmentsType+=tr.name
+        })
+        console.log(treatmentsType);
+        treatmentsType.substring()
+        time = UtilsService.addHoursToMatchTheClock(time, 3)
         const startTime = `${date}T${time}:00Z`
         time = UtilsService.calculateEndTime(time, props.duration)
         const endTime = `${date}T${time}:00Z`
         console.log(startTime, endTime);
-        CalendarService.update(startTime, endTime, 'בר טיפול ציפורנים', 'ayal', 'ayal@gmail.com')
+        CalendarService.update(startTime, endTime,treatmentsType, 'ayal', 'ayal@gmail.com')
     }
 
     function handleDateChangeAndConvert(pickedDate) {
@@ -113,7 +120,8 @@ function mapStateProps(state) {
     return {
         email: state.EmailReducer.email,
         timeSlots: state.CalendarReducer.timeSlots,
-        duration: state.TreatmentReducer.duration
+        duration: state.TreatmentReducer.duration,
+        pickedTreatments: state.TreatmentReducer.pickedTreatments
     }
 }
 
