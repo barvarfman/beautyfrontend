@@ -8,9 +8,10 @@ import { ThemeProvider } from "@material-ui/styles";
 import { AppHeader } from '../../cmps/AppHeader/AppHeader';
 import { TimeslotList } from '../../cmps/TimeslotList/TimeslotList';
 import CalendarService from '../../services/CalendarService';
-import { updateEmail, sendEmail } from '../../actions/emailAction.js';
+// import { updateEmail, sendEmail } from '../../actions/emailAction.js';
 import { loadTimeSlots } from '../../actions/calendarActions.js';
 import UtilsService from "../../services/UtilsService";
+import {StepperBtn} from '../../cmps/StepperBtn/StepperBtn';
 
 const materialTheme = createMuiTheme({
     overrides: {
@@ -50,6 +51,9 @@ export function _CalendarApp(props) {
         props.loadTimeSlots()
     }, []);
 
+    function pushRoute(route) {
+        props.history.push(route)
+    }
 
     function setAppointment(time, date) {
         let treatmentsType=''
@@ -72,21 +76,6 @@ export function _CalendarApp(props) {
         props.loadTimeSlots(pickedDate)
     }
 
-    function handleChange({ target }) {
-        const value = target.value;
-        props.updateEmail(value)
-    }
-
-    function onSendEmail(ev) {
-        ev.preventDefault()
-        let emailObj = {
-            email: props.email,
-            bodyText: 'פה צריך להיכנס גוף ההודעה'
-        }
-        props.sendEmail(emailObj)
-    }
-
-
     return (
         <>
             <AppHeader />
@@ -107,18 +96,13 @@ export function _CalendarApp(props) {
                 </ThemeProvider>
             </MuiPickersUtilsProvider>
             {(props.timeSlots) ? <TimeslotList setAppointment={setAppointment} timeslots={props.timeSlots} /> : ' '}
-            <form onSubmit={onSendEmail}>
-                <input value={props.email} onChange={handleChange} placeholder="enter email" />
-                <button>שלח</button>
-            </form>
-            <button onClick={() => props.history.push('/')}>חזרה</button>
+            <StepperBtn pushRoute={pushRoute}/>
         </>
     );
 }
 
 function mapStateProps(state) {
     return {
-        email: state.EmailReducer.email,
         timeSlots: state.CalendarReducer.timeSlots,
         duration: state.TreatmentReducer.duration,
         pickedTreatments: state.TreatmentReducer.pickedTreatments
@@ -126,8 +110,6 @@ function mapStateProps(state) {
 }
 
 const mapDispatchToProps = {
-    updateEmail,
-    sendEmail,
     loadTimeSlots
 }
 

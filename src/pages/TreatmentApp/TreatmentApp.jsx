@@ -12,6 +12,10 @@ import {StepperBtn} from '../../cmps/StepperBtn/StepperBtn';
 
 export function _TreatmentApp(props) {
 
+    function pushRoute(route) {
+        props.history.push(route)
+    }
+
     useEffect( () => {
          props.loadTreatments()
          props.loadCalendar()
@@ -26,14 +30,10 @@ export function _TreatmentApp(props) {
             <main className="home-page">
                 <TreatmentList treatments={treatments} />
             </main>
-            {/* <button onClick={()=>props.history.push('/calendar')}>הבא</button> */}
-            <StepperBtn/>
+            <StepperBtn pushRoute={pushRoute}/>
         </>
     )
 }
-
-
-
 
 function mapStateProps(state) {
     return {

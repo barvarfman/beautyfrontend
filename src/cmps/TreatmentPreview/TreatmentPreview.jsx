@@ -18,7 +18,6 @@ export function _TreatmentPreview(props) {
     function updatePickedTreatments(addOrRemove) {
         props.updatePickedTreatments(props.treatment, addOrRemove)
     }
-    console.log(props.pickedTreatments);
 
     return (
         <div className="treatment-preview">

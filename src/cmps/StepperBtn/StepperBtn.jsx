@@ -3,41 +3,43 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import {updateActiveStep} from '../../actions/stepperAction';
 
+
    function _StepperBtn(props) {
-    const [activeStep, setActiveStep] = React.useState(0);
-console.log(props);
-    const handleNext = () => {
-         setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
-    };
+    function changeStep(diff) {
+         props.updateActiveStep(props.activeStep + diff)
+         if (!props.activeStep && diff>0) props.pushRoute('/calendar')
+         else if ( props.activeStep === 1 && diff > 0) props.pushRoute('/form')
+         else if ( props.activeStep === 2 && diff < 0) props.pushRoute('/calendar')
+         else if ( props.activeStep === 1 && diff < 0) props.pushRoute('/')
+    }
 
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
-
+    function checkStepValidation() {
+        console.log(props.duration)
+        if (!props.duration) return true
+        // if (props.activeStep === 1 && props.treatmentDate)
+    }
   
     return (
 
         <div>
-            <Button disabled={activeStep === 0} onClick={handleBack} >
+            <Button disabled={props.activeStep === 0} onClick={() => changeStep(-1)} >
                 חזור
-              </Button>
-
-
-            <Button onClick={handleNext}>
-                {activeStep === props.steps.length - 1 ? 'סיום' : 'הבא'}
+            </Button>
+            <Button onClick={() => changeStep(1)} disabled={checkStepValidation()}>
+                {props.activeStep === props.steps.length - 1 ? 'סיום' : 'הבא'}
             </Button>
         </div>
 
     )
 }
 
-
-
 function mapStateProps(state) {
     return {
-      steps:  state.StepperReducer.steps,
-      activeStep:state.StepperReducer.step
+      steps: state.StepperReducer.steps,
+      activeStep: state.StepperReducer.step,
+      duration: state.TreatmentReducer.duration,
+    //   treatmentDate:
     }
 }
 

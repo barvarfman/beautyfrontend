@@ -134,13 +134,10 @@ function idGen() {
 function updatePickedTreatments(reducerPickedTreatments, action) {
 
   if (action.treatmentObj.addOrRemove === 'add') {
-    console.log(action.treatmentObj.treatment._id);
     reducerPickedTreatments.push(action.treatmentObj.treatment)
-    console.log(reducerPickedTreatments);
   } else {
     const treatmentIdx = reducerPickedTreatments.findIndex((treatment) => treatment._id === action.treatmentObj.treatment._id);
     reducerPickedTreatments.splice(treatmentIdx, 1);
-    console.log(reducerPickedTreatments);
   }
   return reducerPickedTreatments
 }
