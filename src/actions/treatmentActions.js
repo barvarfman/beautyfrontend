@@ -52,6 +52,16 @@ export function updatePickedTreatments(treatment,addOrRemove) {
     }
   };
 }
+export function setTreatment(treatment) {
+  return async dispatch => {
+    try {
+      await 
+      dispatch((_setTreatment(treatment)));
+    } catch (err) {
+      console.log('TreatmentActions: err in setTreatment', err);
+    }
+  };
+}
 export function _updatePickedTreatments(treatment,addOrRemove) {
     return {
       type: 'UPDATE_PICKED_TREATMENT',
@@ -68,7 +78,7 @@ export function _updateDuration(duration) {
       duration
     };
   }
-export function setTreatment(treatment) {
+export function _setTreatment(treatment) {
     return {
       type: 'SET_TREATMENT',
       treatment

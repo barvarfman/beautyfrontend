@@ -12,10 +12,6 @@ import {StepperBtn} from '../../cmps/StepperBtn/StepperBtn';
 
 export function _TreatmentApp(props) {
 
-    function pushRoute(route) {
-        props.history.push(route)
-    }
-
     useEffect( () => {
          props.loadTreatments()
          props.loadCalendar()
@@ -30,7 +26,7 @@ export function _TreatmentApp(props) {
             <main className="home-page">
                 <TreatmentList treatments={treatments} />
             </main>
-            <StepperBtn pushRoute={pushRoute}/>
+            <StepperBtn/>
         </>
     )
 }

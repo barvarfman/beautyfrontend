@@ -8,8 +8,8 @@ import UtilsService from '../../services/UtilsService';
 export function TimeslotList(props) {
 
     useEffect(() => {
-        console.log('timeslots', props.timeslots)
     }, []);
+
 
     return (
         <div className="timeslot-list flex">
@@ -20,13 +20,14 @@ export function TimeslotList(props) {
                     // running on each day
                     var slotsForPreview = UtilsService.getDailySlotsForPreview(props.timeslots[day], 30)
                     return (
+
                         <div key={UtilsService.idGen()}>
                             <DailyslotsPreview setAppointment={props.setAppointment} timeslots={slotsForPreview} date={date} />
                         </div>
                     )
                 })
             })
-         
+
         </div>
     )
 }

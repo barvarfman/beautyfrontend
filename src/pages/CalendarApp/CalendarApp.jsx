@@ -8,11 +8,11 @@ import { ThemeProvider } from "@material-ui/styles";
 import { AppHeader } from '../../cmps/AppHeader/AppHeader';
 import { TimeslotList } from '../../cmps/TimeslotList/TimeslotList';
 import CalendarService from '../../services/CalendarService';
-// import { updateEmail, sendEmail } from '../../actions/emailAction.js';
-import { loadTimeSlots } from '../../actions/calendarActions.js';
+import { loadTimeSlots, loderSwitch } from '../../actions/calendarActions.js';
 import UtilsService from "../../services/UtilsService";
-import {StepperBtn} from '../../cmps/StepperBtn/StepperBtn';
-
+import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';
+import './CalendarApp.scss';
+import { LoaderApp } from '../../cmps/LoaderApp/LoaderApp'
 const materialTheme = createMuiTheme({
     overrides: {
         MuiPickersToolbar: {
@@ -51,15 +51,11 @@ export function _CalendarApp(props) {
         props.loadTimeSlots()
     }, []);
 
-    function pushRoute(route) {
-        props.history.push(route)
-    }
-
     function setAppointment(time, date) {
-        let treatmentsType=''
-             props.pickedTreatments.forEach((tr,idx)=>{
-                 if( props.pickedTreatments.length!==idx+1) treatmentsType+=tr.name+', '
-                else treatmentsType+=tr.name
+        let treatmentsType = ''
+        props.pickedTreatments.forEach((tr, idx) => {
+            if (props.pickedTreatments.length !== idx + 1) treatmentsType += tr.name + ', '
+            else treatmentsType += tr.name
         })
         console.log(treatmentsType);
         treatmentsType.substring()
@@ -68,13 +64,15 @@ export function _CalendarApp(props) {
         time = UtilsService.calculateEndTime(time, props.duration)
         const endTime = `${date}T${time}:00Z`
         console.log(startTime, endTime);
-        CalendarService.update(startTime, endTime,treatmentsType, 'ayal', 'ayal@gmail.com')
+        CalendarService.update(startTime, endTime, treatmentsType, 'ayal', 'ayal@gmail.com')
     }
 
     function handleDateChangeAndConvert(pickedDate) {
+        props.loderSwitch(false)
         handleDateChange(pickedDate)
-        props.loadTimeSlots(pickedDate)
+        props.loadTimeSlots(pickedDate).then(() => props.loderSwitch(true))
     }
+
 
     return (
         <>
@@ -95,8 +93,11 @@ export function _CalendarApp(props) {
                     />
                 </ThemeProvider>
             </MuiPickersUtilsProvider>
-            {(props.timeSlots) ? <TimeslotList setAppointment={setAppointment} timeslots={props.timeSlots} /> : ' '}
-            <StepperBtn pushRoute={pushRoute}/>
+            <div >
+                {(props.timeSlots && props.loder) ? <TimeslotList setAppointment={setAppointment} timeslots={props.timeSlots} />
+                    : <LoaderApp />}
+            </div>
+            <StepperBtn/>
         </>
     );
 }
@@ -104,13 +105,15 @@ export function _CalendarApp(props) {
 function mapStateProps(state) {
     return {
         timeSlots: state.CalendarReducer.timeSlots,
+        loder: state.CalendarReducer.loder,
         duration: state.TreatmentReducer.duration,
         pickedTreatments: state.TreatmentReducer.pickedTreatments
     }
 }
 
 const mapDispatchToProps = {
-    loadTimeSlots
+    loadTimeSlots,
+    loderSwitch
 }
 
 export const CalendarApp = connect(mapStateProps, mapDispatchToProps)(_CalendarApp)

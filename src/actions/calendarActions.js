@@ -20,6 +20,22 @@ export function setCalendar(calendar) {
       calendar
      };
 }
+export function loderSwitch(loder) {
+  return async dispatch => {
+    try {
+      dispatch(_loderSwitch(loder));
+    } catch (err) {
+      console.log('CalendarActions: err in loder', err);
+  };
+}
+}
+
+export function _loderSwitch(loder) {
+    return {
+      type: 'SET_LODER',
+      loder
+     };
+}
 
 export function loadTimeSlots(pickedDate = null){
     if (!pickedDate) {

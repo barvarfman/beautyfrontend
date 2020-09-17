@@ -2,20 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import {updateActiveStep} from '../../actions/stepperAction';
-
+import {withRouter} from 'react-router-dom';
 
    function _StepperBtn(props) {
 
     function changeStep(diff) {
          props.updateActiveStep(props.activeStep + diff)
-         if (!props.activeStep && diff>0) props.pushRoute('/calendar')
-         else if ( props.activeStep === 1 && diff > 0) props.pushRoute('/form')
-         else if ( props.activeStep === 2 && diff < 0) props.pushRoute('/calendar')
-         else if ( props.activeStep === 1 && diff < 0) props.pushRoute('/')
+         if (!props.activeStep && diff>0) props.history.push('/calendar')
+         else if ( props.activeStep === 1 && diff > 0) props.history.push('/form')
+         else if ( props.activeStep === 2 && diff < 0) props.history.push('/calendar')
+         else if ( props.activeStep === 1 && diff < 0) props.history.push('/')
     }
 
     function checkStepValidation() {
-        console.log(props.duration)
         if (!props.duration) return true
         // if (props.activeStep === 1 && props.treatmentDate)
     }
@@ -26,9 +25,11 @@ import {updateActiveStep} from '../../actions/stepperAction';
             <Button disabled={props.activeStep === 0} onClick={() => changeStep(-1)} >
                 חזור
             </Button>
+            {(props.activeStep !==1)&&
             <Button onClick={() => changeStep(1)} disabled={checkStepValidation()}>
-                {props.activeStep === props.steps.length - 1 ? 'סיום' : 'הבא'}
+                הבא
             </Button>
+            }
         </div>
 
     )
@@ -47,4 +48,4 @@ const mapDispatchToProps = {
     updateActiveStep
 }
 
-export const StepperBtn = connect(mapStateProps, mapDispatchToProps)(_StepperBtn)
+export const StepperBtn = withRouter(connect(mapStateProps, mapDispatchToProps)(_StepperBtn))

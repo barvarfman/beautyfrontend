@@ -15,6 +15,7 @@ export function TreatmentReducer(state = INITIAL_STATE, action) {
                 treatments: action.treatments
             }            
         case 'SET_TREATMENT':
+            console.log(action.treatment);
             return {
                 ...state,
                 treatment: action.treatment
