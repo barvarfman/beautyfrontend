@@ -8,7 +8,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import { AppHeader } from '../../cmps/AppHeader/AppHeader';
 import { TimeslotList } from '../../cmps/TimeslotList/TimeslotList';
 import CalendarService from '../../services/CalendarService';
-import { loadTimeSlots, loderSwitch } from '../../actions/calendarActions.js';
+import { loadTimeSlots, loaderSwitch } from '../../actions/calendarActions.js';
 import UtilsService from "../../services/UtilsService";
 import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';
 import './CalendarApp.scss';
@@ -68,9 +68,9 @@ export function _CalendarApp(props) {
     }
 
     function handleDateChangeAndConvert(pickedDate) {
-        props.loderSwitch(false)
+        props.loaderSwitch(false)
         handleDateChange(pickedDate)
-        props.loadTimeSlots(pickedDate).then(() => props.loderSwitch(true))
+        props.loadTimeSlots(pickedDate).then(() => props.loaderSwitch(true))
     }
 
 
@@ -94,7 +94,7 @@ export function _CalendarApp(props) {
                 </ThemeProvider>
             </MuiPickersUtilsProvider>
             <div >
-                {(props.timeSlots && props.loder) ? <TimeslotList setAppointment={setAppointment} timeslots={props.timeSlots} />
+                {(props.timeSlots && props.loader) ? <TimeslotList setAppointment={setAppointment} timeslots={props.timeSlots} />
                     : <LoaderApp />}
             </div>
             <StepperBtn/>
@@ -105,7 +105,7 @@ export function _CalendarApp(props) {
 function mapStateProps(state) {
     return {
         timeSlots: state.CalendarReducer.timeSlots,
-        loder: state.CalendarReducer.loder,
+        loader: state.CalendarReducer.loader,
         duration: state.TreatmentReducer.duration,
         pickedTreatments: state.TreatmentReducer.pickedTreatments
     }
@@ -113,7 +113,7 @@ function mapStateProps(state) {
 
 const mapDispatchToProps = {
     loadTimeSlots,
-    loderSwitch
+    loaderSwitch
 }
 
 export const CalendarApp = connect(mapStateProps, mapDispatchToProps)(_CalendarApp)

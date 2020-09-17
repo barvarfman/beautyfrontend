@@ -7,6 +7,8 @@ import {withRouter} from 'react-router-dom';
    function _StepperBtn(props) {
 
     function changeStep(diff) {
+        // confiramtion
+        if (props.activeStep + diff === 3) {props.setAppointment()}
          props.updateActiveStep(props.activeStep + diff)
          if (!props.activeStep && diff>0) props.history.push('/calendar')
          else if ( props.activeStep === 1 && diff > 0) props.history.push('/form')
@@ -16,7 +18,7 @@ import {withRouter} from 'react-router-dom';
 
     function checkStepValidation() {
         if (!props.duration) return true
-        // if (props.activeStep === 1 && props.treatmentDate)
+        if (props.activeStep === 2 && !props.treatment) return true
     }
   
     return (
@@ -27,7 +29,7 @@ import {withRouter} from 'react-router-dom';
             </Button>
             {(props.activeStep !==1)&&
             <Button onClick={() => changeStep(1)} disabled={checkStepValidation()}>
-                הבא
+                {(props.activeStep === 2)? 'אשר':'הבא'}
             </Button>
             }
         </div>
@@ -40,7 +42,7 @@ function mapStateProps(state) {
       steps: state.StepperReducer.steps,
       activeStep: state.StepperReducer.step,
       duration: state.TreatmentReducer.duration,
-    //   treatmentDate:
+      treatment: state.TreatmentReducer.treatment,
     }
 }
 

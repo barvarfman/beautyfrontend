@@ -7,10 +7,9 @@ export class LoaderApp extends React.Component {
       <Loader
         type="Oval"
         color="#e91e63"
-        height={100}
-        width={100}
+        height={75}
+        width={75}
         timeout={3000} //3 secs
-
       />
     );
   }

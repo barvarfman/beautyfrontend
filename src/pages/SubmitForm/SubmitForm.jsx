@@ -5,15 +5,19 @@ import UtilsService from "../../services/UtilsService";
 import CalendarService from '../../services/CalendarService';
 import { AppHeader } from '../../cmps/AppHeader/AppHeader';
 import { updateEmail, updateName, updatePhone, sendEmail } from '../../actions/formAction.js';
+import { setTimeSlots} from '../../actions/calendarActions.js';
+import { setTreatment, updateDuration, initPickedTreatments} from '../../actions/treatmentActions.js';
 import './SubmitForm.scss';
+import {updateActiveStep} from '../../actions/stepperAction';
+import {withRouter} from 'react-router-dom';
+
 export function _SubmitForm(props) {
 
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
     }, []);
 
-
-    function setAppointment(time, date) {
+    function setAppointment(time=props.treatment.time, date=props.treatment.date) {
         let treatmentsType = ''
         props.pickedTreatments.forEach((tr, idx) => {
             if (props.pickedTreatments.length !== idx + 1) treatmentsType += tr.name + ', '
@@ -27,6 +31,7 @@ export function _SubmitForm(props) {
         const endTime = `${date}T${time}:00Z`
         console.log(startTime, endTime);
         CalendarService.update(startTime, endTime, treatmentsType, 'ayal', 'ayal@gmail.com')
+        sendEmail()
     }
 
     function handleChange({ target }) {
@@ -45,19 +50,38 @@ export function _SubmitForm(props) {
         }
     }
 
-    function onSendEmail(ev) {
-        ev.preventDefault()
+    function sendEmail() {
+        const {name,phone,email,duration,treatment,pickedTreatments} = props
+        let treatmentsType = ''
+        pickedTreatments.forEach((tr, idx) => {
+            if (pickedTreatments.length !== idx + 1) treatmentsType += tr.name + ', '
+            else treatmentsType += tr.name
+        })
         let emailObj = {
-            email: props.email,
-            bodyText: 'פה צריך להיכנס גוף ההודעה'
+            email,
+            bodyText: `שלום, ${name} שמחים שבחרת במספרת קובי!
+            נקבע לך תור ל${treatmentsType}  
+            בתאריך ${treatment.date}
+            בשעה ${treatment.time}
+            משך זמן הטיפול מוערך כ- ${duration} דקות
+            הטלפון שהתקבל ליצירת קשר הוא - ${phone}`
         }
         props.sendEmail(emailObj)
+    }
+
+    function initApp() {
+        props.updateActiveStep(0)
+        props.setTreatment(null)
+        props.updateDuration (+props.duration*-1)
+        props.initPickedTreatments()
+        props.setTimeSlots(null)
+        props.history.push('/')
     }
 
     return (
         <>
             <AppHeader />
-            <form onSubmit={onSendEmail}>
+            <div>
                 <div>
                     <div className="black">שם מלא :</div>
                     <input name="name" value={props.name} onChange={handleChange} />
@@ -70,10 +94,9 @@ export function _SubmitForm(props) {
                     <div className="black">מייל :</div>
                     <input name="email" value={props.email} onChange={handleChange} />
                 </div>
-
-                <button>שלח</button>
-            </form>
-            <StepperBtn />
+                <button onClick={initApp}>אתחול</button>
+            </div>
+            <StepperBtn setAppointment={setAppointment} />
         </>
     );
 }
@@ -84,6 +107,8 @@ function mapStateProps(state) {
         email: state.FormReducer.email,
         phone: state.FormReducer.phone,
         pickedTreatments: state.TreatmentReducer.pickedTreatments,
+        duration: state.TreatmentReducer.duration,
+        treatment: state.TreatmentReducer.treatment
     }
 }
 
@@ -91,7 +116,12 @@ const mapDispatchToProps = {
     updateEmail,
     updateName,
     updatePhone,
-    sendEmail
+    sendEmail,
+    updateActiveStep,
+    setTreatment,
+    updateDuration,
+    setTimeSlots,
+    initPickedTreatments
 }
 
-export const SubmitForm = connect(mapStateProps, mapDispatchToProps)(_SubmitForm)
+export const SubmitForm = withRouter(connect(mapStateProps, mapDispatchToProps)(_SubmitForm))

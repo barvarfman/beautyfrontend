@@ -96,3 +96,21 @@ function _removeTreatment(treatmentId) {
     treatmentId
   };
 }
+
+export function initPickedTreatments() {
+  return async dispatch => {
+    try {
+      await 
+      dispatch(_initPickedTreatments());
+    } catch (err) {
+      console.log('ERR WITH initPickedTreatments', err);
+    }
+  };
+}
+
+
+function _initPickedTreatments() {
+  return {
+    type: 'INIT_PICKED_TREATMENTS'
+  };
+}

@@ -20,20 +20,21 @@ export function setCalendar(calendar) {
       calendar
      };
 }
-export function loderSwitch(loder) {
+
+export function loaderSwitch(loader) {
   return async dispatch => {
     try {
-      dispatch(_loderSwitch(loder));
+      dispatch(_loaderSwitch(loader));
     } catch (err) {
-      console.log('CalendarActions: err in loder', err);
-  };
-}
+      console.log('CalendarActions: err in loader', err);
+    };
+  }
 }
 
-export function _loderSwitch(loder) {
+export function _loaderSwitch(loader) {
     return {
-      type: 'SET_LODER',
-      loder
+      type: 'SET_loader',
+      loader
      };
 }
 

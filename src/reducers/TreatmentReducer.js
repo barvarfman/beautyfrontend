@@ -35,6 +35,11 @@ export function TreatmentReducer(state = INITIAL_STATE, action) {
           ...state,
           pickedTreatments:UtilsService.updatePickedTreatments(state.pickedTreatments,action) 
         };        
+        case 'INIT_PICKED_TREATMENTS':
+        return {
+          ...state,
+          pickedTreatments:[]
+        };        
       
         default:
             return state;
