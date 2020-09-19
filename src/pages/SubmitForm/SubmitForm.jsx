@@ -33,7 +33,7 @@ export function _SubmitForm(props) {
         const confirmedEvent = await CalendarService.update(startTime, endTime, treatmentsType, 'ayal', 'ayal@gmail.com')
         const event = {phone:props.phone,eventId:confirmedEvent.id}
         CalendarService.saveConfirmedEvent(event)
-        cancelAppointment ('043222222')
+        // cancelAppointment ('043222222')
         sendEmail()
     }
 
