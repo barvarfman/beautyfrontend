@@ -22,7 +22,7 @@ export function TimeslotList(props) {
                     return (
 
                         <div key={UtilsService.idGen()}>
-                            <DailyslotsPreview setAppointment={props.setAppointment} timeslots={slotsForPreview} date={date} />
+                            <DailyslotsPreview  timeslots={slotsForPreview} date={date} />
                         </div>
                     )
                 })

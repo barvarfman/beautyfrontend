@@ -11,9 +11,9 @@ export function TreatmentList(props) {
                 props.treatments.map(treatment => {
                     let id=UtilsService.idGen()
                     return (
-                        <>
-                            <TreatmentPreview treatment={treatment} key={id} />
-                        </>
+                        <div key={id}>
+                            <TreatmentPreview treatment={treatment}  />
+                        </div>
 
                     )
                 })

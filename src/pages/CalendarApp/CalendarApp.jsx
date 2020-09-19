@@ -7,9 +7,7 @@ import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { AppHeader } from '../../cmps/AppHeader/AppHeader';
 import { TimeslotList } from '../../cmps/TimeslotList/TimeslotList';
-import CalendarService from '../../services/CalendarService';
 import { loadTimeSlots, loaderSwitch } from '../../actions/calendarActions.js';
-import UtilsService from "../../services/UtilsService";
 import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';
 import './CalendarApp.scss';
 import { LoaderApp } from '../../cmps/LoaderApp/LoaderApp'
@@ -35,11 +33,6 @@ const materialTheme = createMuiTheme({
                 color: '#e91e63',
             },
         },
-        MuiPickersModal: {
-            dialogAction: {
-                color: '#e91e63',
-            },
-        },
     },
 });
 
@@ -48,23 +41,7 @@ export function _CalendarApp(props) {
 
     // Similar to componentDidMount and componentDidUpdate:
     const { loadTimeSlots } = props
-    useEffect(() => loadTimeSlots(), [loadTimeSlots]);
-
-    function setAppointment(time, date) {
-        let treatmentsType = ''
-        props.pickedTreatments.forEach((tr, idx) => {
-            if (props.pickedTreatments.length !== idx + 1) treatmentsType += tr.name + ', '
-            else treatmentsType += tr.name
-        })
-        console.log(treatmentsType);
-        treatmentsType.substring()
-        time = UtilsService.addHoursToMatchTheClock(time, 3)
-        const startTime = `${date}T${time}:00Z`
-        time = UtilsService.calculateEndTime(time, props.duration)
-        const endTime = `${date}T${time}:00Z`
-        console.log(startTime, endTime);
-        CalendarService.update(startTime, endTime, treatmentsType, 'ayal', 'ayal@gmail.com')
-    }
+    useEffect(() => {loadTimeSlots()}, [loadTimeSlots]);
 
     function handleDateChangeAndConvert(pickedDate) {
         props.loaderSwitch(false)
@@ -93,7 +70,7 @@ export function _CalendarApp(props) {
                 </ThemeProvider>
             </MuiPickersUtilsProvider>
             <div >
-                {(props.timeSlots && props.loader) ? <TimeslotList setAppointment={setAppointment} timeslots={props.timeSlots} />
+                {(props.timeSlots && props.loader) ? <TimeslotList  timeslots={props.timeSlots} />
                     : <LoaderApp />}
             </div>
             <StepperBtn />
