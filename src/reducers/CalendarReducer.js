@@ -1,7 +1,8 @@
 const INITIAL_STATE = {
     calendar: null,
     timeSlots: null,
-    loader:true
+    loader:true,
+    confirmedEventId:null
 }
 
 export function CalendarReducer(state = INITIAL_STATE, action) {
@@ -21,7 +22,7 @@ export function CalendarReducer(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 loader: action.loader
-            }          
+            }                
       
         default:
             return state;

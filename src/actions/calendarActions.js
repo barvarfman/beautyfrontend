@@ -69,7 +69,6 @@ export function setTimeSlots(timeSlots) {
    };
 }
 
-
 // export async function loadTimeSlots(pickedDate = null){
 //   if (!pickedDate) {
 //       var firstDay = getIsosDate (0)

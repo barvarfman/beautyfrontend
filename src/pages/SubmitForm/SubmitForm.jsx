@@ -17,7 +17,7 @@ export function _SubmitForm(props) {
     useEffect(() => {
     }, []);
 
-    function setAppointment(time=props.treatment.time, date=props.treatment.date) {
+    async function setAppointment(time=props.treatment.time, date=props.treatment.date) {
         let treatmentsType = ''
         props.pickedTreatments.forEach((tr, idx) => {
             if (props.pickedTreatments.length !== idx + 1) treatmentsType += tr.name + ', '
@@ -30,8 +30,20 @@ export function _SubmitForm(props) {
         time = UtilsService.calculateEndTime(time, props.duration)
         const endTime = `${date}T${time}:00Z`
         console.log(startTime, endTime);
-        CalendarService.update(startTime, endTime, treatmentsType, 'ayal', 'ayal@gmail.com')
+        const confirmedEvent = await CalendarService.update(startTime, endTime, treatmentsType, 'ayal', 'ayal@gmail.com')
+        const event = {phone:props.phone,eventId:confirmedEvent.id}
+        CalendarService.saveConfirmedEvent(event)
+        cancelAppointment ('043222222')
         sendEmail()
+    }
+
+    async function cancelAppointment (phone){
+        const events = await CalendarService.getEventByPhone(phone)
+        const eventToRmove = events[0]
+        console.log ('event to remove', eventToRmove)
+        CalendarService.remove(eventToRmove.eventId)
+        // delete from mongo data base
+        CalendarService.removeEventFromDB(eventToRmove._id)
     }
 
     function handleChange({ target }) {
@@ -88,7 +100,7 @@ export function _SubmitForm(props) {
                 </div>
                 <div>
                     <div className="black">טלפון :</div>
-                    <input name="phone" value={props.phone} onChange={handleChange} />
+                    <input name="phone" type="text" value={props.phone} onChange={handleChange} />
                 </div>
                 <div>
                     <div className="black">מייל :</div>
@@ -108,7 +120,7 @@ function mapStateProps(state) {
         phone: state.FormReducer.phone,
         pickedTreatments: state.TreatmentReducer.pickedTreatments,
         duration: state.TreatmentReducer.duration,
-        treatment: state.TreatmentReducer.treatment
+        treatment: state.TreatmentReducer.treatment,
     }
 }
 
