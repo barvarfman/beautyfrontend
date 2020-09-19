@@ -5,17 +5,17 @@ import { loadCalendar } from '../../actions/calendarActions.js';
 // import { TreatmentEdit } from '../TreatmentEdit/TreatmentEdit.jsx'
 import { TreatmentList } from '../../cmps/TreatmentList/TreatmentList';
 import { AppHeader } from '../../cmps/AppHeader/AppHeader';
-import CalendarService from '../../services/CalendarService';
 import './TreatmentApp.scss';
 import '../../styles/style.scss';
-import {StepperBtn} from '../../cmps/StepperBtn/StepperBtn';
+import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';
 
 export function _TreatmentApp(props) {
-
-    useEffect( () => {
-         props.loadTreatments()
-         props.loadCalendar()
-    }, []);
+    const { loadTreatments, loadCalendar } = props
+    useEffect(() => {
+        loadTreatments()
+        loadCalendar()
+    }
+        , [loadTreatments,loadCalendar]);
 
     const { treatments } = props;
 
@@ -26,7 +26,7 @@ export function _TreatmentApp(props) {
             <main className="home-page">
                 <TreatmentList treatments={treatments} />
             </main>
-            <StepperBtn/>
+            <StepperBtn />
         </>
     )
 }

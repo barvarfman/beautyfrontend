@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect } from "react";
 import { connect } from 'react-redux';
 import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';
 import UtilsService from "../../services/UtilsService";
@@ -33,17 +33,7 @@ export function _SubmitForm(props) {
         const confirmedEvent = await CalendarService.update(startTime, endTime, treatmentsType, 'ayal', 'ayal@gmail.com')
         const event = {phone:props.phone,eventId:confirmedEvent.id}
         CalendarService.saveConfirmedEvent(event)
-        // cancelAppointment ('043222222')
         sendEmail()
-    }
-
-    async function cancelAppointment (phone){
-        const events = await CalendarService.getEventByPhone(phone)
-        const eventToRmove = events[0]
-        console.log ('event to remove', eventToRmove)
-        CalendarService.remove(eventToRmove.eventId)
-        // delete from mongo data base
-        CalendarService.removeEventFromDB(eventToRmove._id)
     }
 
     function handleChange({ target }) {
@@ -59,6 +49,8 @@ export function _SubmitForm(props) {
             case 'email':
                 props.updateEmail(value)
                 break;
+                default:
+                    console.log('default');
         }
     }
 

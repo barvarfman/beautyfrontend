@@ -1,6 +1,7 @@
 import React from 'react';
 import './TreatmentList.scss';
 import '../../styles/style.scss';
+import UtilsService from '../../services/UtilsService';
 import { TreatmentPreview } from '../TreatmentPreview/TreatmentPreview';
 
 export function TreatmentList(props) {
@@ -8,9 +9,10 @@ export function TreatmentList(props) {
         <div className="treatment-list flex column">
             {
                 props.treatments.map(treatment => {
+                    let id=UtilsService.idGen()
                     return (
                         <>
-                            <TreatmentPreview treatment={treatment} key={treatment._id} />
+                            <TreatmentPreview treatment={treatment} key={id} />
                         </>
 
                     )

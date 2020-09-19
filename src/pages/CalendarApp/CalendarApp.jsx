@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import DateFnsUtils from '@date-io/date-fns';
 import heLocale from "date-fns/locale/he";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
-import { createMuiTheme, duration } from "@material-ui/core";
+import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { AppHeader } from '../../cmps/AppHeader/AppHeader';
 import { TimeslotList } from '../../cmps/TimeslotList/TimeslotList';
@@ -47,9 +47,8 @@ export function _CalendarApp(props) {
     const [selectedDate, handleDateChange] = useState(new Date());
 
     // Similar to componentDidMount and componentDidUpdate:
-    useEffect(() => {
-        props.loadTimeSlots()
-    }, []);
+    const { loadTimeSlots } = props
+    useEffect(() => loadTimeSlots(), [loadTimeSlots]);
 
     function setAppointment(time, date) {
         let treatmentsType = ''
@@ -97,7 +96,7 @@ export function _CalendarApp(props) {
                 {(props.timeSlots && props.loader) ? <TimeslotList setAppointment={setAppointment} timeslots={props.timeSlots} />
                     : <LoaderApp />}
             </div>
-            <StepperBtn/>
+            <StepperBtn />
         </>
     );
 }

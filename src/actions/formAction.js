@@ -67,3 +67,21 @@ export function sendEmail(emailToSend) {
 }
 
 
+
+export function updatePhoneForCancel(phoneForCancel) {
+    return async dispatch => {
+        try {
+            await dispatch(_updatePhoneForCancel(phoneForCancel));
+        } catch (err) {
+            console.log('formActions: err in updatePhoneForCancel', err);
+        };
+    }
+}
+
+
+function _updatePhoneForCancel(phoneForCancel) {
+    return {
+        type: 'UPDATE_PHONEֹֹֹֹֹ_FOR_CANCEL',
+        phoneForCancel
+    };
+}

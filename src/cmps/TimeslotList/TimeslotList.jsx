@@ -1,6 +1,6 @@
 // import React from 'react';
 import './TimeslotList.scss';
-import React, { useState, useEffect } from "react";
+import React, {useEffect } from "react";
 import { DailyslotsPreview } from '../DailyslotsPreview/DailyslotsPreview';
 import UtilsService from '../../services/UtilsService';
 // import { TreatmentPreview } from '../TreatmentPreview/TreatmentPreview';
