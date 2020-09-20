@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';
 import UtilsService from "../../services/UtilsService";
 import CalendarService from '../../services/CalendarService';
-// import { AppHeader } from '../../cmps/AppHeader/AppHeader';
 import { updateEmail, updateName, updatePhone, sendEmail } from '../../actions/formAction.js';
 import { setTimeSlots } from '../../actions/calendarActions.js';
 import { setTreatment, updateDuration, initPickedTreatments } from '../../actions/treatmentActions.js';
@@ -14,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import TextField from '@material-ui/core/TextField';
 export function _SubmitForm(props) {
 
     // Similar to componentDidMount and componentDidUpdate:
@@ -97,6 +97,12 @@ export function _SubmitForm(props) {
             padding: theme.spacing(2, 4, 3),
             color: 'black'
         },
+        input: {
+            '& > *': {
+                margin: theme.spacing(1),
+                width: '25ch',
+            }
+        }
     }));
 
     const classes = useStyles();
@@ -114,24 +120,24 @@ export function _SubmitForm(props) {
 
     return (
         <>
-            {/* <AppHeader /> */}
-            <div>
-                <div>
 
-                </div>
-                <div>
-                    <div className="black">שם מלא :</div>
-                    <input name="name" value={props.name} onChange={handleChange} />
-                </div>
-                <div>
-                    <div className="black">טלפון :</div>
-                    <input name="phone" type="text" value={props.phone} onChange={handleChange} />
-                </div>
-                <div>
-                    <div className="black">מייל :</div>
-                    <input name="email" value={props.email} onChange={handleChange} />
-                </div>
-                <button onClick={initApp}>אתחול</button>
+            <div>
+            <button className="restart-btn" onClick={initApp}>אתחול  <i className="fas fa-redo-alt"></i></button>
+                <form className={`${classes.input} flex column`} noValidate autoComplete="off">
+                    <div>
+                        <div className="black">שם מלא :</div>
+                        <TextField name="name" id="outlined-basic" variant="outlined" value={props.name} onChange={handleChange} />
+                    </div>
+                    <div>
+                        <div className="black">טלפון :</div>
+                        <TextField name="phone" id="outlined-basic" variant="outlined" value={props.phone} onChange={handleChange} />
+                    </div>
+                    <div>
+                        <div className="black">מייל :</div>
+                        <TextField name="email" id="outlined-basic" variant="outlined" value={props.email} onChange={handleChange} />
+                    </div>
+                </form>
+               
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"

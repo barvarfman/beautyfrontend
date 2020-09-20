@@ -27,8 +27,9 @@ export function _CancelAppointment(props) {
         CalendarService.remove(eventToRmove.eventId)
         // delete from mongo data base
         CalendarService.removeEventFromDB(eventToRmove._id)
+        rotate="rotate"
     }
-
+    
     function handleChange({ target }) {
         const field = target.name;
         const value = target.value;
@@ -40,7 +41,8 @@ export function _CancelAppointment(props) {
                 console.log("not working");
         }
     }
-
+     let trashStyle ="fas fa-trash"
+     let rotate=""
     const classes = useStyles();
 
     return (
@@ -51,7 +53,7 @@ export function _CancelAppointment(props) {
                 <form className={classes.root} noValidate autoComplete="off">
                     <div className="cancel-input-wrapper flex">
                      <TextField name="phone" id="outlined-basic"  variant="outlined" value={props.phone} onChange={handleChange}/>
-                     { props.phone.length===10 && <i class="fas fa-trash" onClick={cancelAppointment}></i>}
+                     { props.phone.length===10 && <i className={`${trashStyle} ${rotate}`} onClick={cancelAppointment}></i>}
                     </div>
                 </form>
             </div>
