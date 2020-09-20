@@ -33,17 +33,7 @@ export function _SubmitForm(props) {
         const confirmedEvent = await CalendarService.update(startTime, endTime, treatmentsType, 'ayal', 'ayal@gmail.com')
         const event = {phone:props.phone,eventId:confirmedEvent.id}
         CalendarService.saveConfirmedEvent(event)
-        cancelAppointment ('043222222')
         sendEmail()
-    }
-
-    async function cancelAppointment (phone){
-        const events = await CalendarService.getEventByPhone(phone)
-        const eventToRmove = events[0]
-        console.log ('event to remove', eventToRmove)
-        CalendarService.remove(eventToRmove.eventId)
-        // delete from mongo data base
-        CalendarService.removeEventFromDB(eventToRmove._id)
     }
 
     function handleChange({ target }) {
