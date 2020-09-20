@@ -4,7 +4,7 @@ import { loadTreatments } from '../../actions/treatmentActions.js';
 import { loadCalendar } from '../../actions/calendarActions.js';
 // import { TreatmentEdit } from '../TreatmentEdit/TreatmentEdit.jsx'
 import { TreatmentList } from '../../cmps/TreatmentList/TreatmentList';
-import { AppHeader } from '../../cmps/AppHeader/AppHeader';
+// import { AppHeader } from '../../cmps/AppHeader/AppHeader';
 import './TreatmentApp.scss';
 import '../../styles/style.scss';
 import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';
@@ -22,7 +22,7 @@ export function _TreatmentApp(props) {
     if (!treatments) return 'loading...'
     return (
         <>
-            <AppHeader />
+            {/* <AppHeader /> */}
                 <TreatmentList treatments={treatments} />
             <StepperBtn />
         </>

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';
 import UtilsService from "../../services/UtilsService";
 import CalendarService from '../../services/CalendarService';
-import { AppHeader } from '../../cmps/AppHeader/AppHeader';
+// import { AppHeader } from '../../cmps/AppHeader/AppHeader';
 import { updateEmail, updateName, updatePhone, sendEmail } from '../../actions/formAction.js';
 import { setTimeSlots } from '../../actions/calendarActions.js';
 import { setTreatment, updateDuration, initPickedTreatments } from '../../actions/treatmentActions.js';
@@ -114,7 +114,7 @@ export function _SubmitForm(props) {
 
     return (
         <>
-            <AppHeader />
+            {/* <AppHeader /> */}
             <div>
                 <div>
 

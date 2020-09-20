@@ -5,7 +5,7 @@ import heLocale from "date-fns/locale/he";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
-import { AppHeader } from '../../cmps/AppHeader/AppHeader';
+// import { AppHeader } from '../../cmps/AppHeader/AppHeader';
 import { TimeslotList } from '../../cmps/TimeslotList/TimeslotList';
 import { loadTimeSlots, loaderSwitch } from '../../actions/calendarActions.js';
 import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';
@@ -53,7 +53,7 @@ export function _CalendarApp(props) {
 
     return (
         <>
-            <AppHeader />
+            {/* <AppHeader /> */}
             <MuiPickersUtilsProvider utils={DateFnsUtils} locale={heLocale}>
                 <ThemeProvider theme={materialTheme}>
                     <KeyboardDatePicker

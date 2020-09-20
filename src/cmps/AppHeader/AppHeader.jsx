@@ -8,14 +8,12 @@ export function AppHeader() {
     return (
         <>
             <div className="app-header">
-                <header className="flex space-between">
+                <header className="flex space-between upper-header">
                     <h2 className="header-right">ניהול תורים</h2>
-                    <h2 className="logo">Logo</h2>
+                    <h2 className="logo">Bar</h2>
                 </header>
                 <TabsApp />
-
                 <StepperApp />
-
             </div>
 
         </>

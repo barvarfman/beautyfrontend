@@ -17,11 +17,17 @@ export function _TabsApp(props) {
     }
   };
 
+  const style = {
+    width:'50%',
+    boxShadow:'none'
+  }
+
   return (
-    <AppBar position="static" >
+
+    <AppBar position="static" style={{boxShadow:'none'}} >
       <Tabs value={value} onChange={handleChange} className="tabs">
-        <Tab label="זימון" />
-        <Tab label="ביטול" />
+        <Tab label="זימון" style={style}/>
+        <Tab label="ביטול" style={style}/>
       </Tabs>
     </AppBar>
 

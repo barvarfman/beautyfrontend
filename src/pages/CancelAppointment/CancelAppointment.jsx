@@ -4,8 +4,19 @@ import CalendarService from '../../services/CalendarService';
 import './CancelAppointment.scss';
 import { withRouter } from 'react-router-dom';
 import { updatePhoneForCancel } from '../../actions/formAction.js';
-import { AppHeader } from '../../cmps/AppHeader/AppHeader';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
 export function _CancelAppointment(props) {
+    
+    const useStyles = makeStyles((theme) => ({
+        root: {
+          '& > *': {
+            margin: theme.spacing(1),
+            width: '25ch',
+          }
+        },
+      }));
 
     useEffect(() => {
     }, []);
@@ -30,14 +41,20 @@ export function _CancelAppointment(props) {
         }
     }
 
+    const classes = useStyles();
+
     return (
-        <main>
-            <AppHeader />
+        <main className="cancel-appointment">
             <div>
                 <div className="black">נא להזין מספר טלפון לביטול התור  :</div>
-                <input name="phone" value={props.phone} onChange={handleChange} />
+                {/* <input name="phone" value={props.phone} onChange={handleChange} /> */}
+                <form className={classes.root} noValidate autoComplete="off">
+                    <div className="cancel-input-wrapper flex">
+                     <TextField name="phone" id="outlined-basic"  variant="outlined" value={props.phone} onChange={handleChange}/>
+                     { props.phone.length===10 && <i class="fas fa-trash" onClick={cancelAppointment}></i>}
+                    </div>
+                </form>
             </div>
-            <button onClick={cancelAppointment}>מחק תור</button>
         </main>
     );
 }

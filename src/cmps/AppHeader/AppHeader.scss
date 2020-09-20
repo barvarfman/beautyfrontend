@@ -1,18 +1,19 @@
 .app-header {
     width: 100%;
     margin-block-end: 1rem;
-    box-shadow: 0px 1px 2px #00000033;
-    header {
+    // box-shadow: 0px 1px 2px #00000033;
+    .upper-header {
         h2{
             font-size:1rem;
         }
         height: 3rem;
         background-color:#e91e63;
         color: #f6f6f6;
-        padding: 0 1rem;
+        padding: 0 38px;
         width: 100%;
     }
     .bottom-header{
+        padding: 0;
         height: 3rem;
            h3 {
             font-size: 1.1rem;
@@ -27,6 +28,13 @@
     }
 }
 
+fieldset {
+    border-color:#e91e63!important
+}
+
+.MuiInputBase-input {
+    height: 5px!important;
+}
 
 @media screen and (min-width: 500px) {
     .app-header {

@@ -1,0 +1,15 @@
+
+.cancel-appointment{
+    transition: 0.5s;
+    i{
+        color: #e91e63;
+        font-size: 1.5rem;
+    }
+
+    .cancel-input-wrapper{
+        fieldset{
+            margin-left: 20px;
+        }
+        align-items: center;
+    }
+}
