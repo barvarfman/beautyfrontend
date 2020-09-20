@@ -6,7 +6,6 @@ import { TreatmentApp } from './pages/TreatmentApp/TreatmentApp.jsx'
 import { CalendarApp } from './pages/CalendarApp/CalendarApp.jsx'
 import { SubmitForm } from './pages/SubmitForm/SubmitForm.jsx'
 import { CancelAppointment } from './pages/CancelAppointment/CancelAppointment.jsx'
-// import { AppFooter } from './cmps/AppFooter/AppFooter';
 
 function App() {
   return (
