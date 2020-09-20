@@ -23,9 +23,7 @@ export function _TreatmentApp(props) {
     return (
         <>
             <AppHeader />
-            <main className="home-page">
                 <TreatmentList treatments={treatments} />
-            </main>
             <StepperBtn />
         </>
     )

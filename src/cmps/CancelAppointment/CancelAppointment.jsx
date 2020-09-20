@@ -13,7 +13,6 @@ export function _CancelAppointment(props) {
     async function cancelAppointment() {
         const events = await CalendarService.getEventByPhone(props.phone)
         const eventToRmove = events[0]
-        console.log('event to remove', eventToRmove)
         CalendarService.remove(eventToRmove.eventId)
         // delete from mongo data base
         CalendarService.removeEventFromDB(eventToRmove._id)

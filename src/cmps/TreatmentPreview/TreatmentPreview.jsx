@@ -32,9 +32,7 @@ export function _TreatmentPreview(props) {
                         </div>
                     </div>
                     <div className="flex column">
-                        {/* <input class="switch" type="checkbox"></input> */}
                         <SwitchApp updateDuration={updateDuration} updatePickedTreatments={updatePickedTreatments} />
-
                         {props.treatment.duration + UtilService.englishToHebrew('minutes')}
                     </div>
                 </div>
