@@ -1,7 +1,7 @@
 // import React from 'react';
 import './DailyslotsPreview.scss';
 import '../../styles/style.scss';
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import UtilsService from '../../services/UtilsService';
 import { connect } from 'react-redux';
 import { setTreatment } from '../../actions/treatmentActions';

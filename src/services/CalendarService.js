@@ -31,7 +31,6 @@ async function getCalendar() {
         headers: {Authorization: TOKEN}
     })
     const calendar = res.data.objects[0]
-    console.log(calendar)
     return calendar
 }
 

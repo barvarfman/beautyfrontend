@@ -9,3 +9,13 @@
     }
   }
 
+
+
+  .treatment-list{
+        width: 400px;
+        max-height: 515px;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: scroll;
+  }

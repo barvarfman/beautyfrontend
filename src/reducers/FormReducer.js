@@ -1,7 +1,8 @@
 const INITIAL_STATE = {
     name: '',
     email: '',
-    phone: ''
+    phone: '',
+    phoneForCancel:''
 }
 
 export function FormReducer(state = INITIAL_STATE, action) {
@@ -21,6 +22,11 @@ export function FormReducer(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 phone: action.customerPhone
+            }
+        case 'UPDATE_PHONEֹֹֹֹֹ_FOR_CANCEL':
+            return {
+                ...state,
+                phoneForCancel: action.phoneForCancel
             }
 
         default:

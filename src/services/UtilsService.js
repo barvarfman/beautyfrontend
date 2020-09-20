@@ -42,6 +42,8 @@ function englishToHebrew(word) {
     case ('eyebrows-mustache'):
       convertedWord = 'גבות ושפם';
       break;
+      default:
+        convertedWord="ברירת מחדל"
   }
 
   return ' ' + convertedWord

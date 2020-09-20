@@ -7,7 +7,6 @@ export function loadTreatments() {
   return async dispatch => {
     try {
       const treatments = await TreatmentService.getTreatments();
-        console.log(treatments);
       dispatch(setTreatments(treatments));
    
     } catch (err) {
