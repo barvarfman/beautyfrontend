@@ -15,21 +15,21 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import TextField from '@material-ui/core/TextField';
 import { motion } from 'framer-motion'
-const pageVariants={
-    in:{
-        opacity: 1 ,
-        x:0
+const pageVariants = {
+    in: {
+        opacity: 1,
+        x: 0
     },
-    out:{
+    out: {
         opacity: 0,
-        x:"50%"
+        x: "50%"
     }
 }
 
-const pageTransition={
-    duration:1.3,
-    type:"spring",
-    stiffness:50
+const pageTransition = {
+    duration: 1.3,
+    type: "spring",
+    stiffness: 50
 }
 
 export function _SubmitForm(props) {
@@ -45,13 +45,22 @@ export function _SubmitForm(props) {
             else treatmentsType += tr.name
         })
         treatmentsType.substring()
-        time = UtilsService.addHoursToMatchTheClock(time, 3)
+        time = UtilsService.changeTimeForDisplay(time, 3)
         const startTime = `${date}T${time}:00Z`
         time = UtilsService.calculateEndTime(time, props.duration)
         const endTime = `${date}T${time}:00Z`
         const confirmedEvent = await CalendarService.update(startTime, endTime, treatmentsType, 'ayal', 'ayal@gmail.com')
-        const event = { phone: props.phone, eventId: confirmedEvent.id }
+        const event = {
+            phone: props.phone,
+            eventId: confirmedEvent.id,
+            treatments:treatmentsType,
+            duration:props.duration,
+            startTime:startTime.slice(11,20),
+            endTime:endTime.slice(11,20),
+            date:startTime.slice(0,10)
+        }
         CalendarService.saveConfirmedEvent(event)
+        console.log(event);
         sendEmail()
     }
 
@@ -138,53 +147,53 @@ export function _SubmitForm(props) {
 
     return (
         <>
-        <button className="restart-btn" onClick={initApp}>אתחול  <i className="fas fa-redo-alt"></i></button>
-        <motion.div
-            initial="out"
-            exit="in"
-            animate="in"
-            variants={pageVariants}
-            transition={pageTransition}
-            style={{textAlign:'center'}}
-        >
-            <div>
-                <form className={`${classes.input} submit-form flex column`} noValidate autoComplete="off">
-                    <div>
-                        <div className="form-title">שם מלא :</div>
-                        <TextField name="name" id="outlined-basic" variant="outlined" value={props.name} onChange={handleChange} />
-                    </div>
-                    <div>
-                        <div className="form-title">טלפון :</div>
-                        <TextField name="phone" id="outlined-basic" variant="outlined" value={props.phone} onChange={handleChange} />
-                    </div>
-                    <div>
-                        <div className="form-title">מייל :</div>
-                        <TextField name="email" id="outlined-basic" variant="outlined" value={props.email} onChange={handleChange} />
-                    </div>
-                </form>
-
-                <Modal
-                    aria-labelledby="transition-modal-title"
-                    aria-describedby="transition-modal-description"
-                    className={classes.modal}
-                    open={open}
-                    onClose={handleClose}
-                    closeAfterTransition
-                    BackdropComponent={Backdrop}
-                    BackdropProps={{
-                        timeout: 500,
-                    }}
-                >
-                    <Fade in={open}>
-                        <div className={classes.paper}>
-                            <h2 id="transition-modal-title">התור נקבע בהצלחה</h2>
-                            <p id="transition-modal-description">פירוט התור כאן:</p>
+            <button className="restart-btn" onClick={initApp}>אתחול  <i className="fas fa-redo-alt"></i></button>
+            <motion.div
+                initial="out"
+                exit="in"
+                animate="in"
+                variants={pageVariants}
+                transition={pageTransition}
+                style={{ textAlign: 'center' }}
+            >
+                <div>
+                    <form className={`${classes.input} submit-form flex column`} noValidate autoComplete="off">
+                        <div>
+                            <div className="form-title">שם מלא :</div>
+                            <TextField name="name" id="outlined-basic" variant="outlined" value={props.name} onChange={handleChange} />
                         </div>
-                    </Fade>
-                </Modal>
-            </div>
+                        <div>
+                            <div className="form-title">טלפון :</div>
+                            <TextField name="phone" id="outlined-basic" variant="outlined" value={props.phone} onChange={handleChange} />
+                        </div>
+                        <div>
+                            <div className="form-title">מייל :</div>
+                            <TextField name="email" id="outlined-basic" variant="outlined" value={props.email} onChange={handleChange} />
+                        </div>
+                    </form>
+
+                    <Modal
+                        aria-labelledby="transition-modal-title"
+                        aria-describedby="transition-modal-description"
+                        className={classes.modal}
+                        open={open}
+                        onClose={handleClose}
+                        closeAfterTransition
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                            timeout: 500,
+                        }}
+                    >
+                        <Fade in={open}>
+                            <div className={classes.paper}>
+                                <h2 id="transition-modal-title">התור נקבע בהצלחה</h2>
+                                <p id="transition-modal-description">פירוט התור כאן:</p>
+                            </div>
+                        </Fade>
+                    </Modal>
+                </div>
             </motion.div>
-          <StepperBtn handleOpen={handleOpen} setAppointment={setAppointment} />
+            <StepperBtn handleOpen={handleOpen} setAppointment={setAppointment} />
         </>
     );
 }

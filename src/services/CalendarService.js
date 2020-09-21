@@ -15,14 +15,19 @@ export default {
     removeEventFromDB
 }
 
-// AYAL'S CALENDAR
+// // AYAL'S CALENDAR
 // const ACCOUNT_ID = '413361439'
 // const CALENDAR_ID = 'calendar_YXlhbG1pc2huQGdtYWlsLmNvbQ'
 // const TOKEN = "Bearer mFzYTSGauAA4QGdG6rI9MtfvvfEZHo"
 
-const ACCOUNT_ID = '416457905'
-const CALENDAR_ID = 'calendar_YmFydmFydGVzdEBnbWFpbC5jb20'
-const TOKEN = "Bearer gVTIuU0seE73kvJqfCyLS8uFYV3cwm"
+// BAR
+// const ACCOUNT_ID = '416457905'
+// const CALENDAR_ID = 'calendar_YmFydmFydGVzdEBnbWFpbC5jb20'
+// const TOKEN = "Bearer gVTIuU0seE73kvJqfCyLS8uFYV3cwm"
+// BAR new
+const ACCOUNT_ID = '416830154'
+const CALENDAR_ID = "calendar_YmFydmFyZm1hbjNAZ21haWwuY29t"
+const TOKEN = "Bearer Zz1lcWHR2WjThDJhiLrJ4fgJ8ZzoxU"
 
 async function getCalendar() {
     const res = await axios ({

@@ -3,7 +3,7 @@ export default {
   getIsosDate,
   getTimeSlotsForPreview,
   getDailySlotsForPreview,
-  addHoursToMatchTheClock,
+  changeTimeForDisplay,
   idGen,
   calculateEndTime,
   updatePickedTreatments
@@ -76,7 +76,6 @@ function getTimeSlotsForPreview(timeslot, duration) {
   hours = +timeslot.end.slice(11, 13)
   min = timeslot.end.slice(14, 16)
   const endTime = new Date(year, month - 1, day, hours + 3, min, 0, 0);
-
   let nextTimeSlot = startTime//maby need copy
   hours = nextTimeSlot.getHours()
   min = nextTimeSlot.getMinutes()
@@ -93,11 +92,11 @@ function getTimeSlotsForPreview(timeslot, duration) {
 }
 
 //get an hour and returns full isos date (including the time)
-function addHoursToMatchTheClock(time, diff) {
+function changeTimeForDisplay(time, diff) {
   let hours = +time.slice(0, 2) - diff
   let minutes = time.slice(3, 5)
   hours = checkDigitsAndAddZerosIfNeeded(hours)
-  return hours + ':' + minutes
+  return hours + ':' + (minutes)
 }
 
 
@@ -117,7 +116,9 @@ function calculateEndTime(time, duration) {
   }
   else {
     hours += (duration / 60)
+    minutes='00'
   }
+  
   hours = checkDigitsAndAddZerosIfNeeded(hours)
   return hours + ':' + minutes
 }

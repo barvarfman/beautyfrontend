@@ -2,8 +2,9 @@
 .cancel-appointment{
     transition: 0.5s;
     i{
-        color: #e91e63;
-        font-size: 1.5rem;
+        color:white;
+        font-size: 1.1rem;
+        margin-right: 5px;
     }
     .cancel-input-wrapper{
         fieldset{
@@ -14,8 +15,22 @@
     .cancel-form-title {
         color : #172b4d;
     }
+    .apointment-details{
+        text-align: center;
+    }
+    .trash-btn{
+        color :white;
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        padding: 10px;
+        font-size: 1rem;
+        background-color: #e91e63;
+        cursor: pointer;
+    }
 }
 
 .rotate{
     transform: rotate(45deg);
 }
+
