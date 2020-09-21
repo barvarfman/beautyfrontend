@@ -6,6 +6,23 @@ import { withRouter } from 'react-router-dom';
 import { updatePhoneForCancel } from '../../actions/formAction.js';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import { motion } from 'framer-motion'
+const pageVariants={
+    in:{
+        opacity: 1 ,
+        x:0
+    },
+    out:{
+        opacity: 0,
+        x:"50%"
+    }
+}
+
+const pageTransition={
+    duration:1.3,
+    type:"spring",
+    stiffness:50
+}
 
 export function _CancelAppointment(props) {
     
@@ -46,6 +63,13 @@ export function _CancelAppointment(props) {
     const classes = useStyles();
 
     return (
+        <motion.div
+            initial="out"
+            exit="in"
+            animate="in"
+            variants={pageVariants}
+            transition={pageTransition}
+        >
         <main className="cancel-appointment">
             <div>
                 <div className="black">נא להזין מספר טלפון לביטול התור  :</div>
@@ -58,6 +82,7 @@ export function _CancelAppointment(props) {
                 </form>
             </div>
         </main>
+        </motion.div>
     );
 }
 

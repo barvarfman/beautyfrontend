@@ -14,6 +14,24 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import TextField from '@material-ui/core/TextField';
+import { motion } from 'framer-motion'
+const pageVariants={
+    in:{
+        opacity: 1 ,
+        x:0
+    },
+    out:{
+        opacity: 0,
+        x:"50%"
+    }
+}
+
+const pageTransition={
+    duration:1.3,
+    type:"spring",
+    stiffness:50
+}
+
 export function _SubmitForm(props) {
 
     // Similar to componentDidMount and componentDidUpdate:
@@ -119,10 +137,15 @@ export function _SubmitForm(props) {
 
 
     return (
-        <>
-
+        <motion.div
+            initial="out"
+            exit="in"
+            animate="in"
+            variants={pageVariants}
+            transition={pageTransition}
+        >
             <div>
-            <button className="restart-btn" onClick={initApp}>אתחול  <i className="fas fa-redo-alt"></i></button>
+                <button className="restart-btn" onClick={initApp}>אתחול  <i className="fas fa-redo-alt"></i></button>
                 <form className={`${classes.input} flex column`} noValidate autoComplete="off">
                     <div>
                         <div className="black">שם מלא :</div>
@@ -137,7 +160,7 @@ export function _SubmitForm(props) {
                         <TextField name="email" id="outlined-basic" variant="outlined" value={props.email} onChange={handleChange} />
                     </div>
                 </form>
-               
+
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
@@ -159,7 +182,7 @@ export function _SubmitForm(props) {
                 </Modal>
             </div>
             <StepperBtn handleOpen={handleOpen} setAppointment={setAppointment} />
-        </>
+        </motion.div>
     );
 }
 
