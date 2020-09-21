@@ -4,6 +4,7 @@ import { loadTreatments } from '../../actions/treatmentActions.js';
 import { loadCalendar } from '../../actions/calendarActions.js';
 // import { TreatmentEdit } from '../TreatmentEdit/TreatmentEdit.jsx'
 import { TreatmentList } from '../../cmps/TreatmentList/TreatmentList';
+
 import './TreatmentApp.scss';
 import '../../styles/style.scss';
 import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';
@@ -44,7 +45,6 @@ export function _TreatmentApp(props) {
             variants={pageVariants}
             transition={pageTransition}
         >
-
             <TreatmentList treatments={treatments} />
             <StepperBtn />
         </motion.div>
