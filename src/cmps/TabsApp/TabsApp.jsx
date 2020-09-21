@@ -19,7 +19,8 @@ export function _TabsApp(props) {
 
   const style = {
     width:'50%',
-    boxShadow:'none'
+    boxShadow:'none',
+    color:'#172b4d'
   }
 
   return (

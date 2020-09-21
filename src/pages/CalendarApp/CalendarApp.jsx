@@ -68,14 +68,16 @@ export function _CalendarApp(props) {
 
 
     return (
+       <>
         <motion.div
             initial="out"
             exit="in"
             animate="in"
             variants={pageVariants}
             transition={pageTransition}
+            style={{textAlign: 'center'}}
         >
-            <MuiPickersUtilsProvider utils={DateFnsUtils} locale={heLocale}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils} locale={heLocale} >
                 <ThemeProvider theme={materialTheme}>
                     <KeyboardDatePicker
                         disableToolbar
@@ -95,8 +97,9 @@ export function _CalendarApp(props) {
                 {(props.timeSlots && props.loader) ? <TimeslotList timeslots={props.timeSlots} />
                     : <LoaderApp />}
             </div>
-            <StepperBtn />
         </motion.div>
+        <StepperBtn />
+        </>
     );
 }
 

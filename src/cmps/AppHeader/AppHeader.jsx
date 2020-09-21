@@ -1,10 +1,14 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { TabsApp } from '../TabsApp/TabsApp.jsx';
 import { StepperApp } from '../StepperApp/StepperApp.jsx';
 import './AppHeader.scss';
 
 
-export function AppHeader() {
+export function AppHeader(props) {
+
+    const location = useLocation()
+
     return (
         <>
             <div className="app-header">
@@ -13,7 +17,9 @@ export function AppHeader() {
                     <h2 className="logo">Bar</h2>
                 </header>
                 <TabsApp />
-                <StepperApp />
+                {
+                    (location.pathname === '/cancelAppointment')? '': <StepperApp />
+                }
             </div>
 
         </>
