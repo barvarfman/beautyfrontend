@@ -1,12 +1,14 @@
 *{
     box-sizing: border-box;
 }
-.black{
-    color: black;
-    padding: 7px;
+
+.submit-form{
+    margin-top: 20%;
 }
 
-
+.form-title{
+    padding: 7px;
+}
 
 .restart-btn{
     border-radius: 5px;
@@ -15,15 +17,16 @@
     padding-left: 13px;
     padding-right: 13px;
     font-size: 0.9rem;
-    color: #acabab;
+    color: #808080;
     position: absolute;
     left: 0;
     top: 169px;
+    cursor: pointer;
 }
 
 
 @media screen and (min-width: 500px) {
     .restart-btn{
-        left: 359px;
+        left: 192PX;
     }
   }

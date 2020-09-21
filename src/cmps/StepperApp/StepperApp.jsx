@@ -41,8 +41,8 @@ export function _StepperApp(props) {
           const stepProps = {};
           const labelProps = {};
           return (
-            <Step key={label} {...stepProps}  >
-              <StepLabel {...labelProps}>{label} </StepLabel>
+            <Step key={label} {...stepProps} >
+              <StepLabel {...labelProps}>{label}  </StepLabel>
             </Step>
           );
         })}

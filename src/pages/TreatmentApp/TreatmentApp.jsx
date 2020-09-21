@@ -37,6 +37,7 @@ export function _TreatmentApp(props) {
 
     if (!treatments) return 'loading...'
     return (
+    <>
         <motion.div
             initial="out"
             exit="in"
@@ -44,10 +45,10 @@ export function _TreatmentApp(props) {
             variants={pageVariants}
             transition={pageTransition}
         >
-
             <TreatmentList treatments={treatments} />
-            <StepperBtn />
         </motion.div>
+    <StepperBtn />
+    </>
     )
 }
 

@@ -13,7 +13,7 @@ function englishToHebrew(word) {
   let convertedWord
   switch (word) {
     case ('minutes'):
-      convertedWord = 'דקות';
+      convertedWord = 'דק׳';
       break;
     case ('build'):
       convertedWord = 'בנייה';

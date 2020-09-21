@@ -31,7 +31,8 @@ export function _CancelAppointment(props) {
           '& > *': {
             margin: theme.spacing(1),
             width: '25ch',
-          }
+            color: '#172b4d'
+          },
         },
       }));
 
@@ -74,11 +75,11 @@ export function _CancelAppointment(props) {
         >
         <main className="cancel-appointment">
             <div>
-                <div className="black">נא להזין מספר טלפון לביטול התור  :</div>
+                <div className="cancel-form-title">נא להזין מספר טלפון לביטול התור  :</div>
                 {/* <input name="phone" value={props.phone} onChange={handleChange} /> */}
                 <form className={classes.root} noValidate autoComplete="off">
                     <div className="cancel-input-wrapper flex">
-                     <TextField name="phone" id="outlined-basic"  variant="outlined" value={props.phone} onChange={handleChange}/>
+                     <TextField className={classes.root} name="phone" id="outlined-basic" variant="outlined" value={props.phone} onChange={handleChange}/>
                      { props.phone.length===10 && <i className={`${trashStyle} ${rotate}`} onClick={cancelAppointment}></i>}
                     </div>
                 </form>

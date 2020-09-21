@@ -113,7 +113,7 @@ export function _SubmitForm(props) {
             border: '2px solid #000',
             boxShadow: theme.shadows[5],
             padding: theme.spacing(2, 4, 3),
-            color: 'black'
+            color: 'form-title'
         },
         input: {
             '& > *': {
@@ -137,26 +137,28 @@ export function _SubmitForm(props) {
 
 
     return (
+        <>
+        <button className="restart-btn" onClick={initApp}>אתחול  <i className="fas fa-redo-alt"></i></button>
         <motion.div
             initial="out"
             exit="in"
             animate="in"
             variants={pageVariants}
             transition={pageTransition}
+            style={{textAlign:'center'}}
         >
             <div>
-                <button className="restart-btn" onClick={initApp}>אתחול  <i className="fas fa-redo-alt"></i></button>
-                <form className={`${classes.input} flex column`} noValidate autoComplete="off">
+                <form className={`${classes.input} submit-form flex column`} noValidate autoComplete="off">
                     <div>
-                        <div className="black">שם מלא :</div>
+                        <div className="form-title">שם מלא :</div>
                         <TextField name="name" id="outlined-basic" variant="outlined" value={props.name} onChange={handleChange} />
                     </div>
                     <div>
-                        <div className="black">טלפון :</div>
+                        <div className="form-title">טלפון :</div>
                         <TextField name="phone" id="outlined-basic" variant="outlined" value={props.phone} onChange={handleChange} />
                     </div>
                     <div>
-                        <div className="black">מייל :</div>
+                        <div className="form-title">מייל :</div>
                         <TextField name="email" id="outlined-basic" variant="outlined" value={props.email} onChange={handleChange} />
                     </div>
                 </form>
@@ -181,8 +183,9 @@ export function _SubmitForm(props) {
                     </Fade>
                 </Modal>
             </div>
-            <StepperBtn handleOpen={handleOpen} setAppointment={setAppointment} />
-        </motion.div>
+            </motion.div>
+          <StepperBtn handleOpen={handleOpen} setAppointment={setAppointment} />
+        </>
     );
 }
 
