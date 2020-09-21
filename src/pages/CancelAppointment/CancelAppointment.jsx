@@ -39,9 +39,11 @@ export function _CancelAppointment(props) {
             default:
                 console.log("not working");
         }
+        
     }
 
     const classes = useStyles();
+
 
     return (
         <main className="cancel-appointment">
@@ -51,7 +53,7 @@ export function _CancelAppointment(props) {
                 <form className={classes.root} noValidate autoComplete="off">
                     <div className="cancel-input-wrapper flex">
                      <TextField name="phone" id="outlined-basic"  variant="outlined" value={props.phone} onChange={handleChange}/>
-                     { props.phone.length===10 && <i class="fas fa-trash" onClick={cancelAppointment}></i>}
+                     { props.phone.length===10 && <i className="fas fa-trash" onClick={cancelAppointment}></i>}
                     </div>
                 </form>
             </div>
