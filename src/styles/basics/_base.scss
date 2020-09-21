@@ -1,12 +1,17 @@
+@font-face {
+    font-family: Tinos;
+    src: url('../fonts/static/Heebo-Regular.ttf');
+  }
+
 * {
     box-sizing: border-box;
+    font-family: Tinos;
 }
 
 body {
+    color: #172b4d;
     margin: 0;
     font-size: 1rem;
-    font-family: 'Cabin Condensed', sans-serif;
-    color: #f6f6f6;
     background-color: rgba(236, 236, 236, 0.322);
 }
 

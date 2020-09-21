@@ -1,26 +1,28 @@
 import React from 'react';
 import './App.scss';
-import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route,useLocation } from 'react-router-dom';
 import { AppHeader } from './cmps/AppHeader/AppHeader';
 import { TreatmentApp } from './pages/TreatmentApp/TreatmentApp.jsx'
 import { CalendarApp } from './pages/CalendarApp/CalendarApp.jsx'
 import { SubmitForm } from './pages/SubmitForm/SubmitForm.jsx'
 import { CancelAppointment } from './pages/CancelAppointment/CancelAppointment.jsx'
-// import { AppFooter } from './cmps/AppFooter/AppFooter';
+import { AnimatePresence} from 'framer-motion'
 
 function App() {
+  const location=useLocation()
+  console.log(location);
   return (
-    <Router>
       <div className="App">
-        <AppHeader/>
-        <Switch>
-          <Route path="/calendar" component={ CalendarApp } />
-          <Route path="/cancelAppointment" component={ CancelAppointment } />
-          <Route path="/form" component={ SubmitForm } />
-          <Route path="/" component={ TreatmentApp } />
+        <AppHeader />
+        <AnimatePresence exitBeforeEnter>
+        <Switch location={location} key={location.pathname}>
+          <Route path="/calendar" component={CalendarApp} />
+          <Route path="/cancelAppointment" component={CancelAppointment} />
+          <Route path="/form" component={SubmitForm} />
+          <Route path="/" component={TreatmentApp} />
         </Switch>
+        </AnimatePresence>
       </div>
-    </Router>
   );
 }
 

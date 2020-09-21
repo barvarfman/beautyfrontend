@@ -6,6 +6,24 @@
     padding: 7px;
 }
 
-button{
-    margin-top: 10px;  
+
+
+.restart-btn{
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+    padding-left: 13px;
+    padding-right: 13px;
+    font-size: 0.9rem;
+    color: #acabab;
+    position: absolute;
+    left: 0;
+    top: 169px;
 }
+
+
+@media screen and (min-width: 500px) {
+    .restart-btn{
+        left: 359px;
+    }
+  }

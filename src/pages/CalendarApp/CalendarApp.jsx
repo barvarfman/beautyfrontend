@@ -5,12 +5,28 @@ import heLocale from "date-fns/locale/he";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
-// import { AppHeader } from '../../cmps/AppHeader/AppHeader';
 import { TimeslotList } from '../../cmps/TimeslotList/TimeslotList';
 import { loadTimeSlots, loaderSwitch } from '../../actions/calendarActions.js';
 import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';
 import './CalendarApp.scss';
 import { LoaderApp } from '../../cmps/LoaderApp/LoaderApp'
+import { motion } from 'framer-motion'
+
+const pageVariants={
+    in:{
+        opacity: 1 ,
+        x:0
+    },
+    out:{
+        opacity: 0,
+        x:"50%"
+    }
+}
+const pageTransition={
+    duration:1.3,
+    type:"spring",
+    stiffness:50
+}
 
 const materialTheme = createMuiTheme({
     overrides: {
@@ -42,7 +58,7 @@ export function _CalendarApp(props) {
 
     // Similar to componentDidMount and componentDidUpdate:
     const { loadTimeSlots } = props
-    useEffect(() => {loadTimeSlots()}, [loadTimeSlots]);
+    useEffect(() => { loadTimeSlots() }, [loadTimeSlots]);
 
     function handleDateChangeAndConvert(pickedDate) {
         props.loaderSwitch(false)
@@ -52,8 +68,13 @@ export function _CalendarApp(props) {
 
 
     return (
-        <>
-            {/* <AppHeader /> */}
+        <motion.div
+            initial="out"
+            exit="in"
+            animate="in"
+            variants={pageVariants}
+            transition={pageTransition}
+        >
             <MuiPickersUtilsProvider utils={DateFnsUtils} locale={heLocale}>
                 <ThemeProvider theme={materialTheme}>
                     <KeyboardDatePicker
@@ -71,11 +92,11 @@ export function _CalendarApp(props) {
                 </ThemeProvider>
             </MuiPickersUtilsProvider>
             <div >
-                {(props.timeSlots && props.loader) ? <TimeslotList  timeslots={props.timeSlots} />
+                {(props.timeSlots && props.loader) ? <TimeslotList timeslots={props.timeSlots} />
                     : <LoaderApp />}
             </div>
             <StepperBtn />
-        </>
+        </motion.div>
     );
 }
 
