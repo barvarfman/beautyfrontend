@@ -12,7 +12,7 @@ export function TimeslotList(props) {
 
 
     return (
-        <div className="timeslot-list flex">
+        <div className="timeslot-list  flex">
             {
                 // cahnge name properly --- timeslots is the arrays of each day/key 
                 Object.keys(props.timeslots).map(day => {
@@ -26,7 +26,7 @@ export function TimeslotList(props) {
                         </div>
                     )
                 })
-            })
+            }
 
         </div>
     )
