@@ -12,9 +12,8 @@ export function AppHeader(props) {
     return (
         <>
             <div className="app-header">
-                <header className="flex space-between upper-header">
-                    <h2 className="header-right">ניהול תורים</h2>
-                    <h2 className="logo">Bar</h2>
+                <header className="flex upper-header align-center">
+                    <h2 id="text" className="logo"> Tor-Li<i  className="fas fa-tasks"></i></h2>
                 </header>
                 <TabsApp />
                 {

@@ -3,9 +3,11 @@
     margin-block-end: 1rem;
     // box-shadow: 0px 1px 2px #00000033;
     .upper-header {
+        justify-content: flex-end;
         h2{
+            padding-top: 9px;
             font-size:1rem;
-        }
+         }
         height: 3rem;
         background-color:#e91e63;
         color: #f6f6f6;
@@ -42,3 +44,12 @@ fieldset {
     }
   }
 
+
+@import url('https://fonts.googleapis.com/css?family=Aguafina+Script');
+#text{
+    font-family: "Aguafina Script", cursive;
+    text-align: center;
+    font-size: 25px;
+    // background-color: rgb(84, 84, 84);
+    text-shadow: rgb(83, 83, 83) 2px 2px 2px;
+}

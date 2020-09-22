@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { updateActiveStep } from '../../actions/stepperAction';
 import { withRouter } from 'react-router-dom';
-
+import './StepperBtn.scss';
 function _StepperBtn(props) {
 
     function changeStep(diff) {
@@ -13,7 +13,10 @@ function _StepperBtn(props) {
             props.handleOpen()
         }
         props.updateActiveStep(props.activeStep + diff)
-        if (!props.activeStep && diff > 0) props.history.push('/calendar')
+        if (!props.activeStep && diff > 0){
+            props.history.push('/calendar')
+            
+        }    
         else if (props.activeStep === 1 && diff > 0) props.history.push('/form')
         else if (props.activeStep === 2 && diff < 0) props.history.push('/calendar')
         else if (props.activeStep === 1 && diff < 0) props.history.push('/')
@@ -26,9 +29,9 @@ function _StepperBtn(props) {
 
     return (
 
-        <div>
-            <Button disabled={props.activeStep === 0} onClick={() => changeStep(-1)} >
-                חזור
+        <div className="stepper-btn">
+            <Button  disabled={props.activeStep === 0} onClick={() => changeStep(-1)} >
+               חזור
             </Button>
             {(props.activeStep !== 1) &&
                 <Button onClick={() => changeStep(1)} disabled={checkStepValidation()}>

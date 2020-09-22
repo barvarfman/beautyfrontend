@@ -26,6 +26,7 @@ const pageTransition = {
     stiffness: 50
 }
 
+
 export function _CancelAppointment(props) {
 
     const [eventToCancel, setEventToCancel] = useState(null)
@@ -48,7 +49,7 @@ export function _CancelAppointment(props) {
         CalendarService.remove(eventToRmove.eventId)
         // delete from mongo data base
         CalendarService.removeEventFromDB(eventToRmove._id)
-        
+
         setEventToCancel(null)
     }
 
@@ -60,6 +61,7 @@ export function _CancelAppointment(props) {
                 if (value.length >= 9 && value.length <= 10) {
                     CalendarService.getEventByPhone(value)
                         .then(ev => {
+                            if (!ev[0]) return
                             const dateParts = (ev[0].date).split('-')
                             const dateIsraeliDisplay = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`
                             setEventToCancel({
@@ -100,15 +102,17 @@ export function _CancelAppointment(props) {
                     </form>
 
                 </div>
-                {eventToCancel &&
-                    <div className="apointment-details">
-                        <div>פרטי התור הקיימים עבור מספר טלפון זה -</div>
-                        <div> סוג הטיפול : {eventToCancel.treatments}</div>
-                        <div> בתאריך : {eventToCancel.date}</div>
-                        <div> בין השעות : {`${eventToCancel.endTime} - ${eventToCancel.startTime}`}</div>
-                    </div>
-                }
-                {(eventToCancel) && <button onClick={cancelAppointment} className="trash-btn"> מחק תור <i className="fas fa-trash" ></i></button>}
+                <div>
+                    {eventToCancel &&
+                        <div className="apointment-details">
+                            <div>פרטי התור הקיימים עבור מספר טלפון זה -</div>
+                            <div> סוג הטיפול : {eventToCancel.treatments}</div>
+                            <div> בתאריך : {eventToCancel.date}</div>
+                            <div> בין השעות : {`${eventToCancel.endTime} - ${eventToCancel.startTime}`}</div>
+                        </div>
+                    }
+                    {(eventToCancel) && <button onClick={cancelAppointment} className="trash-btn"> מחק תור <i className="fas fa-trash" ></i></button>}
+                </div>
             </main>
         </motion.div>
     );

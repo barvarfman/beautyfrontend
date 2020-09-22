@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadTreatments } from '../../actions/treatmentActions.js';
 import { loadCalendar } from '../../actions/calendarActions.js';
-// import { TreatmentEdit } from '../TreatmentEdit/TreatmentEdit.jsx'
 import { TreatmentList } from '../../cmps/TreatmentList/TreatmentList';
 
 import './TreatmentApp.scss';

@@ -17,12 +17,13 @@ export function _TreatmentPreview(props) {
 
     function updatePickedTreatments(addOrRemove) {
         props.updatePickedTreatments(props.treatment, addOrRemove)
+
     }
 
     return (
         <div className="treatment-preview">
             {props.treatment &&
-                <div className="preview-container flex align-center space-between">
+                <div className=" preview-container flex align-center space-between">
                     <div className="align-col-name">
                         {props.treatment.name}
                     </div>
