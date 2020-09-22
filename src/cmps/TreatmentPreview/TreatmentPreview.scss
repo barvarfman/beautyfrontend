@@ -1,7 +1,7 @@
 .treatment-preview{
     box-shadow: 0px 1px 1px #e6e3e3;
     // height: 4rem;
-    height: 100px;
+    min-height: 85px;
     padding: 15px;
     .preview-container {
         height: 100%;
@@ -12,7 +12,12 @@
     .align-col-name{
       width:25%;
     }
-}
+  }
+   
+   .marked-by-switch{
+      // background-color:darken(rgba(236, 236, 236, 0.322), 5%)
+      background-color:lighten(#e91e63, 45%)
+    }
 
 input.switch {
   -moz-appearance: none;

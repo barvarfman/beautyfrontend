@@ -3,9 +3,5 @@
 }
 
 .timeslot-list{
-        width: 400px;
-        max-height: 460px;
-        display: flex;
-        overflow-x: hidden;
-        overflow-y: scroll;
+    justify-content: space-evenly;
 }

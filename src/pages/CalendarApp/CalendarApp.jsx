@@ -93,7 +93,7 @@ export function _CalendarApp(props) {
                     />
                 </ThemeProvider>
             </MuiPickersUtilsProvider>
-            <div >
+            <div className="main-container time-slot-lists-container">
                 {(props.timeSlots && props.loader) ? <TimeslotList timeslots={props.timeSlots} />
                     : <LoaderApp />}
             </div>

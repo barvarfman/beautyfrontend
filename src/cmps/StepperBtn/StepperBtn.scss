@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .stepper-btn{
     button{
         height: 32px;
@@ -16,7 +17,44 @@
             font-size: 1.3rem;
             margin-right: 5px;
         }
+=======
+
+.stepper-btns-container{
+    height: 90px;
+    width: 400px;
+    .stepper-btn-wrraper{
+        box-shadow: 0 1px 1px 0 rgba(32,33,36,0.28);
+        text-align: center;
+        width: 48%;
+        height: 40%;
+    }
+    .stepper-btn-wrraper-next{
+     border-radius: 0 0 0 10px;
+    }
+    .stepper-btn-wrraper-back{
+        border-radius: 0 0 10px 0;
+    }
+    .hide-btn{
+        visibility: hidden;
+    }
+    .stepper-btn{
+        border: none;
+        background-color: transparent;
+        color: rgb(187, 184, 184)
+    }
+    .active-btn{
+        color: #172b4d;
+>>>>>>> 3d6c4af60438949ff459351bf2af92b57b0f29f1
     }
 }
 
 
+<<<<<<< HEAD
+=======
+
+@media screen and (max-width: 500px) {
+    .treatment-list {
+        width: 390px;
+    }
+  }
+>>>>>>> 3d6c4af60438949ff459351bf2af92b57b0f29f1

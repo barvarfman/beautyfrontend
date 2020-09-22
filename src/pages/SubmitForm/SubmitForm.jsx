@@ -157,7 +157,7 @@ export function _SubmitForm(props) {
                 style={{ textAlign: 'center' }}
             >
                 <div>
-                    <form className={`${classes.input} submit-form flex column`} noValidate autoComplete="off">
+                    <form className={`${classes.input} submit-form flex column align-center`} noValidate autoComplete="off">
                         <div>
                             <div className="form-title">שם מלא :</div>
                             <TextField name="name" id="outlined-basic" variant="outlined" value={props.name} onChange={handleChange} />

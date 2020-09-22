@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './TreatmentPreview.scss';
 import '../../styles/style.scss';
 import { connect } from 'react-redux';
@@ -7,6 +7,9 @@ import UtilService from '../../services/UtilsService'
 import { SwitchApp } from '../SwitchApp/SwitchApp';
 
 export function _TreatmentPreview(props) {
+
+    const [markedBySwitch, setMarkedBySwitch] = useState('');
+
     function updateDuration(switchIsOn) {
         if (switchIsOn) {
             props.updateDuration(+props.treatment.duration)
@@ -17,11 +20,15 @@ export function _TreatmentPreview(props) {
 
     function updatePickedTreatments(addOrRemove) {
         props.updatePickedTreatments(props.treatment, addOrRemove)
-
+        if (addOrRemove==='add') {
+            setMarkedBySwitch(" marked-by-switch")
+        } else {
+        setMarkedBySwitch("")
+        }
     }
 
     return (
-        <div className="treatment-preview">
+        <div className={`treatment-preview ${markedBySwitch}`}>
             {props.treatment &&
                 <div className=" preview-container flex align-center space-between">
                     <div className="align-col-name">

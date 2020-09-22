@@ -6,7 +6,7 @@ import { TreatmentPreview } from '../TreatmentPreview/TreatmentPreview';
 
 export function TreatmentList(props) {
     return (
-        <div className="treatment-list flex column">
+        <div className="treatment-list main-container flex column">
             {
                 props.treatments.map(treatment => {
                     let id=UtilsService.idGen()

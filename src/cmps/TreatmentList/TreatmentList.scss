@@ -1,26 +1,4 @@
-.treatment-container{
-     width: 100%;
-}
-
-
 .treatment-list{
-    width: 400px;
-    max-height: 515px;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
-    overflow-y: scroll;
     border: 1px solid rgba(236, 236, 236, 0.722);
 }
 
-@media screen and (min-width: 500px) {
-    .treatment-container {
-        width: 480px
-    }
-  }
-
-@media screen and (max-width: 500px) {
-    .treatment-list {
-        width: 390px;
-    }
-  }
