@@ -86,13 +86,14 @@ export function _CancelAppointment(props) {
 
     return (
         <motion.div
+            className="motion-div"
             initial="out"
             exit="in"
             animate="in"
             variants={pageVariants}
             transition={pageTransition}
         >
-            <main className="cancel-appointment">
+            <main className="cancel-appointment flex column align-center space-around main-container">
                 <div>
                     <div className="cancel-form-title">נא להזין מספר טלפון לביטול התור  :</div>
                     <form className={classes.root} noValidate autoComplete="off">
@@ -102,17 +103,20 @@ export function _CancelAppointment(props) {
                     </form>
 
                 </div>
-                <div>
-                    {eventToCancel &&
+                <div className="table-wrapper">
+                    {(eventToCancel) && <div className="table-title"> פרטי התור :</div>}
+                    {(eventToCancel) ?
                         <div className="apointment-details">
-                            <div>פרטי התור הקיימים עבור מספר טלפון זה -</div>
-                            <div> סוג הטיפול : {eventToCancel.treatments}</div>
-                            <div> בתאריך : {eventToCancel.date}</div>
-                            <div> בין השעות : {`${eventToCancel.endTime} - ${eventToCancel.startTime}`}</div>
+                            <div className="table-cell"> <span>סוג הטיפול</span> : {eventToCancel.treatments}</div>
+                            <div className="table-cell"> בתאריך : {eventToCancel.date}</div>
+                            <div className="last-cell"> בין השעות : {`${eventToCancel.endTime} - ${eventToCancel.startTime}`}</div>
                         </div>
+                        :
+                        <div className="space"></div>
                     }
-                    {(eventToCancel) && <button onClick={cancelAppointment} className="trash-btn"> מחק תור <i className="fas fa-trash" ></i></button>}
                 </div>
+                <div className="space"></div>
+                {(eventToCancel) && <button onClick={cancelAppointment} className="trash-btn"> מחק תור <i className="fas fa-trash" ></i></button>}
             </main>
         </motion.div>
     );

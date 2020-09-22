@@ -4,10 +4,6 @@ import Button from '@material-ui/core/Button';
 import { updateActiveStep } from '../../actions/stepperAction';
 import { withRouter } from 'react-router-dom';
 import './StepperBtn.scss';
-<<<<<<< HEAD
-=======
-
->>>>>>> 3d6c4af60438949ff459351bf2af92b57b0f29f1
 function _StepperBtn(props) {
 
     const [hideBtn, setHideBtn] = useState('');
@@ -48,14 +44,6 @@ function _StepperBtn(props) {
 
     return (
 
-<<<<<<< HEAD
-        <div className="stepper-btn">
-            <Button  disabled={props.activeStep === 0} onClick={() => changeStep(-1)} >
-               חזור
-            </Button>
-            {(props.activeStep !== 1) &&
-                <Button onClick={() => changeStep(1)} disabled={checkStepValidation()}>
-=======
         <div className={`stepper-btns-container flex align-center space-around `}>
           <div className="stepper-btn-wrraper stepper-btn-wrraper-back"> 
             <button className={`stepper-btn ${activeBackBtn}`} disabled={props.activeStep === 0} onClick={() => changeStep(-1)} >
@@ -64,7 +52,6 @@ function _StepperBtn(props) {
           </div>
           <div className={`stepper-btn-wrraper stepper-btn-wrraper-next ${hideBtn} `}>
             <button className={`stepper-btn ${activeNextBtn}`} onClick={() => changeStep(1)} disabled={checkStepValidation()}>
->>>>>>> 3d6c4af60438949ff459351bf2af92b57b0f29f1
                     {(props.activeStep === 2) ? 'אשר' : 'הבא'}
             </button>
           </div>
