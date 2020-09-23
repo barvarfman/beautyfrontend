@@ -4,7 +4,7 @@ export default {
     sendMail
 }
 
-function sendMail( emailObj) {
+function sendMail(emailObj) {
     return HttpService.post('email',emailObj)
 }
 
