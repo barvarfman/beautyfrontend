@@ -36,8 +36,9 @@ const pageTransition = {
 export function _SubmitForm(props) {
     // Similar to componentDidMount and componentDidUpdate:
     // useEffect(() => {
-    // },);
-
+    // }, []);
+    
+    
     async function setAppointment(time = props.treatment.time, date = props.treatment.date) {
         let treatmentsType = ''
         props.pickedTreatments.forEach((tr, idx) => {
@@ -71,42 +72,42 @@ export function _SubmitForm(props) {
             case 'name':
                 props.updateName(value)
                 break;
-            case 'phone':
-                props.updatePhone(value)
-                break;
-            case 'email':
-                props.updateEmail(value)
-                break;
-            default:
-                console.log('default');
-        }
-    }
-
-    function sendEmail() {
-        const { name, phone, email, duration, treatment, pickedTreatments } = props
-        let treatmentsType = UtilsService.arrayToString(pickedTreatments)
-        let emailObj = {
-            email,
-            bodyText: `שלום, ${name} שמחים שבחרת במספרת קובי!
-            נקבע לך תור ל${treatmentsType}  
-            בתאריך ${treatment.date}
-            בשעה ${treatment.time}
-            משך זמן הטיפול מוערך כ- ${duration} דקות
-            הטלפון שהתקבל ליצירת קשר הוא - ${phone}`
-        }
-        props.sendEmail(emailObj)
-    }
-
-    function initApp() {
-        props.updateActiveStep(0)
-        props.setTreatment(null)
-        props.setTimeSlots(null)
-        props.initDuration()
-        props.initPickedTreatments()
-        props.history.push('/')
-    }
-
-
+                case 'phone':
+                    props.updatePhone(value)
+                    break;
+                    case 'email':
+                        props.updateEmail(value)
+                        break;
+                        default:
+                            console.log('default');
+                        }
+                    }
+                    
+                    function sendEmail() {
+                        const { name, phone, email, duration, treatment, pickedTreatments } = props
+                        let treatmentsType = UtilsService.arrayToString(pickedTreatments)
+                        let emailObj = {
+                            email,
+                            bodyText: `שלום, ${name} שמחים שבחרת במספרת קובי!
+                            נקבע לך תור ל${treatmentsType}  
+                            בתאריך ${treatment.date}
+                            בשעה ${treatment.time}
+                            משך זמן הטיפול מוערך כ- ${duration} דקות
+                            הטלפון שהתקבל ליצירת קשר הוא - ${phone}`
+                        }
+                        props.sendEmail(emailObj)
+                    }
+                    
+                    function initApp() {
+                        props.updateActiveStep(0)
+                        props.setTreatment(null)
+                        props.setTimeSlots(null)
+                        props.initDuration()
+                        props.initPickedTreatments()
+                        props.history.push('/')
+                    }
+                   
+                    
     const useStyles = makeStyles((theme) => ({
         modal: {
             display: 'flex',
@@ -140,6 +141,9 @@ export function _SubmitForm(props) {
         initApp()
     };
 
+    const dateParts = (props.treatment.date).split('-')
+    const dateIsraeliDisplay = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`
+    const endTime= UtilsService.calculateEndTime(props.treatment.time,props.duration)
 
     return (
         <>
@@ -183,10 +187,10 @@ export function _SubmitForm(props) {
                         <Fade in={open}>
                             <div className={classes.paper}>
                                 <h2 id="transition-modal-title">התור נקבע בהצלחה</h2>
-                                <p id="transition-modal-description">פירוט התור כאן:</p>
                                 <div> נקבע לך תור ל: {UtilsService.arrayToString(props.pickedTreatments)}  </div>
-                                <div> בתאריך {props.treatment.date}</div>
-                                <div>   בשעה  {props.treatment.time}</div>
+                                <div> בתאריך {dateIsraeliDisplay}</div>
+                                <div> בין השעות: {endTime} - {props.treatment.time}</div>
+                                
                             </div>
                         </Fade>
                     </Modal>

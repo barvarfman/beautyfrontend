@@ -97,7 +97,7 @@ export function _CalendarApp(props) {
             </MuiPickersUtilsProvider>
             <div className="main-container time-slot-lists-container">
                 {(props.timeSlots && props.loader) ? <TimeslotList timeslots={props.timeSlots} />
-                    :<div className="loaderContainer"><LoaderApp /></div>}
+                    :<div className="loaderContainer flex align-center justify-center"><LoaderApp /></div>}
             </div>
         </motion.div>
         <StepperBtn />

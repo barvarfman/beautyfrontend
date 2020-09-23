@@ -12,10 +12,10 @@ export function _TreatmentPreview(props) {
     const [isActive, setIsActive] = useState(false);
 
     useEffect(() => {
-        //if path===form it means that the last path was form, but still need to update all the othre route page
             let trNames = props.pickedTreatments.map(treatment => treatment.name)
             setIsActive(trNames.includes(props.treatment.name))
     }, [props.treatment, props.pickedTreatments])
+
 
     function updateDuration(switchIsOn) {
         if (switchIsOn) {
@@ -35,7 +35,7 @@ export function _TreatmentPreview(props) {
     }
 
     return (
-        <div className={`treatment-preview ${markedBySwitch}`}>
+        <div className={`treatment-preview ${(isActive)?'marked-by-switch':""} ${markedBySwitch}`}>
             {props.treatment &&
                 <div className=" preview-container flex align-center space-between">
                     <div className="align-col-name">
@@ -43,10 +43,9 @@ export function _TreatmentPreview(props) {
                     </div>
                     <div className="align-col">{'₪' + props.treatment.price}</div>
                     <div className="align-col">{props.treatment.duration + UtilService.englishToHebrew('minutes')}</div>
-                    <SwitchApp  isActive={isActive} className="align-col" updateDuration={updateDuration} updatePickedTreatments={updatePickedTreatments} />
+                    <SwitchApp setIsActive={setIsActive} isActive={isActive} className="align-col" updateDuration={updateDuration} updatePickedTreatments={updatePickedTreatments} />
                 </div>
             }
-
         </div>
     )
 }
