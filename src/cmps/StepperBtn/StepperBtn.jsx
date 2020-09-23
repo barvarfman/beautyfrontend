@@ -21,7 +21,6 @@ function _StepperBtn(props) {
     },[props.activeStep,props.duration,props.treatment]);
 
     function changeStep(diff) {
-        // confiramtion
         if (props.activeStep + diff === 3) {
             props.setAppointment()
             props.handleOpen()
@@ -65,6 +64,7 @@ function mapStateProps(state) {
         activeStep: state.StepperReducer.step,
         duration: state.TreatmentReducer.duration,
         treatment: state.TreatmentReducer.treatment,
+
     }
 }
 

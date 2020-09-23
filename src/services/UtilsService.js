@@ -6,8 +6,8 @@ export default {
   changeTimeForDisplay,
   idGen,
   calculateEndTime,
-  updatePickedTreatments,
-  arrayToString
+  arrayToString,
+  convertDateToIsraelisDisplay
 }
 
 function englishToHebrew(word) {
@@ -100,7 +100,6 @@ function changeTimeForDisplay(time, diff) {
   return hours + ':' + (minutes)
 }
 
-
 function calculateEndTime(time, duration) {
   let hours = +time.slice(0, 2)
   let minutes = +time.slice(3, 5)
@@ -134,16 +133,6 @@ function idGen() {
   return '_' + Math.random().toString(36).substr(2, 9);
 };
 
-function updatePickedTreatments(reducerPickedTreatments, action) {
-
-  if (action.treatmentObj.addOrRemove === 'add') {
-    reducerPickedTreatments.push(action.treatmentObj.treatment)
-  } else {
-    const treatmentIdx = reducerPickedTreatments.findIndex((treatment) => treatment._id === action.treatmentObj.treatment._id);
-    reducerPickedTreatments.splice(treatmentIdx, 1);
-  }
-  return reducerPickedTreatments
-}
 
 function arrayToString(pickedTreatments) {
   let treatmentsType = ''
@@ -153,3 +142,9 @@ function arrayToString(pickedTreatments) {
   })
   return treatmentsType
 }
+
+function convertDateToIsraelisDisplay (date) {
+  const dateParts = (date).split('-')
+  return `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` 
+}
+        

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';
 import UtilsService from "../../services/UtilsService";
 import CalendarService from '../../services/CalendarService';
-import { updateEmail, updateName, updatePhone, sendEmail } from '../../actions/formActions.js';
+import { updateEmail, updateName, updatePhone } from '../../actions/formActions.js';
 import { setTimeSlots } from '../../actions/calendarActions.js';
 import { setTreatment, updateDuration, initPickedTreatments, initDuration } from '../../actions/treatmentActions.js';
 import './SubmitForm.scss';
@@ -16,6 +16,7 @@ import Fade from '@material-ui/core/Fade';
 import TextField from '@material-ui/core/TextField';
 import { motion } from 'framer-motion'
 
+// style for motion div
 const pageVariants = {
     in: {
         opacity: 1,
@@ -32,106 +33,37 @@ const pageTransition = {
     type: "spring",
     stiffness: 50
 }
+// style for modal + input material ui
+
+const useStyles = makeStyles((theme) => ({
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    paper: {
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+        color: 'form-title'
+    },
+    input: {
+        '& > *': {
+            margin: theme.spacing(1),
+            width: '25ch',
+        }
+    }
+}));
+
 
 export function _SubmitForm(props) {
-    // Similar to componentDidMount and componentDidUpdate:
-    // useEffect(() => {
-    // }, []);
     
-    
-    async function setAppointment(time = props.treatment.time, date = props.treatment.date) {
-        let treatmentsType = ''
-        props.pickedTreatments.forEach((tr, idx) => {
-            if (props.pickedTreatments.length !== idx + 1) treatmentsType += tr.name + ', '
-            else treatmentsType += tr.name
-        })
-        treatmentsType.substring()
-        time = UtilsService.changeTimeForDisplay(time, 3)
-        const startTime = `${date}T${time}:00Z`
-        time = UtilsService.calculateEndTime(time, props.duration)
-        const endTime = `${date}T${time}:00Z`
-        const confirmedEvent = await CalendarService.update(startTime, endTime, treatmentsType, 'ayal', 'ayal@gmail.com')
-        const event = {
-            phone: props.phone,
-            eventId: confirmedEvent.id,
-            treatments: treatmentsType,
-            duration: props.duration,
-            startTime: startTime.slice(11, 20),
-            endTime: endTime.slice(11, 20),
-            date: startTime.slice(0, 10)
-        }
-        CalendarService.saveConfirmedEvent(event)
-        console.log(event);
-        sendEmail()
-    }
-
-    function handleChange({ target }) {
-        const field = target.name;
-        const value = target.value;
-        switch (field) {
-            case 'name':
-                props.updateName(value)
-                break;
-                case 'phone':
-                    props.updatePhone(value)
-                    break;
-                    case 'email':
-                        props.updateEmail(value)
-                        break;
-                        default:
-                            console.log('default');
-                        }
-                    }
-                    
-                    function sendEmail() {
-                        const { name, phone, email, duration, treatment, pickedTreatments } = props
-                        let treatmentsType = UtilsService.arrayToString(pickedTreatments)
-                        let emailObj = {
-                            email,
-                            bodyText: `שלום, ${name} שמחים שבחרת במספרת קובי!
-                            נקבע לך תור ל${treatmentsType}  
-                            בתאריך ${treatment.date}
-                            בשעה ${treatment.time}
-                            משך זמן הטיפול מוערך כ- ${duration} דקות
-                            הטלפון שהתקבל ליצירת קשר הוא - ${phone}`
-                        }
-                        props.sendEmail(emailObj)
-                    }
-                    
-                    function initApp() {
-                        props.updateActiveStep(0)
-                        props.setTreatment(null)
-                        props.setTimeSlots(null)
-                        props.initDuration()
-                        props.initPickedTreatments()
-                        props.history.push('/')
-                    }
-                   
-                    
-    const useStyles = makeStyles((theme) => ({
-        modal: {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-        },
-        paper: {
-            backgroundColor: theme.palette.background.paper,
-            border: '2px solid #000',
-            boxShadow: theme.shadows[5],
-            padding: theme.spacing(2, 4, 3),
-            color: 'form-title'
-        },
-        input: {
-            '& > *': {
-                margin: theme.spacing(1),
-                width: '25ch',
-            }
-        }
-    }));
-
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-
+    const dateIsraeliDisplay = UtilsService.convertDateToIsraelisDisplay(props.treatment.date)
+    const endTime = UtilsService.calculateEndTime(props.treatment.time,props.duration)
+    
     const handleOpen = () => {
         setOpen(true);
     };
@@ -141,9 +73,35 @@ export function _SubmitForm(props) {
         initApp()
     };
 
-    const dateParts = (props.treatment.date).split('-')
-    const dateIsraeliDisplay = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`
-    const endTime= UtilsService.calculateEndTime(props.treatment.time,props.duration)
+    function initApp() {
+        props.updateActiveStep(0)
+        props.setTimeSlots(null)
+        props.setTreatment(null)
+        props.initDuration()
+        props.initPickedTreatments()
+        props.history.push('/')
+    }
+
+    function setAppointment () {
+        CalendarService.setAppointment(props.pickedTreatments, props.duration, props.phone, props.email, props.name, props.treatment)
+    }
+
+    function handleChange({ target }) {
+        const field = target.name;
+        const value = target.value;
+        switch (field) {
+            case 'name':
+            props.updateName(value)
+            break;
+            case 'phone':
+            props.updatePhone(value)
+            break;
+            case 'email':
+            props.updateEmail(value)
+            break;
+            }
+        }
+    
 
     return (
         <>
@@ -216,7 +174,6 @@ const mapDispatchToProps = {
     updateEmail,
     updateName,
     updatePhone,
-    sendEmail,
     updateActiveStep,
     setTreatment,
     updateDuration,

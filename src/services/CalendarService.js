@@ -1,4 +1,6 @@
 import HttpService from './HttpService'
+import UtilsService from "../services/UtilsService";
+import EmailService from '../services/EmailService'
 import axios from 'axios';
 
 // const url = process.env.NODE_ENV === 'production'
@@ -12,7 +14,8 @@ export default {
     remove,
     saveConfirmedEvent,
     getEventByPhone,
-    removeEventFromDB
+    removeEventFromDB,
+    setAppointment
 }
 
 // // AYAL'S CALENDAR
@@ -124,4 +127,29 @@ function removeEventFromDB (_id) {
 // function update(calendar) {
 //     return HttpService.put('calendar', calendar)
 // }
+
+async function setAppointment(treatments, duration, phone, email, name, treatment) {
+    let treatmentsType = ''
+    treatments.forEach((tr, idx) => {
+        if (treatments.length !== idx + 1) treatmentsType += tr.name + ', '
+        else treatmentsType += tr.name
+    })
+    let time = UtilsService.changeTimeForDisplay(treatment.time, 3)
+    const startTime = `${treatment.date}T${time}:00Z`
+    time = UtilsService.calculateEndTime(time, duration)
+    const endTime = `${treatment.date}T${time}:00Z`
+    const confirmedEvent = await update(startTime, endTime, treatmentsType, 'ayal', 'ayal@gmail.com')
+    const event = {
+        phone,
+        eventId: confirmedEvent.id,
+        treatments: treatmentsType,
+        duration,
+        startTime: startTime.slice(11, 20),
+        endTime: endTime.slice(11, 20),
+        date: startTime.slice(0, 10)
+    }
+    saveConfirmedEvent(event)
+    console.log(event);
+    EmailService.sendEmail(name, treatment.date, email, true, phone, duration, treatment.time , treatments ) 
+}
 

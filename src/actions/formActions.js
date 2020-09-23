@@ -1,11 +1,9 @@
-import EmailService from '../services/EmailService'
-
 export function updateEmail(emailToSend) {
     return async dispatch => {
         try {
             await dispatch(setEmail(emailToSend));
         } catch (err) {
-            console.log('formActions: err in sendEmail', err);
+            console.log('formActions: err in setEmail', err);
         };
     }
 }
@@ -17,15 +15,6 @@ function setEmail(email) {
     };
 }
 
-export function sendEmail(emailToSend) {
-    return async () => {
-        try {
-            await EmailService.sendMail(emailToSend);
-        } catch (err) {
-            console.log('formActions: err in sendEmail', err);
-        };
-    }
-}
 
 export function updateName(customerName) {
     return async dispatch => {

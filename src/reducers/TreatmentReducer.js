@@ -1,4 +1,5 @@
 import UtilsService from "../services/UtilsService";
+import TreatmentService from "../services/TreatmentService";
 
 const INITIAL_STATE = {
     treatment: null,
@@ -29,7 +30,7 @@ export function TreatmentReducer(state = INITIAL_STATE, action) {
         case 'UPDATE_PICKED_TREATMENT':
         return {
           ...state,
-          pickedTreatments:UtilsService.updatePickedTreatments(state.pickedTreatments,action) 
+          pickedTreatments:TreatmentService.updatePickedTreatments(state.pickedTreatments,action) 
         };   
         case 'UPDATE_DURATION':
         return {

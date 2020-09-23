@@ -4,7 +4,8 @@ export default {
     getTreatments,
     getById,
     remove,
-    update
+    update,
+    updatePickedTreatments
 }
 
 
@@ -24,4 +25,13 @@ function update(treatment) {
     return HttpService.put(`treatment/${treatment._id}`, treatment)
 }
 
-
+function updatePickedTreatments(reducerPickedTreatments, action) {
+        
+    if (action.treatmentObj.addOrRemove === 'add') {
+      reducerPickedTreatments.push(action.treatmentObj.treatment)
+    } else {
+      const treatmentIdx = reducerPickedTreatments.findIndex((treatment) => treatment._id === action.treatmentObj.treatment._id);
+      reducerPickedTreatments.splice(treatmentIdx, 1);
+    }
+    return reducerPickedTreatments
+  }

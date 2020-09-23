@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { connect } from 'react-redux';
 import UtilsService from "../../services/UtilsService";
 import CalendarService from '../../services/CalendarService';
+import EmailService from '../../services/EmailService';
 import './CancelAppointment.scss';
 import { withRouter } from 'react-router-dom';
-import { updatePhoneForCancel, sendEmail } from '../../actions/formActions.js';
+import { updatePhoneForCancel } from '../../actions/formActions.js';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { motion } from 'framer-motion'
@@ -77,10 +78,7 @@ export function _CancelAppointment(props) {
         props.initPickedTreatments()
       }
 
-
     const [eventToCancel, setEventToCancel] = useState(null)
-    useEffect(() => {
-    }, []);
 
     async function cancelAppointment() {
         const events = await CalendarService.getEventByPhone(props.phone)
@@ -88,8 +86,8 @@ export function _CancelAppointment(props) {
         CalendarService.remove(eventToRmove.eventId)
         // delete from mongo data base
         CalendarService.removeEventFromDB(eventToRmove._id)
+        EmailService.sendEmail(props.name, eventToCancel.date, props.email, false)
         setEventToCancel(null)
-        sendEmail()
         handleOpen()
     }
 
@@ -102,8 +100,7 @@ export function _CancelAppointment(props) {
                     CalendarService.getEventByPhone(value)
                         .then(ev => {
                             if (!ev[0]) return
-                            const dateParts = (ev[0].date).split('-')
-                            const dateIsraeliDisplay = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`
+                            const dateIsraeliDisplay = UtilsService.convertDateToIsraelisDisplay(ev[0].date)
                             setEventToCancel({
                                 treatments: ev[0].treatments,
                                 startTime: UtilsService.changeTimeForDisplay(ev[0].startTime, -3),
@@ -118,17 +115,6 @@ export function _CancelAppointment(props) {
                 console.log("not working");
         }
 
-    }
-
-    function sendEmail() {
-        const { phone } = props
-        let emailObj = {
-            // email,
-            bodyText: `שלום, ${props.name}
-                       התור שנקבע לתאריך ${eventToCancel.date} בוטל 
-                       תודה על העדכון `
-        }
-        props.sendEmail(emailObj)
     }
 
     const classes = useStyles();
@@ -188,13 +174,13 @@ export function _CancelAppointment(props) {
 function mapStateProps(state) {
     return {
         phone: state.FormReducer.phoneForCancel,
-        name: state.FormReducer.name
+        name: state.FormReducer.name,
+        email: state.FormReducer.email
     }
 }
 
 const mapDispatchToProps = {
     updatePhoneForCancel,
-    sendEmail,
     setTreatment,
     updateActiveStep,
     setTimeSlots,
