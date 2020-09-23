@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
 import { updateActiveStep } from '../../actions/stepperAction';
 import { withRouter } from 'react-router-dom';
 import './StepperBtn.scss';
@@ -19,7 +18,7 @@ function _StepperBtn(props) {
         } else {setActiveNextBtn('')} 
         if (props.duration) {setActiveNextBtn('active-btn') 
         } else {setActiveNextBtn('')} 
-    });
+    },[props.activeStep,props.duration,props.treatment]);
 
     function changeStep(diff) {
         // confiramtion

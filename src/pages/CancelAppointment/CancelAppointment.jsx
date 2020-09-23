@@ -4,11 +4,16 @@ import UtilsService from "../../services/UtilsService";
 import CalendarService from '../../services/CalendarService';
 import './CancelAppointment.scss';
 import { withRouter } from 'react-router-dom';
-import { updatePhoneForCancel } from '../../actions/formAction.js';
+import { updatePhoneForCancel, sendEmail } from '../../actions/formAction.js';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { motion } from 'framer-motion'
-
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import { setTreatment, initPickedTreatments,initDuration } from '../../actions/treatmentActions.js';
+import { setTimeSlots } from '../../actions/calendarActions.js';
+import { updateActiveStep } from '../../actions/stepperAction';
 const pageVariants = {
     in: {
         opacity: 1,
@@ -29,17 +34,51 @@ const pageTransition = {
 
 export function _CancelAppointment(props) {
 
-    const [eventToCancel, setEventToCancel] = useState(null)
     const useStyles = makeStyles((theme) => ({
+        modal: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        paper: {
+            backgroundColor: theme.palette.background.paper,
+            border: '2px solid #000',
+            boxShadow: theme.shadows[5],
+            padding: theme.spacing(2, 4, 3),
+            color: 'form-title'
+        },
         root: {
             '& > *': {
                 margin: theme.spacing(1),
                 width: '25ch',
                 color: '#172b4d'
-            },
+            }
         },
     }));
 
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+         initApp()
+        props.history.push('/')
+    };
+
+    function initApp() {
+        props.updateActiveStep(0)
+        props.setTreatment(null)
+        props.setTimeSlots(null)
+        props.initDuration()
+        props.initPickedTreatments()
+      }
+
+
+    const [eventToCancel, setEventToCancel] = useState(null)
     useEffect(() => {
     }, []);
 
@@ -49,8 +88,9 @@ export function _CancelAppointment(props) {
         CalendarService.remove(eventToRmove.eventId)
         // delete from mongo data base
         CalendarService.removeEventFromDB(eventToRmove._id)
-
         setEventToCancel(null)
+        sendEmail()
+        handleOpen()
     }
 
     function handleChange({ target }) {
@@ -78,12 +118,21 @@ export function _CancelAppointment(props) {
                 console.log("not working");
         }
 
+    }
 
+    function sendEmail() {
+        const { phone } = props
+        let emailObj = {
+            // email,
+            bodyText: `שלום, ${"cusomer name"}
+        בוטל תור${eventToCancel.treatments}  
+            בתאריך ${eventToCancel.date}
+                בוטל עם מספר  - ${phone}`
+        }
+        props.sendEmail(emailObj)
     }
 
     const classes = useStyles();
-
-
     return (
         <motion.div
             className="motion-div"
@@ -94,14 +143,9 @@ export function _CancelAppointment(props) {
             transition={pageTransition}
         >
             <main className="cancel-appointment flex column align-center space-around main-container">
-                <div>
+                <div className="flex align-center column">
                     <div className="cancel-form-title">נא להזין מספר טלפון לביטול התור  :</div>
-                    <form className={classes.root} noValidate autoComplete="off">
-                        <div className="cancel-input-wrapper flex">
-                            <TextField className={classes.root} name="phone" id="outlined-basic" variant="outlined" value={props.phone} onChange={handleChange} />
-                        </div>
-                    </form>
-
+                    <TextField autoFocus={true} className={classes.root} name="phone" id="outlined-basic" variant="outlined" value={props.phone} onChange={handleChange} />
                 </div>
                 <div className="table-wrapper">
                     {(eventToCancel) && <div className="table-title"> פרטי התור :</div>}
@@ -117,6 +161,26 @@ export function _CancelAppointment(props) {
                 </div>
                 <div className="space"></div>
                 {(eventToCancel) && <button onClick={cancelAppointment} className="trash-btn"> מחק תור <i className="fas fa-trash" ></i></button>}
+
+                <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={open}
+                    onClose={handleClose}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                        timeout: 500,
+                    }}
+                >
+                    <Fade in={open}>
+                        <div className={classes.paper}>
+                            <h2 id="transition-modal-title">התור בוטל</h2>
+                            <p id="transition-modal-description"></p>
+                        </div>
+                    </Fade>
+                </Modal>
             </main>
         </motion.div>
     );
@@ -124,12 +188,18 @@ export function _CancelAppointment(props) {
 
 function mapStateProps(state) {
     return {
-        phone: state.FormReducer.phoneForCancel,
+        phone: state.FormReducer.phoneForCancel
     }
 }
 
 const mapDispatchToProps = {
     updatePhoneForCancel,
+    sendEmail,
+    setTreatment,
+    updateActiveStep,
+    setTimeSlots,
+    initDuration,
+    initPickedTreatments,
 }
 
 export const CancelAppointment = withRouter(connect(mapStateProps, mapDispatchToProps)(_CancelAppointment))

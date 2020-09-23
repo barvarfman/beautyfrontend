@@ -4,7 +4,8 @@ const INITIAL_STATE = {
     treatment: null,
     treatments: null,
     pickedTreatments:[],
-    duration:0
+    duration:0,
+    path:''
 }
 
 export function TreatmentReducer(state = INITIAL_STATE, action) {
@@ -38,6 +39,17 @@ export function TreatmentReducer(state = INITIAL_STATE, action) {
         return {
           ...state,
           pickedTreatments:[]
+        };        
+        case 'INIT_DURATION':
+        return {
+          ...state,
+          duration:0
+        };        
+        case 'PATH':
+          console.log(action.path);
+        return {
+          ...state,
+          path:action.path
         };        
       
         default:

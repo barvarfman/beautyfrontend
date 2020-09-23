@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { loadTreatments } from '../../actions/treatmentActions.js';
 import { loadCalendar } from '../../actions/calendarActions.js';
 import { TreatmentList } from '../../cmps/TreatmentList/TreatmentList';
-
 import './TreatmentApp.scss';
 import '../../styles/style.scss';
 import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import './TreatmentPreview.scss';
 import '../../styles/style.scss';
 import { connect } from 'react-redux';
@@ -9,6 +9,13 @@ import { SwitchApp } from '../SwitchApp/SwitchApp';
 export function _TreatmentPreview(props) {
 
     const [markedBySwitch, setMarkedBySwitch] = useState('');
+    const [isActive, setIsActive] = useState(false);
+
+    useEffect(() => {
+        //if path===form it means that the last path was form, but still need to update all the othre route page
+            let trNames = props.pickedTreatments.map(treatment => treatment.name)
+            setIsActive(trNames.includes(props.treatment.name))
+    }, [props.treatment, props.pickedTreatments])
 
     function updateDuration(switchIsOn) {
         if (switchIsOn) {
@@ -20,10 +27,10 @@ export function _TreatmentPreview(props) {
 
     function updatePickedTreatments(addOrRemove) {
         props.updatePickedTreatments(props.treatment, addOrRemove)
-        if (addOrRemove==='add') {
+        if (addOrRemove === 'add') {
             setMarkedBySwitch(" marked-by-switch")
         } else {
-        setMarkedBySwitch("")
+            setMarkedBySwitch("")
         }
     }
 
@@ -34,9 +41,9 @@ export function _TreatmentPreview(props) {
                     <div className="align-col-name">
                         {props.treatment.name}
                     </div>
-                    <div className="align-col">{'₪'+props.treatment.price}</div>
+                    <div className="align-col">{'₪' + props.treatment.price}</div>
                     <div className="align-col">{props.treatment.duration + UtilService.englishToHebrew('minutes')}</div>
-                    <SwitchApp className="align-col" updateDuration={updateDuration} updatePickedTreatments={updatePickedTreatments} />
+                    <SwitchApp  isActive={isActive} className="align-col" updateDuration={updateDuration} updatePickedTreatments={updatePickedTreatments} />
                 </div>
             }
 
@@ -49,7 +56,8 @@ export function _TreatmentPreview(props) {
 function mapStateProps(state) {
     return {
         duration: state.TreatmentReducer.duration,
-        pickedTreatments: state.TreatmentReducer.pickedTreatments
+        pickedTreatments: state.TreatmentReducer.pickedTreatments,
+        path: state.TreatmentReducer.path,
     }
 }
 

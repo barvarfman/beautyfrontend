@@ -1,6 +1,5 @@
 import TreatmentService from '../services/TreatmentService';
 
-
 // THUNK
 export function loadTreatments() {
   
@@ -111,5 +110,44 @@ export function initPickedTreatments() {
 function _initPickedTreatments() {
   return {
     type: 'INIT_PICKED_TREATMENTS'
+  };
+}
+
+
+export function initDuration() {
+  console.log('here');
+  return async dispatch => {
+    try {
+      await 
+      dispatch(_initDuration());
+    } catch (err) {
+      console.log('ERR WITH initDuration', err);
+    }
+  };
+}
+
+function _initDuration() {
+  return {
+    type: 'INIT_DURATION'
+  };
+}
+
+export function updatePath(path) {
+  console.log(path);
+  return async dispatch => {
+    try {
+      await 
+      dispatch(_updatePath(path));
+    } catch (err) {
+      console.log('ERR WITH initPickedTreatments', err);
+    }
+  };
+}
+
+
+function _updatePath(path) {
+  return {
+    type: 'PATH',
+    path
   };
 }

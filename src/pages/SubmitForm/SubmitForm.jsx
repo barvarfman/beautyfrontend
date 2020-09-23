@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from 'react-redux';
 import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';
 import UtilsService from "../../services/UtilsService";
 import CalendarService from '../../services/CalendarService';
 import { updateEmail, updateName, updatePhone, sendEmail } from '../../actions/formAction.js';
 import { setTimeSlots } from '../../actions/calendarActions.js';
-import { setTreatment, updateDuration, initPickedTreatments } from '../../actions/treatmentActions.js';
+import { setTreatment, updateDuration, initPickedTreatments, initDuration } from '../../actions/treatmentActions.js';
 import './SubmitForm.scss';
 import { updateActiveStep } from '../../actions/stepperAction';
 import { withRouter } from 'react-router-dom';
@@ -15,6 +15,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import TextField from '@material-ui/core/TextField';
 import { motion } from 'framer-motion'
+
 const pageVariants = {
     in: {
         opacity: 1,
@@ -33,10 +34,9 @@ const pageTransition = {
 }
 
 export function _SubmitForm(props) {
-
     // Similar to componentDidMount and componentDidUpdate:
-    useEffect(() => {
-    }, []);
+    // useEffect(() => {
+    // },);
 
     async function setAppointment(time = props.treatment.time, date = props.treatment.date) {
         let treatmentsType = ''
@@ -53,11 +53,11 @@ export function _SubmitForm(props) {
         const event = {
             phone: props.phone,
             eventId: confirmedEvent.id,
-            treatments:treatmentsType,
-            duration:props.duration,
-            startTime:startTime.slice(11,20),
-            endTime:endTime.slice(11,20),
-            date:startTime.slice(0,10)
+            treatments: treatmentsType,
+            duration: props.duration,
+            startTime: startTime.slice(11, 20),
+            endTime: endTime.slice(11, 20),
+            date: startTime.slice(0, 10)
         }
         CalendarService.saveConfirmedEvent(event)
         console.log(event);
@@ -84,11 +84,7 @@ export function _SubmitForm(props) {
 
     function sendEmail() {
         const { name, phone, email, duration, treatment, pickedTreatments } = props
-        let treatmentsType = ''
-        pickedTreatments.forEach((tr, idx) => {
-            if (pickedTreatments.length !== idx + 1) treatmentsType += tr.name + ', '
-            else treatmentsType += tr.name
-        })
+        let treatmentsType = UtilsService.arrayToString(pickedTreatments)
         let emailObj = {
             email,
             bodyText: `שלום, ${name} שמחים שבחרת במספרת קובי!
@@ -104,9 +100,9 @@ export function _SubmitForm(props) {
     function initApp() {
         props.updateActiveStep(0)
         props.setTreatment(null)
-        props.updateDuration(+props.duration * -1)
-        props.initPickedTreatments()
         props.setTimeSlots(null)
+        props.initDuration()
+        props.initPickedTreatments()
         props.history.push('/')
     }
 
@@ -141,7 +137,7 @@ export function _SubmitForm(props) {
 
     const handleClose = () => {
         setOpen(false);
-        props.history.push('/')
+        initApp()
     };
 
 
@@ -160,7 +156,7 @@ export function _SubmitForm(props) {
                     <form className={`${classes.input} submit-form flex column align-center`} noValidate autoComplete="off">
                         <div>
                             <div className="form-title">שם מלא :</div>
-                            <TextField name="name" id="outlined-basic" variant="outlined" value={props.name} onChange={handleChange} />
+                            <TextField autoFocus={true} name="name" id="outlined-basic" variant="outlined" value={props.name} onChange={handleChange} />
                         </div>
                         <div>
                             <div className="form-title">טלפון :</div>
@@ -188,6 +184,9 @@ export function _SubmitForm(props) {
                             <div className={classes.paper}>
                                 <h2 id="transition-modal-title">התור נקבע בהצלחה</h2>
                                 <p id="transition-modal-description">פירוט התור כאן:</p>
+                                <div> נקבע לך תור ל: {UtilsService.arrayToString(props.pickedTreatments)}  </div>
+                                <div> בתאריך {props.treatment.date}</div>
+                                <div>   בשעה  {props.treatment.time}</div>
                             </div>
                         </Fade>
                     </Modal>
@@ -218,7 +217,8 @@ const mapDispatchToProps = {
     setTreatment,
     updateDuration,
     setTimeSlots,
-    initPickedTreatments
+    initPickedTreatments,
+    initDuration
 }
 
 export const SubmitForm = withRouter(connect(mapStateProps, mapDispatchToProps)(_SubmitForm))

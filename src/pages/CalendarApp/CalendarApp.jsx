@@ -82,6 +82,8 @@ export function _CalendarApp(props) {
                     <KeyboardDatePicker
                         disableToolbar
                         variant="dialog"
+                        okLabel="אישור"
+                        cancelLabel="ביטול"
                         format="MM/dd/yyyy"
                         margin="normal"
                         id="date-picker-inline"
@@ -95,7 +97,7 @@ export function _CalendarApp(props) {
             </MuiPickersUtilsProvider>
             <div className="main-container time-slot-lists-container">
                 {(props.timeSlots && props.loader) ? <TimeslotList timeslots={props.timeSlots} />
-                    : <LoaderApp />}
+                    :<div className="loaderContainer"><LoaderApp /></div>}
             </div>
         </motion.div>
         <StepperBtn />

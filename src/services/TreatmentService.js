@@ -7,6 +7,8 @@ export default {
     update
 }
 
+
+
 function getTreatments() {
     return HttpService.get('treatment')
 }

@@ -6,7 +6,8 @@ export default {
   changeTimeForDisplay,
   idGen,
   calculateEndTime,
-  updatePickedTreatments
+  updatePickedTreatments,
+  arrayToString
 }
 
 function englishToHebrew(word) {
@@ -42,8 +43,8 @@ function englishToHebrew(word) {
     case ('eyebrows-mustache'):
       convertedWord = 'גבות ושפם';
       break;
-      default:
-        convertedWord="ברירת מחדל"
+    default:
+      convertedWord = "ברירת מחדל"
   }
 
   return ' ' + convertedWord
@@ -116,9 +117,9 @@ function calculateEndTime(time, duration) {
   }
   else {
     hours += (duration / 60)
-    minutes='00'
+    minutes = '00'
   }
-  
+
   hours = checkDigitsAndAddZerosIfNeeded(hours)
   return hours + ':' + minutes
 }
@@ -142,4 +143,13 @@ function updatePickedTreatments(reducerPickedTreatments, action) {
     reducerPickedTreatments.splice(treatmentIdx, 1);
   }
   return reducerPickedTreatments
+}
+
+function arrayToString(pickedTreatments) {
+  let treatmentsType = ''
+  pickedTreatments.forEach((tr, idx) => {
+    if (pickedTreatments.length !== idx + 1) treatmentsType += tr.name + ', '
+    else treatmentsType += tr.name
+  })
+  return treatmentsType
 }
