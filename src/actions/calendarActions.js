@@ -9,7 +9,7 @@ export function loadCalendar() {
       const calendar = await CalendarService.getCalendar();
       dispatch(setCalendar(calendar));
     } catch (err) {
-      console.log('CalendarActions: err in loadCalendars', err);
+      console.log('calendarActions: err in loadCalendars', err);
   };
 }
 }
@@ -26,7 +26,7 @@ export function loaderSwitch(loader) {
     try {
       dispatch(_loaderSwitch(loader));
     } catch (err) {
-      console.log('CalendarActions: err in loader', err);
+      console.log('calendarActions: err in loader', err);
     };
   }
 }

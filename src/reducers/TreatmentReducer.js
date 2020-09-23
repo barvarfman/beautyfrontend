@@ -4,12 +4,13 @@ const INITIAL_STATE = {
     treatment: null,
     treatments: null,
     pickedTreatments:[],
-    duration:0,
-    path:''
+    duration:0
 }
 
 export function TreatmentReducer(state = INITIAL_STATE, action) {
+
     switch (action.type) {
+
         case 'SET_TREATMENTS':
             return {
                 ...state,
@@ -24,17 +25,17 @@ export function TreatmentReducer(state = INITIAL_STATE, action) {
         return {
           ...state,
           treatments: state.treatments.filter(treatment => treatment._id !== action.treatmentId)
-        };        
-        case 'UPDATE_DURATION':
-        return {
-          ...state,
-          duration: state.duration+(action.duration)
-        };        
+        };     
         case 'UPDATE_PICKED_TREATMENT':
         return {
           ...state,
           pickedTreatments:UtilsService.updatePickedTreatments(state.pickedTreatments,action) 
-        };        
+        };   
+        case 'UPDATE_DURATION':
+        return {
+          ...state,
+          duration: state.duration+(action.duration)
+        };         
         case 'INIT_PICKED_TREATMENTS':
         return {
           ...state,
@@ -44,13 +45,7 @@ export function TreatmentReducer(state = INITIAL_STATE, action) {
         return {
           ...state,
           duration:0
-        };        
-        case 'PATH':
-          console.log(action.path);
-        return {
-          ...state,
-          path:action.path
-        };        
+        };           
       
         default:
             return state;

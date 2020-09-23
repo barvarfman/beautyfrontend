@@ -1,6 +1,6 @@
 import TreatmentService from '../services/TreatmentService';
 
-// THUNK
+
 export function loadTreatments() {
   
   return async dispatch => {
@@ -17,7 +17,32 @@ export function loadTreatments() {
     }
   };
 }
-// THUNK
+
+function setTreatments(treatments) {
+  return {
+    type: 'SET_TREATMENTS',
+    treatments
+  };
+}
+
+export function setTreatment(treatment) {
+  return async dispatch => {
+    try {
+      await 
+      dispatch((_setTreatment(treatment)));
+    } catch (err) {
+      console.log('TreatmentActions: err in setTreatment', err);
+    }
+  };
+}
+
+export function _setTreatment(treatment) {
+  return {
+    type: 'SET_TREATMENT',
+    treatment
+  };
+}
+
 export function removeTreatment(treatmentId) {
   return async dispatch => {
     try {
@@ -29,14 +54,10 @@ export function removeTreatment(treatmentId) {
   };
 }
 
-export function updateDuration(duration) {
-  return async dispatch => {
-    try {
-      await 
-      dispatch(_updateDuration(duration));
-    } catch (err) {
-      console.log('TreatmentActions: err in addDuration', err);
-    }
+function _removeTreatment(treatmentId) {
+  return {
+    type: 'REMOVE_TREATMENT',
+    treatmentId
   };
 }
 
@@ -50,48 +71,14 @@ export function updatePickedTreatments(treatment,addOrRemove) {
     }
   };
 }
-export function setTreatment(treatment) {
-  return async dispatch => {
-    try {
-      await 
-      dispatch((_setTreatment(treatment)));
-    } catch (err) {
-      console.log('TreatmentActions: err in setTreatment', err);
-    }
-  };
-}
-export function _updatePickedTreatments(treatment,addOrRemove) {
-    return {
-      type: 'UPDATE_PICKED_TREATMENT',
-      treatmentObj:{
-        treatment,
-        addOrRemove
-      }
-    };
-  }
 
-export function _updateDuration(duration) {
-    return {
-      type: 'UPDATE_DURATION',
-      duration
-    };
-  }
-export function _setTreatment(treatment) {
-    return {
-      type: 'SET_TREATMENT',
-      treatment
-    };
-  }
-  function setTreatments(treatments) {
-    return {
-      type: 'SET_TREATMENTS',
-      treatments
-    };
-  }
-function _removeTreatment(treatmentId) {
+export function _updatePickedTreatments(treatment,addOrRemove) {
   return {
-    type: 'REMOVE_TREATMENT',
-    treatmentId
+    type: 'UPDATE_PICKED_TREATMENT',
+    treatmentObj:{
+      treatment,
+      addOrRemove
+    }
   };
 }
 
@@ -106,16 +93,31 @@ export function initPickedTreatments() {
   };
 }
 
-
 function _initPickedTreatments() {
   return {
     type: 'INIT_PICKED_TREATMENTS'
   };
 }
 
+export function updateDuration(duration) {
+  return async dispatch => {
+    try {
+      await 
+      dispatch(_updateDuration(duration));
+    } catch (err) {
+      console.log('TreatmentActions: err in addDuration', err);
+    }
+  };
+}
+
+export function _updateDuration(duration) {
+    return {
+      type: 'UPDATE_DURATION',
+      duration
+    };
+}
 
 export function initDuration() {
-  console.log('here');
   return async dispatch => {
     try {
       await 
@@ -129,25 +131,5 @@ export function initDuration() {
 function _initDuration() {
   return {
     type: 'INIT_DURATION'
-  };
-}
-
-export function updatePath(path) {
-  console.log(path);
-  return async dispatch => {
-    try {
-      await 
-      dispatch(_updatePath(path));
-    } catch (err) {
-      console.log('ERR WITH initPickedTreatments', err);
-    }
-  };
-}
-
-
-function _updatePath(path) {
-  return {
-    type: 'PATH',
-    path
   };
 }

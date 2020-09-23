@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
-import { updateActiveStep } from '../../actions/stepperAction';
+import { updateActiveStep } from '../../actions/stepperActions';
 import { withRouter } from 'react-router-dom';
 import './StepperBtn.scss';
 function _StepperBtn(props) {

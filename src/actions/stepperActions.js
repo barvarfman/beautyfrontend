@@ -10,11 +10,12 @@ export function updateActiveStep(step) {
       }
     };
   }
+  
   export function _updateActiveStep(step) {
       return {
         type: 'UPDATE_ACTIVE_STEP',
         step
         }
-      };
+  };
 
 

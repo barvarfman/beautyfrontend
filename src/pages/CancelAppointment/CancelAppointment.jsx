@@ -4,7 +4,7 @@ import UtilsService from "../../services/UtilsService";
 import CalendarService from '../../services/CalendarService';
 import './CancelAppointment.scss';
 import { withRouter } from 'react-router-dom';
-import { updatePhoneForCancel, sendEmail } from '../../actions/formAction.js';
+import { updatePhoneForCancel, sendEmail } from '../../actions/formActions.js';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { motion } from 'framer-motion'
@@ -13,7 +13,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { setTreatment, initPickedTreatments,initDuration } from '../../actions/treatmentActions.js';
 import { setTimeSlots } from '../../actions/calendarActions.js';
-import { updateActiveStep } from '../../actions/stepperAction';
+import { updateActiveStep } from '../../actions/stepperActions';
 const pageVariants = {
     in: {
         opacity: 1,
@@ -124,10 +124,9 @@ export function _CancelAppointment(props) {
         const { phone } = props
         let emailObj = {
             // email,
-            bodyText: `שלום, ${"cusomer name"}
-        בוטל תור${eventToCancel.treatments}  
-            בתאריך ${eventToCancel.date}
-                בוטל עם מספר  - ${phone}`
+            bodyText: `שלום, ${props.name}
+                       התור שנקבע לתאריך ${eventToCancel.date} בוטל 
+                       תודה על העדכון `
         }
         props.sendEmail(emailObj)
     }
@@ -188,7 +187,8 @@ export function _CancelAppointment(props) {
 
 function mapStateProps(state) {
     return {
-        phone: state.FormReducer.phoneForCancel
+        phone: state.FormReducer.phoneForCancel,
+        name: state.FormReducer.name
     }
 }
 

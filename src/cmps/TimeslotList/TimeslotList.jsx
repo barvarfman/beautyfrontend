@@ -1,7 +1,7 @@
 // import React from 'react';
 import './TimeslotList.scss';
 import React, {useEffect } from "react";
-import { DailyslotsPreview } from '../DailyslotsPreview/DailyslotsPreview';
+import { DailySlots } from '../DailySlots/DailySlots';
 import UtilsService from '../../services/UtilsService';
 // import { TreatmentPreview } from '../TreatmentPreview/TreatmentPreview';
 
@@ -22,7 +22,7 @@ export function TimeslotList(props) {
                     return (
 
                         <div key={UtilsService.idGen()}>
-                            <DailyslotsPreview  timeslots={slotsForPreview} date={date} />
+                            <DailySlots  timeslots={slotsForPreview} date={date} />
                         </div>
                     )
                 })

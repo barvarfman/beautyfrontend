@@ -1,5 +1,5 @@
 import EmailService from '../services/EmailService'
-// THUNK
+
 export function updateEmail(emailToSend) {
     return async dispatch => {
         try {
@@ -10,12 +10,21 @@ export function updateEmail(emailToSend) {
     }
 }
 
-
 function setEmail(email) {
     return {
         type: 'UPDATE_EMAIL',
         email
     };
+}
+
+export function sendEmail(emailToSend) {
+    return async () => {
+        try {
+            await EmailService.sendMail(emailToSend);
+        } catch (err) {
+            console.log('formActions: err in sendEmail', err);
+        };
+    }
 }
 
 export function updateName(customerName) {
@@ -27,7 +36,6 @@ export function updateName(customerName) {
         };
     }
 }
-
 
 function _updateName(customerName) {
     return {
@@ -53,20 +61,6 @@ function _updatePhone(customerPhone) {
         customerPhone
     };
 }
-
-
-
-export function sendEmail(emailToSend) {
-    return async () => {
-        try {
-            await EmailService.sendMail(emailToSend);
-        } catch (err) {
-            console.log('formActions: err in sendEmail', err);
-        };
-    }
-}
-
-
 
 export function updatePhoneForCancel(phoneForCancel) {
     return async dispatch => {
