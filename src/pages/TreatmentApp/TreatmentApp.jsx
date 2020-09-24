@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadTreatments } from '../../actions/treatmentActions.js';
-import { loadCalendar } from '../../actions/calendarActions.js';
 import { TreatmentList } from '../../cmps/TreatmentList/TreatmentList';
-import './TreatmentApp.scss';
-import '../../styles/style.scss';
 import { NavBtns } from '../../cmps/NavBtns/NavBtns';
 import { motion } from 'framer-motion'
+import './TreatmentApp.scss';
+import '../../styles/style.scss';
 
+// style motion div
 const pageVariants={
     in:{
         opacity: 1 ,
@@ -26,12 +26,8 @@ const pageTransition={
 }
 
 export function _TreatmentApp(props) {
-    const { loadTreatments, loadCalendar } = props
-    useEffect(() => {
-        loadTreatments()
-        loadCalendar()
-    }
-        , [loadTreatments, loadCalendar]);
+    const { loadTreatments } = props
+    useEffect(() => {loadTreatments()},[loadTreatments]);
 
     const { treatments } = props;
 
@@ -55,13 +51,11 @@ export function _TreatmentApp(props) {
 function mapStateProps(state) {
     return {
         treatments: state.TreatmentReducer.treatments,
-        calendar: state.CalendarReducer.calendar
     }
 }
 
 const mapDispatchToProps = {
-    loadTreatments,
-    loadCalendar
+    loadTreatments
 }
 
 export const TreatmentApp = connect(mapStateProps, mapDispatchToProps)(_TreatmentApp)

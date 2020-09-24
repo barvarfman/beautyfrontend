@@ -6,7 +6,6 @@ import CalendarService from '../../services/CalendarService';
 import StoreService from '../../services/StoreService';
 import { setTimeSlots } from '../../actions/calendarActions.js';
 import { setTreatment, updateDuration, initPickedTreatments, initDuration } from '../../actions/treatmentActions.js';
-import './SubmitForm.scss';
 import { updateActiveStep } from '../../actions/stepperActions';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,6 +14,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import TextField from '@material-ui/core/TextField';
 import { motion } from 'framer-motion'
+import './SubmitForm.scss';
 
 // style for motion div
 const pageVariants = {
@@ -80,7 +80,8 @@ export function _SubmitForm(props) {
     }
 
     function setAppointment () {
-        CalendarService.setAppointment(props.pickedTreatments, props.duration, credentials.phone, credentials.email, credentials.name, props.treatment)
+        const {name,phone,email} = credentials
+        CalendarService.setAppointment(props.pickedTreatments, props.duration, phone, email, name, props.treatment)
     }
 
     function handleChange({ target }) {
