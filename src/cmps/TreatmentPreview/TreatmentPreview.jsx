@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { updateDuration, updatePickedTreatments } from '../../actions/treatmentActions';
+import { updateDuration} from '../../actions/treatmentActions';
 import { SwitchApp } from '../SwitchApp/SwitchApp';
 import UtilService from '../../services/UtilsService'
 import './TreatmentPreview.scss';
+import TreatmentService from '../../services/TreatmentService';
 
 export function _TreatmentPreview(props) {
 
@@ -11,10 +12,8 @@ export function _TreatmentPreview(props) {
     const [isActive, setIsActive] = useState(false);
 
     useEffect(() => {
-        //****change****** add isactive to each treatment in the array inside the array and check who is active
-        let treatmentNames = props.pickedTreatments.map(treatment => treatment.name)
-        setIsActive(treatmentNames.includes(props.treatment.name))
-    }, [props.treatment, props.pickedTreatments])
+        setIsActive(props.treatment.marked)
+    }, [props.treatment])
 
     function updateDuration(switchIsOn) {
         if (switchIsOn) {
@@ -24,13 +23,17 @@ export function _TreatmentPreview(props) {
         }
     }
 
-    // ****change**** add isactive to each treatment in the array and mark the css by active/or not
-    function updatePickedTreatments(addOrRemove) {
-        props.updatePickedTreatments(props.treatment, addOrRemove)
-        if (addOrRemove) {setMarkedBySwitch(" marked-by-switch")
+    // mark the treatment
+    function updatePickedTreatments(isActive) {
+        if (isActive) {
+            updatedTreatment.marked = true
+            setMarkedBySwitch(" marked-by-switch")
         } else {
+            updatedTreatment.marked = false
             setMarkedBySwitch("")
         }
+        const treatmentsToUpdate = TreatmentService.updateTreatments(treatments.slice(), {...props.treatment})
+        props.updateTreatments(treatmentsToUpdate)
     }
 
     return (
@@ -52,13 +55,13 @@ export function _TreatmentPreview(props) {
 function mapStateProps(state) {
     return {
         duration: state.TreatmentReducer.duration,
-        pickedTreatments: state.TreatmentReducer.pickedTreatments
+        treatments: state.TreatmentReducer.treatments
     }
 }
 
 const mapDispatchToProps = {
     updateDuration,
-    updatePickedTreatments
+    updateTreatments
 }
 
 export const TreatmentPreview = connect(mapStateProps, mapDispatchToProps)(_TreatmentPreview)

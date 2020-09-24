@@ -7,7 +7,6 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { motion } from 'framer-motion'
-import { setTreatment, initPickedTreatments,initDuration } from '../../actions/treatmentActions.js';
 import { setTimeSlots } from '../../actions/calendarActions.js';
 import { updateActiveStep } from '../../actions/stepperActions';
 import UtilsService from "../../services/UtilsService";
@@ -122,7 +121,6 @@ export function _CancelAppointment(props) {
             default:
                 console.log("err in phone switch case - cancel appoinment");
         }
-
     }
 
     return (
@@ -184,11 +182,8 @@ function mapStateProps(state) {
 }
 
 const mapDispatchToProps = {
-    setTreatment,
     updateActiveStep,
-    setTimeSlots,
-    initDuration,
-    initPickedTreatments,
+    setTimeSlots
 }
 
 export const CancelAppointment = withRouter(connect(mapStateProps, mapDispatchToProps)(_CancelAppointment))

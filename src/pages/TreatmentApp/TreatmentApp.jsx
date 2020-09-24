@@ -27,7 +27,9 @@ const pageTransition={
 
 export function _TreatmentApp(props) {
     const { loadTreatments } = props
-    useEffect(() => {loadTreatments()},[loadTreatments]);
+    useEffect(() => {
+        if (!treatments) loadTreatments()
+    },[loadTreatments]);
 
     const { treatments } = props;
 

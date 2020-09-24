@@ -129,22 +129,17 @@ function removeEventFromDB (_id) {
 // }
 
 async function setAppointment(treatments, duration, phone, email, name, treatment) {
-    let treatmentsType = ''
-    treatments.forEach((tr, idx) => {
-        if (treatments.length !== idx + 1) treatmentsType += tr.name + ', '
-        else treatmentsType += tr.name
-    })
     let time = UtilsService.changeTimeForDisplay(treatment.time, 3)
     const startTime = `${treatment.date}T${time}:00Z`
     time = UtilsService.calculateEndTime(time, duration)
     const endTime = `${treatment.date}T${time}:00Z`
-    const confirmedEvent = await update(startTime, endTime, treatmentsType, 'ayal', 'ayal@gmail.com')
+    const confirmedEvent = await update(startTime, endTime, treatments, 'ayal', 'ayal@gmail.com')
     const event = {
         name,
         email,
         phone,
         eventId: confirmedEvent.id,
-        treatments: treatmentsType,
+        treatments,
         duration,
         startTime: startTime.slice(11, 20),
         endTime: endTime.slice(11, 20),
