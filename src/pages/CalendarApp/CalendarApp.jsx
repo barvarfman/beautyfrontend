@@ -7,7 +7,7 @@ import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { TimeslotList } from '../../cmps/TimeslotList/TimeslotList';
 import { loadTimeSlots, loaderSwitch } from '../../actions/calendarActions.js';
-import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';
+import { NavBtns } from '../../cmps/NavBtns/NavBtns';
 import './CalendarApp.scss';
 import { LoaderApp } from '../../cmps/LoaderApp/LoaderApp'
 import { motion } from 'framer-motion'
@@ -100,7 +100,7 @@ export function _CalendarApp(props) {
                     :<div className="loaderContainer flex align-center justify-center"><LoaderApp /></div>}
             </div>
         </motion.div>
-        <StepperBtn />
+        <NavBtns />
         </>
     );
 }

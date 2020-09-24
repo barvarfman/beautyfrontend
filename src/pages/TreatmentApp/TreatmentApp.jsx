@@ -5,7 +5,7 @@ import { loadCalendar } from '../../actions/calendarActions.js';
 import { TreatmentList } from '../../cmps/TreatmentList/TreatmentList';
 import './TreatmentApp.scss';
 import '../../styles/style.scss';
-import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';
+import { NavBtns } from '../../cmps/NavBtns/NavBtns';
 import { motion } from 'framer-motion'
 const pageVariants={
     in:{
@@ -46,7 +46,7 @@ export function _TreatmentApp(props) {
         >
             <TreatmentList treatments={treatments} />
         </motion.div>
-    <StepperBtn />
+    <NavBtns />
     </>
     )
 }

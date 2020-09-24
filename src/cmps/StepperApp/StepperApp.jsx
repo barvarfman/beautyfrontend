@@ -1,11 +1,12 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import {MuiThemeProvider,createMuiTheme,makeStyles} from "@material-ui/core/styles";
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import { connect } from 'react-redux';
-import {MuiThemeProvider,createMuiTheme} from "@material-ui/core/styles";
+import './StepperApp.scss'
 
+// stepper style
 const theme = createMuiTheme({
 // add margin left from the circules
   palette: {
@@ -18,18 +19,12 @@ const theme = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-  },
-  button: {
-    marginRight: theme.spacing(1),
-  },
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
+  }
 }));
 
 
 export function _StepperApp(props) {
+
   const classes = useStyles();
 
   return (
@@ -41,8 +36,8 @@ export function _StepperApp(props) {
           const stepProps = {};
           const labelProps = {};
           return (
-            <Step key={label} {...stepProps} >
-              <StepLabel {...labelProps}>{label}  </StepLabel>
+            <Step  key={label} {...stepProps} >
+              <StepLabel  {...labelProps}>{label}  </StepLabel>
             </Step>
           );
         })}
@@ -55,7 +50,7 @@ export function _StepperApp(props) {
 
 function mapStateProps(state) {
   return {
-    steps:  state.StepperReducer.steps,
+    steps: state.StepperReducer.steps,
     activeStep:state.StepperReducer.step
   }
 }

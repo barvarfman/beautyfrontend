@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { StepperBtn } from '../../cmps/StepperBtn/StepperBtn';
+import { NavBtns } from '../../cmps/NavBtns/NavBtns';
 import UtilsService from "../../services/UtilsService";
 import CalendarService from '../../services/CalendarService';
 import { updateEmail, updateName, updatePhone } from '../../actions/formActions.js';
@@ -154,7 +154,7 @@ export function _SubmitForm(props) {
                     </Modal>
                 </div>
             </motion.div>
-            <StepperBtn handleOpen={handleOpen} setAppointment={setAppointment} />
+            <NavBtns handleOpen={handleOpen} setAppointment={setAppointment} />
         </>
     );
 }

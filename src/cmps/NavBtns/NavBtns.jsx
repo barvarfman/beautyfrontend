@@ -2,25 +2,31 @@ import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import { updateActiveStep } from '../../actions/stepperActions';
 import { withRouter } from 'react-router-dom';
-import './StepperBtn.scss';
-function _StepperBtn(props) {
+import './NavBtns.scss';
+function _NavBtns(props) {
 
     const [hideBtn, setHideBtn] = useState('');
     const [activeNextBtn, setActiveNextBtn] = useState('');
     const [activeBackBtn, setActiveBackBtn] = useState('');
 
-    useEffect(() => {
+    useEffect(() => {toggleBtnsStyle()});
+
+    function toggleBtnsStyle() {
         if (props.activeStep !== 1) {setHideBtn('')}
         else {setHideBtn("hide-btn")}
         if (props.activeStep) {setActiveBackBtn('active-btn')}
         else {setActiveBackBtn('')}
-        if (props.activeStep === 2 && !props.treatment){setActiveNextBtn('active-btn') 
+        if ((props.activeStep === 2 && !props.treatment) || (props.duration) ){setActiveNextBtn('active-btn') 
         } else {setActiveNextBtn('')} 
-        if (props.duration) {setActiveNextBtn('active-btn') 
-        } else {setActiveNextBtn('')} 
-    },[props.activeStep,props.duration,props.treatment]);
+    }
+
+    function isNextBtnDisable() {
+        if (!props.duration) return true
+        if (props.activeStep === 2 && !props.treatment) return true
+    }
 
     function changeStep(diff) {
+
         if (props.activeStep + diff === 3) {
             props.setAppointment()
             props.handleOpen()
@@ -28,16 +34,10 @@ function _StepperBtn(props) {
         props.updateActiveStep(props.activeStep + diff)
         if (!props.activeStep && diff > 0){
             props.history.push('/calendar')
-            
         }    
         else if (props.activeStep === 1 && diff > 0) props.history.push('/form')
         else if (props.activeStep === 2 && diff < 0) props.history.push('/calendar')
         else if (props.activeStep === 1 && diff < 0) props.history.push('/')
-    }
-
-    function checkStepValidation() {
-        if (!props.duration) return true
-        if (props.activeStep === 2 && !props.treatment) return true
     }
 
     return (
@@ -49,7 +49,7 @@ function _StepperBtn(props) {
             </button>
           </div>
           <div className={`stepper-btn-wrraper stepper-btn-wrraper-next ${hideBtn} `}>
-            <button className={`stepper-btn ${activeNextBtn}`} onClick={() => changeStep(1)} disabled={checkStepValidation()}>
+            <button className={`stepper-btn ${activeNextBtn}`} onClick={() => changeStep(1)} disabled={isNextBtnDisable()}>
                     {(props.activeStep === 2) ? 'אשר' : 'הבא'}
             </button>
           </div>
@@ -72,4 +72,4 @@ const mapDispatchToProps = {
     updateActiveStep
 }
 
-export const StepperBtn = withRouter(connect(mapStateProps, mapDispatchToProps)(_StepperBtn))
+export const NavBtns = withRouter(connect(mapStateProps, mapDispatchToProps)(_NavBtns))

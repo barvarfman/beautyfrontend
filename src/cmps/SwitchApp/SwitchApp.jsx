@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Switch from '@material-ui/core/Switch';
 import { create } from 'jss';
 import rtl from 'jss-rtl';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
-import { createMuiTheme,ThemeProvider } from '@material-ui/core/styles';
+import { StylesProvider, jssPreset,createMuiTheme,ThemeProvider } from '@material-ui/core/styles';
+import Switch from '@material-ui/core/Switch';
+
 const theme = createMuiTheme({
   direction: 'rtl',
 });
@@ -13,14 +13,14 @@ const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
 export function SwitchApp(props) {
 
-  const [checkedA, setCheckedA] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
-    setCheckedA(props.isActive)
+    setIsChecked(props.isActive)
   }, [props.isActive])
 
   const handleChange = (event) => {
-    if (!checkedA) {
+    if (!isChecked) {
       props.updateDuration(true)
       props.updatePickedTreatments('add')
     }
@@ -29,7 +29,7 @@ export function SwitchApp(props) {
       props.updateDuration(false)
       props.updatePickedTreatments('remove')
     }
-    setCheckedA(event.target.checked)
+    setIsChecked(event.target.isChecked)
   };
 
   return (
@@ -37,9 +37,9 @@ export function SwitchApp(props) {
       <ThemeProvider theme={theme}>
         <div dir="rtl">
           <Switch
-            checked={checkedA}
+            isChecked={isChecked}
             onChange={handleChange}
-            name="checkedA"
+            name="isChecked"
             inputProps={{ 'aria-label': 'secondary checkbox' }}
           />
         </div>
