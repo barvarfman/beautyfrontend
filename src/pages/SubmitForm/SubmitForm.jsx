@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { NavBtns } from '../../cmps/NavBtns/NavBtns';
 import UtilsService from "../../services/UtilsService";
 import CalendarService from '../../services/CalendarService';
-import { updateEmail, updateName, updatePhone } from '../../actions/formActions.js';
+import StoreService from '../../services/StoreService';
 import { setTimeSlots } from '../../actions/calendarActions.js';
 import { setTreatment, updateDuration, initPickedTreatments, initDuration } from '../../actions/treatmentActions.js';
 import './SubmitForm.scss';
@@ -61,6 +61,7 @@ export function _SubmitForm(props) {
     
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+    const [credentials, setCredentials] = React.useState({name:'',phone:'',email:''})
     const dateIsraeliDisplay = UtilsService.convertDateToIsraelisDisplay(props.treatment.date)
     const endTime = UtilsService.calculateEndTime(props.treatment.time,props.duration)
     
@@ -70,20 +71,16 @@ export function _SubmitForm(props) {
 
     const handleClose = () => {
         setOpen(false);
-        initApp()
+        init()
+        props.history.push('/')
     };
 
-    function initApp() {
-        props.updateActiveStep(0)
-        props.setTimeSlots(null)
-        props.setTreatment(null)
-        props.initDuration()
-        props.initPickedTreatments()
-        props.history.push('/')
+    function init() {
+        StoreService.initApp()
     }
 
     function setAppointment () {
-        CalendarService.setAppointment(props.pickedTreatments, props.duration, props.phone, props.email, props.name, props.treatment)
+        CalendarService.setAppointment(props.pickedTreatments, props.duration, credentials.phone, credentials.email, credentials.name, props.treatment)
     }
 
     function handleChange({ target }) {
@@ -91,21 +88,24 @@ export function _SubmitForm(props) {
         const value = target.value;
         switch (field) {
             case 'name':
-            props.updateName(value)
+            setCredentials({...credentials,name:value})
             break;
             case 'phone':
-            props.updatePhone(value)
+            setCredentials({...credentials,phone:value})
             break;
             case 'email':
-            props.updateEmail(value)
+            setCredentials({...credentials,email:value})
             break;
-            }
+            default:
+            console.log('Err updating name/phone/email')
         }
+    }
     
 
+    const {name, phone, email} = credentials
     return (
         <>
-            <button className="restart-btn" onClick={initApp}>אתחול  <i className="fas fa-redo-alt"></i></button>
+            <button className="restart-btn" onClick={init}>אתחול  <i className="fas fa-redo-alt"></i></button>
             <motion.div
                 initial="out"
                 exit="in"
@@ -118,15 +118,15 @@ export function _SubmitForm(props) {
                     <form className={`${classes.input} submit-form flex column align-center`} noValidate autoComplete="off">
                         <div>
                             <div className="form-title">שם מלא :</div>
-                            <TextField autoFocus={true} name="name" id="outlined-basic" variant="outlined" value={props.name} onChange={handleChange} />
+                            <TextField autoFocus={true} name="name" id="outlined-basic" variant="outlined" value={name} onChange={handleChange} />
                         </div>
                         <div>
                             <div className="form-title">טלפון :</div>
-                            <TextField name="phone" id="outlined-basic" variant="outlined" value={props.phone} onChange={handleChange} />
+                            <TextField name="phone" id="outlined-basic" variant="outlined" value={phone} onChange={handleChange} />
                         </div>
                         <div>
                             <div className="form-title">מייל :</div>
-                            <TextField name="email" id="outlined-basic" variant="outlined" value={props.email} onChange={handleChange} />
+                            <TextField name="email" id="outlined-basic" variant="outlined" value={email} onChange={handleChange} />
                         </div>
                     </form>
 
@@ -161,9 +161,6 @@ export function _SubmitForm(props) {
 
 function mapStateProps(state) {
     return {
-        name: state.FormReducer.name,
-        email: state.FormReducer.email,
-        phone: state.FormReducer.phone,
         pickedTreatments: state.TreatmentReducer.pickedTreatments,
         duration: state.TreatmentReducer.duration,
         treatment: state.TreatmentReducer.treatment,
@@ -171,9 +168,6 @@ function mapStateProps(state) {
 }
 
 const mapDispatchToProps = {
-    updateEmail,
-    updateName,
-    updatePhone,
     updateActiveStep,
     setTreatment,
     updateDuration,

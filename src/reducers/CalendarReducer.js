@@ -1,7 +1,6 @@
 const INITIAL_STATE = {
     calendar: null,
     timeSlots: null,
-    loader:true,
     confirmedEventId:null
 }
 
@@ -18,12 +17,7 @@ export function CalendarReducer(state = INITIAL_STATE, action) {
                 ...state,
                 timeSlots: action.timeSlots
             }          
-        case  'SET_loader':
-            return {
-                ...state,
-                loader: action.loader
-            }                
-      
+
         default:
             return state;
     }

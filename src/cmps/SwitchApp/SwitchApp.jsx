@@ -13,23 +13,23 @@ const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
 export function SwitchApp(props) {
 
-  const [isChecked, setIsChecked] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    setIsChecked(props.isActive)
+    setChecked(props.isActive)
   }, [props.isActive])
 
   const handleChange = (event) => {
-    if (!isChecked) {
+    if (!checked) {
       props.updateDuration(true)
-      props.updatePickedTreatments('add')
+      props.updatePickedTreatments(true)
     }
     else {
       props.setIsActive(false)
       props.updateDuration(false)
-      props.updatePickedTreatments('remove')
+      props.updatePickedTreatments(false)
     }
-    setIsChecked(event.target.isChecked)
+    setChecked(event.target.checked)
   };
 
   return (
@@ -37,9 +37,9 @@ export function SwitchApp(props) {
       <ThemeProvider theme={theme}>
         <div dir="rtl">
           <Switch
-            isChecked={isChecked}
+            checked={checked}
             onChange={handleChange}
-            name="isChecked"
+            name="checked"
             inputProps={{ 'aria-label': 'secondary checkbox' }}
           />
         </div>

@@ -7,6 +7,7 @@ import './TreatmentApp.scss';
 import '../../styles/style.scss';
 import { NavBtns } from '../../cmps/NavBtns/NavBtns';
 import { motion } from 'framer-motion'
+
 const pageVariants={
     in:{
         opacity: 1 ,

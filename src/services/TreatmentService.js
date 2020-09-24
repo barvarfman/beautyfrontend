@@ -25,13 +25,12 @@ function update(treatment) {
     return HttpService.put(`treatment/${treatment._id}`, treatment)
 }
 
-function updatePickedTreatments(reducerPickedTreatments, action) {
+function updatePickedTreatments(treatments, treatmentToUpdate) {
         
-    if (action.treatmentObj.addOrRemove === 'add') {
-      reducerPickedTreatments.push(action.treatmentObj.treatment)
+    if (treatmentToUpdate.addOrRemove) {treatments.push(treatmentToUpdate.treatment)
     } else {
-      const treatmentIdx = reducerPickedTreatments.findIndex((treatment) => treatment._id === action.treatmentObj.treatment._id);
-      reducerPickedTreatments.splice(treatmentIdx, 1);
+      const idx = treatments.findIndex((treatment) => treatment._id === treatmentToUpdate.treatment._id);
+      treatments.splice(idx, 1);
     }
-    return reducerPickedTreatments
+    return treatments
   }

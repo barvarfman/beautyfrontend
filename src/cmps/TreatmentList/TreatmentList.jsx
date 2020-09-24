@@ -1,8 +1,7 @@
 import React from 'react';
-import './TreatmentList.scss';
-import '../../styles/style.scss';
-import UtilsService from '../../services/UtilsService';
 import { TreatmentPreview } from '../TreatmentPreview/TreatmentPreview';
+import UtilsService from '../../services/UtilsService';
+import './TreatmentList.scss';
 
 export function TreatmentList(props) {
     return (
@@ -14,7 +13,6 @@ export function TreatmentList(props) {
                         <div key={id}>
                             <TreatmentPreview treatment={treatment}  />
                         </div>
-
                     )
                 })
             }

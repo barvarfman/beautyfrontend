@@ -6,7 +6,7 @@ export function updateActiveStep(step) {
         await 
         dispatch(_updateActiveStep(step));
       } catch (err) {
-        console.log('stepperActions: err in updateActiveStep', err);
+        console.log('StepperActions: err in updateActiveStep', err);
       }
     };
   }

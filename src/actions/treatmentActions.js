@@ -75,7 +75,7 @@ export function updatePickedTreatments(treatment,addOrRemove) {
 export function _updatePickedTreatments(treatment,addOrRemove) {
   return {
     type: 'UPDATE_PICKED_TREATMENT',
-    treatmentObj:{
+    treatmentToUpdate:{
       treatment,
       addOrRemove
     }

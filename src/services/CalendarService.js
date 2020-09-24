@@ -140,6 +140,8 @@ async function setAppointment(treatments, duration, phone, email, name, treatmen
     const endTime = `${treatment.date}T${time}:00Z`
     const confirmedEvent = await update(startTime, endTime, treatmentsType, 'ayal', 'ayal@gmail.com')
     const event = {
+        name,
+        email,
         phone,
         eventId: confirmedEvent.id,
         treatments: treatmentsType,

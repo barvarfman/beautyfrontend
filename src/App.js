@@ -9,6 +9,7 @@ import { CancelAppointment } from './pages/CancelAppointment/CancelAppointment.j
 import { HashRouter as Router} from 'react-router-dom';
 
 function App() {
+
   return (
     <Router>
       <div className="App">

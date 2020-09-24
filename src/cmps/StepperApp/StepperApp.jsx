@@ -6,7 +6,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import './StepperApp.scss'
 
-// stepper style
+// StepperApp style
 const theme = createMuiTheme({
 // add margin left from the circules
   palette: {

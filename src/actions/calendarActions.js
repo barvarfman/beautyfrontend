@@ -21,22 +21,6 @@ export function setCalendar(calendar) {
      };
 }
 
-export function loaderSwitch(loader) {
-  return async dispatch => {
-    try {
-      dispatch(_loaderSwitch(loader));
-    } catch (err) {
-      console.log('calendarActions: err in loader', err);
-    };
-  }
-}
-
-export function _loaderSwitch(loader) {
-    return {
-      type: 'SET_loader',
-      loader
-     };
-}
 
 export function loadTimeSlots(pickedDate = null){
     if (!pickedDate) {

@@ -6,7 +6,6 @@ export default {
 }
 
 function sendEmail(name, date, email='', isConfirmation, phone='', duration='', time='', treatments='') {
-    console.log ('name', name, 'date', date, 'phoone', phone, 'email', email, duration, time, treatments, isConfirmation)
     let treatmentsType = (treatments)? UtilsService.arrayToString(treatments) : ''
     let bodyText = ''
     if (isConfirmation) {

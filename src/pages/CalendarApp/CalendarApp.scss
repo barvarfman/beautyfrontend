@@ -1,11 +1,13 @@
-.black{
-    color: black;
-}
 .time-slot-lists-container{
     max-height: 400px;
     margin-top: 1.3rem;
+    .loaderContainer{
+        height: 400px;
+    }
+}
+// MATERIAL UI CLASSES
+.MuiDialogActions-root{
+    justify-content: space-between!important;
 }
 
-.loaderContainer{
-    height: 400px;
-}
+
