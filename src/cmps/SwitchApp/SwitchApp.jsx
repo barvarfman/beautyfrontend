@@ -13,21 +13,19 @@ const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
 export function SwitchApp(props) {
 
-  const [checked, setChecked] = useState(false);
-
-  useEffect(() => {
-    setChecked(props.isActive)
-  }, [props.isActive])
+  const [checked, setChecked] = useState(props.marked);
 
   const handleChange = (event) => {
     if (!checked) {
       props.updateDuration(true)
       props.updatePickedTreatments(true)
+      console.log('1')
     }
     else {
-      props.setIsActive(false)
+      // props.setIsActive(false)
       props.updateDuration(false)
       props.updatePickedTreatments(false)
+      console.log('2')
     }
     setChecked(event.target.checked)
   };

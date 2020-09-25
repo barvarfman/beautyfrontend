@@ -61,13 +61,13 @@ export function _SubmitForm(props) {
     
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+    const [markedTreatmetns, setmarkedTreatmetns] = React.useState('');
     const [credentials, setCredentials] = React.useState({name:'',phone:'',email:''})
     const dateIsraeliDisplay = UtilsService.convertDateToIsraelisDisplay(props.treatment.date)
     const endTime = UtilsService.calculateEndTime(props.treatment.time,props.duration)
-    let markedTreatmetns = ''
 
     useEffect(() => {
-        markedTreatmetns = TreatmentService.getMarkedTreatmentsStr(props.treatments)
+        setmarkedTreatmetns(TreatmentService.getMarkedTreatmentsStr(props.treatments))
     }, [props.treatments])
     
     const handleOpen = () => {
@@ -77,11 +77,11 @@ export function _SubmitForm(props) {
     const handleClose = () => {
         setOpen(false);
         init()
-        props.history.push('/')
     };
 
     function init() {
         StoreService.initApp()
+        props.history.push('/')
     }
 
     function setAppointment () {

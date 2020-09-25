@@ -39,7 +39,8 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.2.0",
-    "twilio": "^3.49.1"
+    "twilio": "^3.49.1",
+    "use-state-with-callback": "^2.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -10,10 +10,11 @@ export function loadTreatments() {
    
     } catch (err) {
       console.log('TreatmentActions: err in loadTreatments', err);
-  };
+    };
+  }
 }
 
-function setTreatments(treatments) {
+export function setTreatments(treatments) {
   return {
     type: 'SET_TREATMENTS',
     treatments
@@ -57,6 +58,7 @@ function _removeTreatment(treatmentId) {
 }
 
 export function updateTreatments(treatments) {
+  console.log(treatments)
   return async dispatch => {
     try {
       await 
@@ -74,22 +76,7 @@ export function _updateTreatments(treatments) {
   };
 }
 
-export function initPickedTreatments() {
-  return async dispatch => {
-    try {
-      await 
-      dispatch(_initPickedTreatments());
-    } catch (err) {
-      console.log('ERR WITH initPickedTreatments', err);
-    }
-  };
-}
 
-function _initPickedTreatments() {
-  return {
-    type: 'INIT_PICKED_TREATMENTS'
-  };
-}
 
 export function updateDuration(duration) {
   return async dispatch => {

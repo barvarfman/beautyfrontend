@@ -6,12 +6,11 @@ export default {
 }
 
 function sendEmail(name, date, email='', isConfirmation, phone='', duration='', time='', treatments='') {
-    let treatmentsType = (treatments)? UtilsService.arrayToString(treatments) : ''
     let bodyText = ''
     if (isConfirmation) {
         bodyText = `שלום,
          ${name} שמחים שבחרת במספרת קובי!
-        נקבע לך תור ל${treatmentsType}  
+        נקבע לך תור ל${treatments}  
         בתאריך ${date}
         בשעה ${time}
         משך זמן הטיפול מוערך כ- ${duration} דקות

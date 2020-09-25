@@ -13,12 +13,12 @@ export default {
 // update only the store not mongo DB
 function updateTreatments(treatments, updatedTreatment){
     const idx = treatments.findIndex(tr => tr._id === updatedTreatment._id)
-    treatments = treatments.splice (idx, 1, updatedTreatment)
+    treatments[idx] = updatedTreatment
 return treatments
 }
 
 function getMarkedTreatmentsStr(treatments) {
-    treatments = treatments.filter (tr => tr.marked)
+    treatments = (treatments.filter(tr => tr.marked))
     return UtilsService.arrayToString(treatments)
 }
 

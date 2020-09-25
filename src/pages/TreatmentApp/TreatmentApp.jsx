@@ -26,12 +26,10 @@ const pageTransition={
 }
 
 export function _TreatmentApp(props) {
-    const { loadTreatments } = props
+    const { loadTreatments,treatments } = props
     useEffect(() => {
         if (!treatments) loadTreatments()
-    },[loadTreatments]);
-
-    const { treatments } = props;
+    },[loadTreatments,treatments]);
 
     if (!treatments) return 'loading...'
     return (
@@ -43,7 +41,7 @@ export function _TreatmentApp(props) {
             variants={pageVariants}
             transition={pageTransition}
         >
-            <TreatmentList treatments={treatments} />
+            <TreatmentList treatments={treatments}  />
         </motion.div>
     <NavBtns />
     </>

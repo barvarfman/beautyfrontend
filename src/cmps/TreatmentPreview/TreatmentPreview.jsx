@@ -1,57 +1,63 @@
-import React, { useState, useEffect } from 'react';
+import React , { Component } from 'react';
+import useStateWithCallback from 'use-state-with-callback';
 import { connect } from 'react-redux';
-import { updateDuration} from '../../actions/treatmentActions';
+import { updateDuration, updateTreatments} from '../../actions/treatmentActions';
 import { SwitchApp } from '../SwitchApp/SwitchApp';
 import UtilService from '../../services/UtilsService'
-import './TreatmentPreview.scss';
 import TreatmentService from '../../services/TreatmentService';
+import './TreatmentPreview.scss';
 
-export function _TreatmentPreview(props) {
 
-    const [markedBySwitch, setMarkedBySwitch] = useState('');
-    const [isActive, setIsActive] = useState(false);
+class _TreatmentPreview extends Component {
 
-    useEffect(() => {
-        setIsActive(props.treatment.marked)
-    }, [props.treatment])
+    state = {
+        updatedTreatment:{...this.props.treatment},
+        treatmentsToUpdate:this.props.treatments.slice()
+    }
 
-    function updateDuration(switchIsOn) {
-        if (switchIsOn) {
-            props.updateDuration(+props.treatment.duration)
+    componentWillUnmount(){
+        // console.log(this.state.treatmentsToUpdate)
+    //   this.props.updateTreatments(this.state.treatmentsToUpdate) 
+    }
+
+    
+    updateDuration = (isMarked) => {
+        if (isMarked) {
+            this.props.updateDuration(+this.props.treatment.duration)
         } else {
-            props.updateDuration((+props.treatment.duration) * -1)
+            this.props.updateDuration((+this.props.treatment.duration) * -1)
         }
     }
 
     // mark the treatment
-    function updatePickedTreatments(isActive) {
-        if (isActive) {
-            updatedTreatment.marked = true
-            setMarkedBySwitch(" marked-by-switch")
-        } else {
-            updatedTreatment.marked = false
-            setMarkedBySwitch("")
-        }
-        const treatmentsToUpdate = TreatmentService.updateTreatments(treatments.slice(), {...props.treatment})
-        props.updateTreatments(treatmentsToUpdate)
+    updatePickedTreatments = (isMarked) => {
+            this.setState({updatedTreatment:{...this.state.updatedTreatment,marked:isMarked}}, ()=>{
+            const treatments = TreatmentService.updateTreatments(this.state.treatmentsToUpdate,this.state.updatedTreatment)
+            this.setState({treatmentsToUpdate:treatments},
+                ()=> {this.props.updateTreatments(this.state.treatmentsToUpdate)})
+            // this.props.updateTreatments(treatments) 
+        })
     }
 
-    return (
-        <div className={`treatment-preview ${(isActive)?'marked-by-switch':""} ${markedBySwitch}`}>
-            {props.treatment &&
-                <div className=" preview-container flex align-center space-between">
-                    <div className="align-col-name">
-                        {props.treatment.name}
+    render() {
+        const {updatedTreatment} = this.state
+        return (
+            <div className={`treatment-preview ${(updatedTreatment.marked)?'marked-by-switch':""}`}>
+                {updatedTreatment &&
+                    <div className=" preview-container flex align-center space-between">
+                        <div className="align-col-name">
+                            {updatedTreatment.name}
+                        </div>
+                        <div className="align-col">{'₪' + updatedTreatment.price}</div>
+                        <div className="align-col">{updatedTreatment.duration + UtilService.englishToHebrew('minutes')}</div>
+                        <SwitchApp className="align-col" marked={updatedTreatment.marked} updateDuration={this.updateDuration} updatePickedTreatments={this.updatePickedTreatments} />
                     </div>
-                    <div className="align-col">{'₪' + props.treatment.price}</div>
-                    <div className="align-col">{props.treatment.duration + UtilService.englishToHebrew('minutes')}</div>
-                    <SwitchApp className="align-col" setIsActive={setIsActive} isActive={isActive} updateDuration={updateDuration} updatePickedTreatments={updatePickedTreatments} />
-                </div>
-            }
-        </div>
-    )
+                }
+            </div>
+        )
+      }
 }
-
+    
 function mapStateProps(state) {
     return {
         duration: state.TreatmentReducer.duration,
