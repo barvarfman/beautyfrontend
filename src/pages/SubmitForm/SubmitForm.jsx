@@ -1,12 +1,10 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { connect } from 'react-redux';
 import { NavBtns } from '../../cmps/NavBtns/NavBtns';
 import UtilsService from "../../services/UtilsService";
 import CalendarService from '../../services/CalendarService';
 import StoreService from '../../services/StoreService';
 import { setTimeSlots } from '../../actions/calendarActions.js';
-import { setTreatment, updateDuration, initPickedTreatments, initDuration } from '../../actions/treatmentActions.js';
-import './SubmitForm.scss';
 import { updateActiveStep } from '../../actions/stepperActions';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,6 +13,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import TextField from '@material-ui/core/TextField';
 import { motion } from 'framer-motion'
+import './SubmitForm.scss';
+import TreatmentService from "../../services/TreatmentService";
 
 // style for motion div
 const pageVariants = {
@@ -61,9 +61,14 @@ export function _SubmitForm(props) {
     
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+    const [markedTreatmetns, setmarkedTreatmetns] = React.useState('');
     const [credentials, setCredentials] = React.useState({name:'',phone:'',email:''})
     const dateIsraeliDisplay = UtilsService.convertDateToIsraelisDisplay(props.treatment.date)
     const endTime = UtilsService.calculateEndTime(props.treatment.time,props.duration)
+
+    useEffect(() => {
+        setmarkedTreatmetns(TreatmentService.getMarkedTreatmentsStr(props.treatments))
+    }, [props.treatments])
     
     const handleOpen = () => {
         setOpen(true);
@@ -72,15 +77,16 @@ export function _SubmitForm(props) {
     const handleClose = () => {
         setOpen(false);
         init()
-        props.history.push('/')
     };
 
     function init() {
         StoreService.initApp()
+        props.history.push('/')
     }
 
     function setAppointment () {
-        CalendarService.setAppointment(props.pickedTreatments, props.duration, credentials.phone, credentials.email, credentials.name, props.treatment)
+        const {name,phone,email} = credentials
+        CalendarService.setAppointment(markedTreatmetns, props.duration, phone, email, name, props.treatment)
     }
 
     function handleChange({ target }) {
@@ -145,7 +151,7 @@ export function _SubmitForm(props) {
                         <Fade in={open}>
                             <div className={classes.paper}>
                                 <h2 id="transition-modal-title">התור נקבע בהצלחה</h2>
-                                <div> נקבע לך תור ל: {UtilsService.arrayToString(props.pickedTreatments)}  </div>
+                                <div> נקבע לך תור ל: {markedTreatmetns}  </div>
                                 <div> בתאריך {dateIsraeliDisplay}</div>
                                 <div> בין השעות: {endTime} - {props.treatment.time}</div>
                                 
@@ -161,19 +167,15 @@ export function _SubmitForm(props) {
 
 function mapStateProps(state) {
     return {
-        pickedTreatments: state.TreatmentReducer.pickedTreatments,
-        duration: state.TreatmentReducer.duration,
+        treatments: state.TreatmentReducer.treatments,
         treatment: state.TreatmentReducer.treatment,
+        duration: state.TreatmentReducer.duration,
     }
 }
 
 const mapDispatchToProps = {
     updateActiveStep,
-    setTreatment,
-    updateDuration,
-    setTimeSlots,
-    initPickedTreatments,
-    initDuration
+    setTimeSlots
 }
 
 export const SubmitForm = withRouter(connect(mapStateProps, mapDispatchToProps)(_SubmitForm))

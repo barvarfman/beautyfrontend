@@ -1,15 +1,28 @@
 import HttpService from './HttpService'
+import UtilsService from "../services/UtilsService";
 
 export default {
     getTreatments,
     getById,
     remove,
     update,
-    updatePickedTreatments
+    updateTreatments,
+    getMarkedTreatmentsStr
 }
 
+// update only the store not mongo DB
+function updateTreatments(treatments, updatedTreatment){
+    const idx = treatments.findIndex(tr => tr._id === updatedTreatment._id)
+    treatments[idx] = updatedTreatment
+return treatments
+}
 
+function getMarkedTreatmentsStr(treatments) {
+    treatments = (treatments.filter(tr => tr.marked))
+    return UtilsService.arrayToString(treatments)
+}
 
+// comunicate with backend
 function getTreatments() {
     return HttpService.get('treatment')
 }
@@ -24,13 +37,3 @@ function remove(treatmentId) {
 function update(treatment) {
     return HttpService.put(`treatment/${treatment._id}`, treatment)
 }
-
-function updatePickedTreatments(treatments, treatmentToUpdate) {
-        
-    if (treatmentToUpdate.addOrRemove) {treatments.push(treatmentToUpdate.treatment)
-    } else {
-      const idx = treatments.findIndex((treatment) => treatment._id === treatmentToUpdate.treatment._id);
-      treatments.splice(idx, 1);
-    }
-    return treatments
-  }

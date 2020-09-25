@@ -10,15 +10,11 @@ export function loadTreatments() {
    
     } catch (err) {
       console.log('TreatmentActions: err in loadTreatments', err);
-      // example for rerouting - after changing the store
-      // history.push('/some/path');
-    } finally {
-   
-    }
-  };
+    };
+  }
 }
 
-function setTreatments(treatments) {
+export function setTreatments(treatments) {
   return {
     type: 'SET_TREATMENTS',
     treatments
@@ -61,43 +57,26 @@ function _removeTreatment(treatmentId) {
   };
 }
 
-export function updatePickedTreatments(treatment,addOrRemove) {
+export function updateTreatments(treatments) {
+  console.log(treatments)
   return async dispatch => {
     try {
       await 
-      dispatch(_updatePickedTreatments(treatment,addOrRemove));
+      dispatch(_updateTreatments(treatments));
     } catch (err) {
-      console.log('TreatmentActions: err in updatePickedTreatments', err);
+      console.log('TreatmentActions: err in updateTreatments', err);
     }
   };
 }
 
-export function _updatePickedTreatments(treatment,addOrRemove) {
+export function _updateTreatments(treatments) {
   return {
-    type: 'UPDATE_PICKED_TREATMENT',
-    treatmentToUpdate:{
-      treatment,
-      addOrRemove
-    }
+    type: 'UPDATE_TREATMENTS',
+    treatments
   };
 }
 
-export function initPickedTreatments() {
-  return async dispatch => {
-    try {
-      await 
-      dispatch(_initPickedTreatments());
-    } catch (err) {
-      console.log('ERR WITH initPickedTreatments', err);
-    }
-  };
-}
 
-function _initPickedTreatments() {
-  return {
-    type: 'INIT_PICKED_TREATMENTS'
-  };
-}
 
 export function updateDuration(duration) {
   return async dispatch => {
