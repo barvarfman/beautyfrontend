@@ -1,5 +1,4 @@
 import HttpService from './HttpService'
-import UtilsService from "../services/UtilsService";
 
 export default {
     sendEmail

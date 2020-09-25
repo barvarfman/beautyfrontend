@@ -1,5 +1,4 @@
 import React , { Component } from 'react';
-import useStateWithCallback from 'use-state-with-callback';
 import { connect } from 'react-redux';
 import { updateDuration, updateTreatments} from '../../actions/treatmentActions';
 import { SwitchApp } from '../SwitchApp/SwitchApp';
@@ -11,16 +10,11 @@ import './TreatmentPreview.scss';
 class _TreatmentPreview extends Component {
 
     state = {
-        updatedTreatment:{...this.props.treatment},
-        treatmentsToUpdate:this.props.treatments.slice()
+        updatedTreatment: this.props.treatment,
+        // treatmentsToUpdate: [...this.props.treatments]
+        treatmentsToUpdate: this.props.treatments
     }
 
-    componentWillUnmount(){
-        // console.log(this.state.treatmentsToUpdate)
-    //   this.props.updateTreatments(this.state.treatmentsToUpdate) 
-    }
-
-    
     updateDuration = (isMarked) => {
         if (isMarked) {
             this.props.updateDuration(+this.props.treatment.duration)
@@ -33,9 +27,10 @@ class _TreatmentPreview extends Component {
     updatePickedTreatments = (isMarked) => {
             this.setState({updatedTreatment:{...this.state.updatedTreatment,marked:isMarked}}, ()=>{
             const treatments = TreatmentService.updateTreatments(this.state.treatmentsToUpdate,this.state.updatedTreatment)
-            this.setState({treatmentsToUpdate:treatments},
-                ()=> {this.props.updateTreatments(this.state.treatmentsToUpdate)})
-            // this.props.updateTreatments(treatments) 
+            this.setState({treatmentsToUpdate:treatments})
+            //     ()=>{
+            //     this.props.updateTreatments(this.state.treatmentsToUpdate)
+            // }) 
         })
     }
 

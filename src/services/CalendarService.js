@@ -69,13 +69,14 @@ return fetch(url, {
 ,
 body: JSON.stringify( 
     {
-        "name": eventName,
+        "name": `${creatorName} -  ${eventName}`,
+        "description" : eventName,
         "start": startTime,
         "end": endtTime,
-        "creator": {
-            "name": creatorName,
-            "email": creatorEmail
-        }
+        // "creator": {
+        //     "name": creatorName,
+        //     "email": creatorEmail
+        // }
     })
 }).then(res=> res.json())
   .then(json => { return json});
@@ -133,7 +134,7 @@ async function setAppointment(treatments, duration, phone, email, name, treatmen
     const startTime = `${treatment.date}T${time}:00Z`
     time = UtilsService.calculateEndTime(time, duration)
     const endTime = `${treatment.date}T${time}:00Z`
-    const confirmedEvent = await update(startTime, endTime, treatments, 'ayal', 'ayal@gmail.com')
+    const confirmedEvent = await update(startTime, endTime, treatments, name, 'ayal@gmail.com')
     const event = {
         name,
         email,
