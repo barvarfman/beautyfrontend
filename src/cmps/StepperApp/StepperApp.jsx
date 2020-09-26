@@ -27,16 +27,19 @@ export function _StepperApp(props) {
 
   const classes = useStyles();
 
+
+
   return (
     <div className={classes.root}>
 
   <MuiThemeProvider theme={theme}>
-      <Stepper activeStep={props.activeStep} >
+      <Stepper activeStep={props.activeStep}
+      style={{padding:'30px'}} >
         {props.steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
           return (
-            <Step  key={label} {...stepProps} >
+            <Step  key={label} {...stepProps}>
               <StepLabel  {...labelProps}>{label}  </StepLabel>
             </Step>
           );
