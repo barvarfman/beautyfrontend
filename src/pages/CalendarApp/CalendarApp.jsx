@@ -103,7 +103,7 @@ export function _CalendarApp(props) {
                 </div>
                 <div className="main-container time-slot-lists-container">
                     {(props.timeSlots && loader) ? <TimeslotList timeSlots={props.timeSlots} />
-                        :<div className="loaderContainer flex align-center justify-center"><LoaderApp /></div>}
+                        :<div className="loaderContainer flex  justify-center"><LoaderApp/></div>}
                 </div>
             </motion.div>
          <NavBtns />
