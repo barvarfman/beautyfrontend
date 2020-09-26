@@ -5,15 +5,19 @@ export default {
 }
 
 function sendEmail(name, date, email='', isConfirmation, phone='', duration='', time='', treatments='') {
+    const businessName='נייל סלון'
     let bodyText = ''
     if (isConfirmation) {
-        bodyText = `שלום,
-         ${name} שמחים שבחרת במספרת קובי!
+        bodyText =`        שלום ${name} ,
+
+        שמחים שבחרת ${businessName} !
         נקבע לך תור ל${treatments}  
         בתאריך ${date}
         בשעה ${time}
         משך זמן הטיפול מוערך כ- ${duration} דקות
-        הטלפון שהתקבל ליצירת קשר הוא - ${phone}`
+        הטלפון שהתקבל ליצירת קשר הוא - ${phone}
+        
+        תודה`
     } else {
         bodyText = `
         שלום,
