@@ -7,7 +7,8 @@ export default {
   idGen,
   calculateEndTime,
   arrayToString,
-  convertDateToIsraelisDisplay
+  convertDateToIsraelisDisplay,
+  getDayByHebrewWord
 }
 
 function englishToHebrew(word) {
@@ -143,8 +144,13 @@ function arrayToString(pickedTreatments) {
   return treatmentsType
 }
 
-function convertDateToIsraelisDisplay (date) {
+function convertDateToIsraelisDisplay(date) {
   const dateParts = (date).split('-')
-  return `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` 
+  return `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`
 }
-        
+function getDayByHebrewWord(idx) {
+  console.log(idx);
+  const days = ["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"]
+  return days[idx]
+}
+

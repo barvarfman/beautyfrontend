@@ -81,6 +81,7 @@ export function _CalendarApp(props) {
                 variants={pageVariants}
                 transition={pageTransition}
             >
+                <div className="calendar-picker-container">
                 <MuiPickersUtilsProvider utils={DateFnsUtils} locale={heLocale} >
                     <ThemeProvider theme={materialTheme}>
                         <KeyboardDatePicker
@@ -99,6 +100,7 @@ export function _CalendarApp(props) {
                         />
                     </ThemeProvider>
                 </MuiPickersUtilsProvider>
+                </div>
                 <div className="main-container time-slot-lists-container">
                     {(props.timeSlots && loader) ? <TimeslotList timeSlots={props.timeSlots} />
                         :<div className="loaderContainer flex align-center justify-center"><LoaderApp /></div>}

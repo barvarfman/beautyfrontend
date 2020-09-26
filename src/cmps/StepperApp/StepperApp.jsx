@@ -33,8 +33,7 @@ export function _StepperApp(props) {
     <div className={classes.root}>
 
   <MuiThemeProvider theme={theme}>
-      <Stepper activeStep={props.activeStep}
-      style={{padding:'30px'}} >
+      <Stepper activeStep={props.activeStep}>
         {props.steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};

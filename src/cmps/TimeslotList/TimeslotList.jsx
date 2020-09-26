@@ -4,7 +4,7 @@ import UtilsService from '../../services/UtilsService';
 import './TimeslotList.scss';
 
 export function TimeslotList(props) {
-
+    console.log(props.timeSlots);
     return (
         <div className="timeslot-list flex">
             {
@@ -14,7 +14,13 @@ export function TimeslotList(props) {
                     const slotsForPreview = UtilsService.getDailySlotsForPreview(props.timeSlots[day], 30)
                     return (
                         <div key={UtilsService.idGen()}>
-                            <DailySlots  timeSlots={slotsForPreview} date={date} />
+                            <div className="date-container">
+                                <div>
+                                    {UtilsService.getDayByHebrewWord(new Date((props.timeSlots[day])[0].start).getDay())}
+                                </div>
+                                {UtilsService.convertDateToIsraelisDisplay(date)}
+                            </div>
+                            <DailySlots timeSlots={slotsForPreview} date={date} />
                         </div>
                     )
                 })
