@@ -69,7 +69,7 @@ return fetch(url, {
 ,
 body: JSON.stringify( 
     {
-        "name": `${creatorName} -  ${eventName}`,
+        "name": `${creatorName} - ${eventName}`,
         "description" : eventName,
         "start": startTime,
         "end": endtTime,
